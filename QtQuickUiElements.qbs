@@ -4,7 +4,7 @@ Project {
     name: "QtQuick UI Elements";
 
     Product {
-        name: "qt-quick-ui-elements";
+        name: "libqtqmltricks-qtquickuielements";
         type: "staticlibrary";
         targetName: "QtQuickUiElements";
 
@@ -42,11 +42,13 @@ Project {
                 "QQuickStretchRowContainer.h",
                 "QQuickSvgIconHelper.h",
                 "QQuickWrapLeftRightContainer.h",
+                "QtQmlTricksPlugin.h",
             ]
         }
         Group {
             name: "QML components";
             files: [
+                "Style.qml",
                 "ComboList.qml",
                 "IconTextButton.qml",
                 "ScrollContainer.qml",
@@ -57,9 +59,9 @@ Project {
             ]
         }
         Group {
-            name: "JavaScript modules";
+            name: "Qt resources bundle";
             files: [
-                "Style.js",
+                "qtqmltricksuielements.qrc",
             ]
         }
         Group {

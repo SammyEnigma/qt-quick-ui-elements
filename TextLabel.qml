@@ -1,5 +1,5 @@
 import QtQuick 2.1;
-import "Style.js" as Style;
+import QtQmlTricks.UiElements 2.0;
 
 Text {
     color: (enabled ? Style.colorBlack : Style.colorGray);

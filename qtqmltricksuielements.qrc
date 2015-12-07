@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/QtQmlTricks/UiElements">
+        <file>ComboList.qml</file>
+        <file>IconTextButton.qml</file>
+        <file>ScrollContainer.qml</file>
+        <file>SingleLineEditBox.qml</file>
+        <file>TextBox.qml</file>
+        <file>TextButton.qml</file>
+        <file>TextLabel.qml</file>
+        <file>Style.qml</file>
+    </qresource>
+</RCC>

@@ -1,5 +1,5 @@
 import QtQuick 2.1;
-import QtQmlTricks 1.0;
+import QtQmlTricks.UiElements 2.0;
 
 MouseArea {
     id: clicker;
