@@ -64,4 +64,29 @@ QtObject {
         }
         return (ret || fallback);
     }
+
+    property Gradient gradientIdle : Gradient {
+        GradientStop { color: Qt.lighter (colorLightGray, 1.15); position: 0.0; }
+        GradientStop { color: Qt.darker  (colorLightGray, 1.15); position: 1.0; }
+    }
+
+    property Gradient gradientPressed : Gradient {
+        GradientStop { color: Qt.darker  (colorDarkGray, 1.15); position: 0.0; }
+        GradientStop { color: Qt.lighter (colorDarkGray, 1.15); position: 1.0; }
+    }
+
+    property Gradient gradientChecked : Gradient {
+        GradientStop { color: Qt.darker  (colorLightBlue, 1.15); position: 0.0; }
+        GradientStop { color: Qt.lighter (colorLightBlue, 1.15); position: 1.0; }
+    }
+
+    property Gradient gradientDisabled : Gradient {
+        GradientStop { color: colorLightGray; position: 0.0; }
+        GradientStop { color: colorLightGray; position: 1.0; }
+    }
+
+    property Gradient gradientEditable : Gradient {
+        GradientStop { color: colorWhite; position: 0.0; }
+        GradientStop { color: colorWhite; position: 1.0; }
+    }
 }

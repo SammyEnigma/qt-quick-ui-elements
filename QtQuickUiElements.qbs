@@ -50,9 +50,7 @@ Project {
             files: [
                 "Style.qml",
                 "ComboList.qml",
-                "IconTextButton.qml",
                 "ScrollContainer.qml",
-                "SingleLineEditBox.qml",
                 "TextBox.qml",
                 "TextButton.qml",
                 "TextLabel.qml",

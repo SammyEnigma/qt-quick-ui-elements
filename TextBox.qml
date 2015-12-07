@@ -23,27 +23,16 @@ FocusScope {
     function selectAll () {
         input.selectAll ();
     }
+
     function clear () {
         input.text = "";
     }
 
-    Gradient {
-        id: gradientIdle;
-
-        GradientStop { color: Style.colorWhite; position: 0.0; }
-        GradientStop { color: Style.colorWhite; position: 1.0; }
-    }
-    Gradient {
-        id: gradientDisabled;
-
-        GradientStop { color: Style.colorLightGray; position: 0.0; }
-        GradientStop { color: Style.colorLightGray; position: 1.0; }
-    }
     Rectangle {
         id: rect;
         radius: 3;
         antialiasing: true;
-        gradient: (base.enabled ? gradientIdle : gradientDisabled);
+        gradient: (base.enabled ? Style.gradientEditable : Style.gradientDisabled);
         border {
             width: 1;
             color: (input.activeFocus ? Style.colorSteelBlue : Style.colorGray);
@@ -89,4 +78,3 @@ FocusScope {
         }
     }
 }
-

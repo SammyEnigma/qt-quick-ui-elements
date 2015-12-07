@@ -5,8 +5,77 @@ MouseArea {
     id: clicker;
     width: implicitWidth;
     height: implicitHeight;
-    implicitWidth: (lbl.contentWidth + padding * 2);
-    implicitHeight: (lbl.contentHeight + padding * 2);
+    states: [
+        State {
+            name: "icon_and_text";
+            when: (ico.visible && lbl.visible);
+
+            PropertyChanges {
+                target: clicker;
+                implicitWidth: (ico.width + lbl.contentWidth + padding * 3);
+                implicitHeight: (ico.height > lbl.contentHeight ? ico.height + padding * 2: lbl.contentHeight + padding * 2);
+            }
+            AnchorChanges {
+                target: ico;
+                anchors {
+                    left: parent.left;
+                    verticalCenter: parent.verticalCenter;
+                }
+            }
+            AnchorChanges {
+                target: lbl;
+                anchors {
+                    left: ico.right;
+                    right: parent.right;
+                    verticalCenter: parent.verticalCenter;
+                }
+            }
+        },
+        State {
+            name: "text_only";
+            when: (!ico.visible && lbl.visible);
+
+            PropertyChanges {
+                target: clicker;
+                implicitWidth: (lbl.contentWidth + padding * 2);
+                implicitHeight: (lbl.contentHeight + padding * 2);
+            }
+            AnchorChanges {
+                target: lbl;
+                anchors {
+                    verticalCenter: parent.verticalCenter;
+                    horizontalCenter: parent.horizontalCenter;
+                }
+            }
+        },
+        State {
+            name: "icon_only";
+            when: (ico.visible && !lbl.visible);
+
+            PropertyChanges {
+                target: clicker;
+                implicitWidth: (ico.width + padding * 2);
+                implicitHeight: (ico.height + padding * 2);
+            }
+            AnchorChanges {
+                target: ico;
+                anchors {
+                    verticalCenter: parent.verticalCenter;
+                    horizontalCenter: parent.horizontalCenter;
+                }
+            }
+        },
+        State {
+            name: "empty";
+            when: (!ico.visible && !lbl.visible);
+
+            PropertyChanges {
+                target: clicker;
+                implicitWidth: 0;
+                implicitHeight: 0;
+            }
+        }
+    ]
 
     property int   padding   : 6;
     property bool  checked   : false;
@@ -15,57 +84,45 @@ MouseArea {
     property alias textColor : lbl.color;
     property alias backColor : rect.color;
     property alias rounding  : rect.radius;
+    property alias icon      : ico.sourceComponent;
 
-    Gradient {
-        id: gradientIdle;
-
-        GradientStop { color: Qt.lighter (Style.colorLightGray, 1.15); position: 0.0; }
-        GradientStop { color: Qt.darker  (Style.colorLightGray, 1.15); position: 1.0; }
-    }
-    Gradient {
-        id: gradientPressed;
-
-        GradientStop { color: Qt.darker  (Style.colorDarkGray, 1.15); position: 0.0; }
-        GradientStop { color: Qt.lighter (Style.colorDarkGray, 1.15); position: 1.0; }
-    }
-    Gradient {
-        id: gradientChecked;
-
-        GradientStop { color: Qt.darker  (Style.colorLightBlue, 1.15); position: 0.0; }
-        GradientStop { color: Qt.lighter (Style.colorLightBlue, 1.15); position: 1.0; }
-    }
-    Gradient {
-        id: gradientDisabled;
-
-        GradientStop { color: Style.colorLightGray; position: 0.0; }
-        GradientStop { color: Style.colorLightGray; position: 1.0; }
-    }
     Rectangle {
         id: rect;
         radius: 3;
         antialiasing: true;
         gradient: (clicker.enabled
                    ? (checked
-                      ? gradientChecked
+                      ? Style.gradientChecked
                       : (pressed
-                         ? gradientPressed
-                         : gradientIdle))
-                   : gradientDisabled);
+                         ? Style.gradientPressed
+                         : Style.gradientIdle))
+                   : Style.gradientDisabled);
         border {
             width: 1;
             color: (checked ? Style.colorSteelBlue : Style.colorGray);
         }
         anchors.fill: parent;
     }
+    Loader {
+        id: ico;
+        active: (sourceComponent !== null);
+        visible: (item !== null);
+        anchors.margins: padding;
+    }
     Text {
         id: lbl;
-        color: (clicker.enabled ? (checked ? Style.colorDarkBlue : Style.colorBlack) : Style.colorGray);
+        color: (clicker.enabled
+                ? (checked
+                   ? Style.colorDarkBlue
+                   : Style.colorBlack)
+                : Style.colorGray);
         visible: (text !== "");
+        horizontalAlignment: (ico.visible ? Text.AlignLeft : Text.AlignHCenter);
         font {
             family: Style.fontName;
             weight: Font.Light;
             pixelSize: Style.fontSizeNormal;
         }
-        anchors.centerIn: parent;
+        anchors.margins: padding;
     }
 }

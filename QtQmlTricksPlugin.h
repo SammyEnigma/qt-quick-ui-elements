@@ -36,11 +36,9 @@ static void registerQtQmlTricksUiElements (void) {
 
     // widgets
     qmlRegisterType (QUrl ("qrc:///QtQmlTricks/UiElements/ComboList.qml"),         uri, maj, min, "ComboList");
-    qmlRegisterType (QUrl ("qrc:///QtQmlTricks/UiElements/IconTextButton.qml"),    uri, maj, min, "IconTextButton");
     qmlRegisterType (QUrl ("qrc:///QtQmlTricks/UiElements/TextBox.qml"),           uri, maj, min, "TextBox");
     qmlRegisterType (QUrl ("qrc:///QtQmlTricks/UiElements/TextButton.qml"),        uri, maj, min, "TextButton");
     qmlRegisterType (QUrl ("qrc:///QtQmlTricks/UiElements/TextLabel.qml"),         uri, maj, min, "TextLabel");
-    qmlRegisterType (QUrl ("qrc:///QtQmlTricks/UiElements/SingleLineEditBox.qml"), uri, maj, min, "SingleLineEditBox");
     qmlRegisterType (QUrl ("qrc:///QtQmlTricks/UiElements/ScrollContainer.qml"),   uri, maj, min, "ScrollContainer");
 }
 

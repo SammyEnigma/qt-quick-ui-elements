@@ -19,24 +19,6 @@ Item {
     readonly property var currentValue : (model && currentIdx >= 0 && currentIdx < model.count ? model.get (currentIdx) ["value"] : undefined);
     readonly property var currentKey   : (model && currentIdx >= 0 && currentIdx < model.count ? model.get (currentIdx) ["key"]   : undefined);
 
-    Gradient {
-        id: gradientIdle;
-
-        GradientStop { color: Qt.lighter (Style.colorLightGray, 1.15); position: 0.0; }
-        GradientStop { color: Qt.darker  (Style.colorLightGray, 1.15); position: 1.0; }
-    }
-    Gradient {
-        id: gradientPressed;
-
-        GradientStop { color: Qt.darker  (Style.colorDarkGray, 1.15); position: 0.0; }
-        GradientStop { color: Qt.lighter (Style.colorDarkGray, 1.15); position: 1.0; }
-    }
-    Gradient {
-        id: gradientDisabled;
-
-        GradientStop { color: Style.colorLightGray; position: 0.0; }
-        GradientStop { color: Style.colorLightGray; position: 1.0; }
-    }
     MouseArea {
         id: clicker;
         anchors.fill: parent;
@@ -78,9 +60,9 @@ Item {
         gradient: (enabled
                    ? (clicker.pressed ||
                       clicker.dropdownItem
-                      ? gradientPressed
-                      : gradientIdle)
-                   : gradientDisabled);
+                      ? Style.gradientPressed
+                      : Style.gradientIdle)
+                   : Style.gradientDisabled);
         border {
             width: 1;
             color: Style.colorGray;
