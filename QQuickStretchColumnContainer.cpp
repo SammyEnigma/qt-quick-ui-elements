@@ -41,7 +41,7 @@ void QQuickStretchColumnContainer::updatePolish (void) {
     int nbStretch = 0;
     for (QList<QQuickItem *>::const_iterator it = childrenList.constBegin (); it != childrenList.constEnd (); it++) {
         QQuickItem * child = (* it);
-        if (child != Q_NULLPTR && child->isVisible ()) {
+        if (child != Q_NULLPTR && !child->inherits ("QQuickRepeater") && child->isVisible ()) {
             if (child->implicitWidth () > tmpW) {
                 tmpW = child->implicitWidth ();
             }
@@ -67,7 +67,7 @@ void QQuickStretchColumnContainer::updatePolish (void) {
     int currY = 0;
     for (QList<QQuickItem *>::const_iterator it = childrenList.constBegin (); it != childrenList.constEnd (); it++) {
         QQuickItem * child = (* it);
-        if (child != Q_NULLPTR && child->isVisible ()) {
+        if (child != Q_NULLPTR && !child->inherits ("QQuickRepeater") && child->isVisible ()) {
             if (currY) {
                 currY += m_spacing;
             }

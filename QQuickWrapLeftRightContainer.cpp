@@ -88,7 +88,7 @@ void QQuickWrapLeftRightContainer::updatePolish (void) {
     rightItems.reserve (childrenList.count ());
     for (QList<QQuickItem *>::const_iterator it = childrenList.constBegin (); it != childrenList.constEnd (); it++) {
         QQuickItem * child = (* it);
-        if (child != Q_NULLPTR && child->isVisible ()) {
+        if (child != Q_NULLPTR && !child->inherits ("QQuickRepeater") && child->isVisible ()) {
             if (isWrapper (child)) {
                 wrapperFound = true;
             }
