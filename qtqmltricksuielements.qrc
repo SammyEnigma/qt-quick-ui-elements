@@ -6,5 +6,6 @@
         <file>TextButton.qml</file>
         <file>TextLabel.qml</file>
         <file>Style.qml</file>
+        <file>FileSelector.qml</file>
     </qresource>
 </RCC>

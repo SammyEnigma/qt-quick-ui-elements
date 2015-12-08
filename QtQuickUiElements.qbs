@@ -48,6 +48,7 @@ Project {
         Group {
             name: "QML components";
             files: [
+                "FileSelector.qml",
                 "Style.qml",
                 "ComboList.qml",
                 "ScrollContainer.qml",

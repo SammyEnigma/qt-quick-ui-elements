@@ -40,6 +40,7 @@ static void registerQtQmlTricksUiElements (void) {
     qmlRegisterType (QUrl ("qrc:///QtQmlTricks/UiElements/TextButton.qml"),        uri, maj, min, "TextButton");
     qmlRegisterType (QUrl ("qrc:///QtQmlTricks/UiElements/TextLabel.qml"),         uri, maj, min, "TextLabel");
     qmlRegisterType (QUrl ("qrc:///QtQmlTricks/UiElements/ScrollContainer.qml"),   uri, maj, min, "ScrollContainer");
+    qmlRegisterType (QUrl ("qrc:///QtQmlTricks/UiElements/FileSelector.qml"),      uri, maj, min, "FileSelector");
 }
 
 #endif // QTQMLTRICKSPLUGIN_H
