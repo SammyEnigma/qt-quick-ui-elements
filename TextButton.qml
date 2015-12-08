@@ -37,7 +37,7 @@ MouseArea {
 
             PropertyChanges {
                 target: clicker;
-                implicitWidth: (lbl.contentWidth + padding * 2);
+                implicitWidth: Math.max (lbl.contentWidth + padding * 2, implicitHeight);
                 implicitHeight: (lbl.contentHeight + padding * 2);
             }
             AnchorChanges {
