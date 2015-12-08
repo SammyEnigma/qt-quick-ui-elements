@@ -5,7 +5,7 @@ Item {
     id: base;
     width: implicitWidth;
     height: implicitHeight;
-    implicitWidth: (lbl.contentWidth + padding * 2);
+    implicitWidth: (dumbLayout.width + arrow.width + padding * 3);
     implicitHeight: (lbl.contentHeight + padding * 2);
 
     property int   padding   : 6;
@@ -19,6 +19,17 @@ Item {
     readonly property var currentValue : (model && currentIdx >= 0 && currentIdx < model.count ? model.get (currentIdx) ["value"] : undefined);
     readonly property var currentKey   : (model && currentIdx >= 0 && currentIdx < model.count ? model.get (currentIdx) ["key"]   : undefined);
 
+    Column {
+        id: dumbLayout;
+
+        Repeater {
+            model: base.model;
+            delegate: TextLabel {
+                text: model.value;
+                color: "transparent";
+            }
+        }
+    }
     MouseArea {
         id: clicker;
         anchors.fill: parent;
