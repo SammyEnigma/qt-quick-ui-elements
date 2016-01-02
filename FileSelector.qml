@@ -116,7 +116,7 @@ Window {
                         id: img;
                         width: size;
                         height: size;
-                        source: "image://icon-theme/%1".arg (mimeHelper.getIconNameForPath (model.filePath));
+                        source: "image://icon-theme/%1".arg (mimeHelper.getIconNameForUrl (model.fileURL));
                         fillMode: Image.Stretch;
                         anchors {
                             left: parent.left;

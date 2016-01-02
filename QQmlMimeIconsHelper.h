@@ -12,7 +12,7 @@ public:
     explicit QQmlMimeIconsHelper (QObject * parent = Q_NULLPTR);
 
 public slots:
-    QString getIconNameForPath (const QString & path) const;
+    QString getIconNameForUrl (const QString & url) const;
 
 private:
     QHash<QString, QString> m_specialFoldersIconNames;

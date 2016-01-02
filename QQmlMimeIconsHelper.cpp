@@ -7,6 +7,7 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QStandardPaths>
+#include <QUrl>
 
 QQmlMimeIconsHelper::QQmlMimeIconsHelper (QObject * parent) : QObject (parent) {
     foreach (const QString & path, QStandardPaths::standardLocations (QStandardPaths::HomeLocation)) {
@@ -29,10 +30,11 @@ QQmlMimeIconsHelper::QQmlMimeIconsHelper (QObject * parent) : QObject (parent) {
     }
 }
 
-QString QQmlMimeIconsHelper::getIconNameForPath (const QString & path) const {
+QString QQmlMimeIconsHelper::getIconNameForUrl (const QString & url) const {
     static QHash<QString, QString> mimes;
     static QMimeDatabase * db = new QMimeDatabase;
     QString ret;
+    const QString path = QUrl (url).toLocalFile ();
     const QFileInfo info (path);
     if (info.exists ()) {
         if (info.isDir ()) {
