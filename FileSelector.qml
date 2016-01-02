@@ -18,6 +18,9 @@ Window {
 
     signal selected (string fileUrl);
 
+    MimeIconsHelper {
+        id: mimeHelper;
+    }
     FolderListModel {
         id: modelFS;
         showDirs: true;
@@ -25,29 +28,49 @@ Window {
         showHidden: false;
         showDirsFirst: true;
         showDotAndDotDot: false;
+        Component.onCompleted: { path.text = folder.toString (); }
     }
     StretchColumnContainer {
-        spacing: 6;
+        spacing: Style.spacingNormal;
         anchors {
             fill: parent;
-            margins: 12;
+            margins: Style.spacingBig;
         }
 
         StretchRowContainer {
-            spacing: 12;
+            spacing: Style.spacingBig;
             anchors {
                 left: parent.left;
                 right: parent.right;
             }
 
             TextButton {
-                text: "Parent dir";
+                text: "Parent";
+                enabled: (folder.toString () !== "file:///");
+                icon: Image {
+                    source: "image://icon-theme/go-up";
+                }
                 anchors.verticalCenter: parent.verticalCenter;
-                onClicked: { modelFS.folder = modelFS.parentFolder; }
+                onClicked: { folder = modelFS.parentFolder; }
             }
-            TextLabel {
+            Item {
+                height: implicitHeight;
+                implicitWidth: -1;
+                implicitHeight: path.height;
                 anchors.verticalCenter: parent.verticalCenter;
-                text: modelFS.folder;
+
+                TextLabel {
+                    id: path;
+                    font.pixelSize: Style.fontSizeSmall;
+                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere;
+                    anchors {
+                        left: parent.left;
+                        right: parent.right;
+                        verticalCenter: parent.verticalCenter;
+                    }
+
+                    Binding on text { value: folder; }
+                }
             }
         }
         ScrollContainer {
@@ -61,7 +84,7 @@ Window {
                 id: list;
                 model: modelFS;
                 delegate: MouseArea {
-                    height: 24;
+                    height: (Math.max (label.height, img.height) + label.anchors.margins * 2);
                     anchors {
                         left: parent.left;
                         right: parent.right;
@@ -71,7 +94,7 @@ Window {
                     }
                     onDoubleClicked: {
                         if (model.fileIsDir) {
-                            modelFS.folder = model.fileURL;
+                            folder = model.fileURL;
                         }
                         else {
                             selected (model.fileURL.toString ());
@@ -80,16 +103,39 @@ Window {
                     }
 
                     Rectangle {
-                        color: (model.index % 2 ? Style.colorLightGray : Style.colorDarkGray);
-                        opacity: 0.35;
-                        anchors.fill: parent;
-                    }
-                    TextLabel {
-                        text: model.fileName + (model.fileIsDir ? "/" : "");
+                        color: Style.colorLightGray;
+                        height: Style.lineSize;
+                        opacity: 0.65;
                         anchors {
                             left: parent.left;
                             right: parent.right;
-                            margins: 6;
+                            bottom: parent.bottom;
+                        }
+                    }
+                    Image {
+                        id: img;
+                        width: size;
+                        height: size;
+                        source: "image://icon-theme/%1".arg (mimeHelper.getIconNameForPath (model.filePath));
+                        fillMode: Image.Stretch;
+                        anchors {
+                            left: parent.left;
+                            margins: Style.spacingNormal;
+                            verticalCenter: parent.verticalCenter;
+                        }
+
+                        readonly property int size : (Style.fontSizeNormal * 2);
+                    }
+                    TextLabel {
+                        id: label;
+                        text: model.fileName + (model.fileIsDir ? "/" : "");
+                        elide: Text.ElideRight;
+                        wrapMode: Text.WrapAtWordBoundaryOrAnywhere;
+                        maximumLineCount: 3;
+                        anchors {
+                            left: img.right;
+                            right: parent.right;
+                            margins: Style.spacingNormal;
                             verticalCenter: parent.verticalCenter;
                         }
                     }

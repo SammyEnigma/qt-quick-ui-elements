@@ -8,7 +8,7 @@ FocusScope {
     implicitWidth: (input.contentWidth + padding * 2);
     implicitHeight: (input.contentHeight + padding * 2);
 
-    property int   padding    : 6;
+    property int   padding    : Style.spacingNormal;
     property alias text       : input.text;
     property alias textFont   : input.font;
     property alias textColor  : input.color;
@@ -30,11 +30,11 @@ FocusScope {
 
     Rectangle {
         id: rect;
-        radius: 3;
-        antialiasing: true;
+        radius: Style.roundness;
+        antialiasing: radius;
         gradient: (base.enabled ? Style.gradientEditable () : Style.gradientDisabled ());
         border {
-            width: 1;
+            width: Style.lineSize;
             color: (input.activeFocus ? Style.colorSteelBlue : Style.colorGray);
         }
         anchors.fill: parent;

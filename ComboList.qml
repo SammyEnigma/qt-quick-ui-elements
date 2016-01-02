@@ -8,7 +8,7 @@ Item {
     implicitWidth: (dumbLayout.width + arrow.width + padding * 3);
     implicitHeight: (lbl.contentHeight + padding * 2);
 
-    property int   padding   : 6;
+    property int   padding   : Style.spacingNormal;
     property alias textColor : lbl.color;
     property alias backColor : rect.color;
     property alias rounding  : rect.radius;
@@ -66,7 +66,7 @@ Item {
     }
     Rectangle {
         id: rect;
-        radius: 3;
+        radius: Style.roundness;
         antialiasing: true;
         gradient: (enabled
                    ? (clicker.pressed ||
@@ -75,7 +75,7 @@ Item {
                       : Style.gradientIdle ())
                    : Style.gradientDisabled ());
         border {
-            width: 1;
+            width: Style.lineSize;
             color: Style.colorGray;
         }
         anchors.fill: parent;
@@ -96,7 +96,7 @@ Item {
     Item {
         id: arrow;
         clip: true;
-        width: 12;
+        width: Style.fontSizeNormal;
         height: (width / 2);
         anchors {
             right: parent.right;
@@ -129,9 +129,9 @@ Item {
 
             Rectangle {
                 color: "lightgray";
-                height: Math.max (layout.height, 24);
+                height: Math.max (layout.height, (Style.fontSizeNormal + Style.spacingNormal * 2));
                 border {
-                    width: 1;
+                    width: Style.lineSize;
                     color: Style.colorGray;
                 }
                 Component.onCompleted: {
@@ -157,7 +157,7 @@ Item {
                     Repeater {
                         model: base.model;
                         delegate: MouseArea {
-                            height: 24;
+                            height: (label.height + label.anchors.margins * 2);
                             anchors {
                                 left: layout.left;
                                 right: layout.right;
@@ -168,6 +168,7 @@ Item {
                             }
 
                             TextLabel {
+                                id: label;
                                 clip: true;
                                 text: (model ["value"] || "");
                                 font.bold: (model.index === currentIdx);

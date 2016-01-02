@@ -77,7 +77,7 @@ MouseArea {
         }
     ]
 
-    property int   padding   : 6;
+    property int   padding   : Style.spacingNormal;
     property bool  checked   : false;
     property alias text      : lbl.text;
     property alias textFont  : lbl.font;
@@ -88,8 +88,8 @@ MouseArea {
 
     Rectangle {
         id: rect;
-        radius: 3;
-        antialiasing: true;
+        radius: Style.roundness;
+        antialiasing: radius;
         gradient: (clicker.enabled
                    ? (checked
                       ? Style.gradientChecked ()
@@ -98,7 +98,7 @@ MouseArea {
                          : Style.gradientIdle (color)))
                    : Style.gradientDisabled ());
         border {
-            width: 1;
+            width: Style.lineSize;
             color: (checked ? Style.colorSteelBlue : Style.colorGray);
         }
         anchors.fill: parent;

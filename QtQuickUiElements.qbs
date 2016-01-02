@@ -25,22 +25,26 @@ Project {
         Group {
             name: "C++ sources";
             files: [
+                "QQmlMimeIconsHelper.cpp",
                 "QQuickGridContainer.cpp",
                 "QQuickPolygon.cpp",
                 "QQuickStretchColumnContainer.cpp",
                 "QQuickStretchRowContainer.cpp",
                 "QQuickSvgIconHelper.cpp",
+                "QQuickThemeIconProvider.cpp",
                 "QQuickWrapLeftRightContainer.cpp",
             ]
         }
         Group {
             name: "C++ headers";
             files: [
+                "QQmlMimeIconsHelper.h",
                 "QQuickGridContainer.h",
                 "QQuickPolygon.h",
                 "QQuickStretchColumnContainer.h",
                 "QQuickStretchRowContainer.h",
                 "QQuickSvgIconHelper.h",
+                "QQuickThemeIconProvider.h",
                 "QQuickWrapLeftRightContainer.h",
                 "QtQmlTricksPlugin.h",
             ]
@@ -60,6 +64,7 @@ Project {
         Group {
             name: "Qt resources bundle";
             files: [
+                "qtqmltricksicons.qrc",
                 "qtqmltricksuielements.qrc",
             ]
         }

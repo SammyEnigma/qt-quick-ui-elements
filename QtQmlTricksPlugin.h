@@ -3,26 +3,35 @@
 
 #include <QQmlEngine>
 #include <qqml.h>
+#include <QIcon>
 
 #include "QQuickPolygon.h"
 #include "QQuickSvgIconHelper.h"
+#include "QQmlMimeIconsHelper.h"
+#include "QQuickThemeIconProvider.h"
 #include "QQuickGridContainer.h"
 #include "QQuickStretchRowContainer.h"
 #include "QQuickStretchColumnContainer.h"
 #include "QQuickWrapLeftRightContainer.h"
 
 static void registerQtQmlTricksUiElements (void) {
+    Q_INIT_RESOURCE (qtqmltricksicons);
     Q_INIT_RESOURCE (qtqmltricksuielements);
 
     const char * uri = "QtQmlTricks.UiElements"; // @uri QtQmlTricks.UiElements
     const int    maj = 2;
     const int    min = 0;
 
+    // icon theme
+    QIcon::setThemeSearchPaths (QStringList () << ":/QtQmlTricks/UiElements/icons");
+    QIcon::setThemeName ("FaenzaIconsLite");
+
     // shapes
     qmlRegisterType<QQuickPolygon>                       (uri, maj, min, "Polygon");
 
     // icons
     qmlRegisterType<QQuickSvgIconHelper>                 (uri, maj, min, "SvgIconHelper");
+    qmlRegisterType<QQmlMimeIconsHelper>                 (uri, maj, min, "MimeIconsHelper");
 
     // layouts
     qmlRegisterType<QQuickGridContainer>                 (uri, maj, min, "GridContainer");

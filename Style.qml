@@ -4,6 +4,14 @@ import QtQuick 2.0;
 QtObject {
     id: style;
 
+    property int lineSize : 1;
+
+    property int roundness : 3;
+
+    property int spacingSmall  :  3;
+    property int spacingNormal :  6;
+    property int spacingBig    : 12;
+
     property int fontSizeSmall  : 11;
     property int fontSizeNormal : 14;
     property int fontSizeBig    : 16;
