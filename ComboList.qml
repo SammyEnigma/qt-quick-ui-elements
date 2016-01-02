@@ -71,9 +71,9 @@ Item {
         gradient: (enabled
                    ? (clicker.pressed ||
                       clicker.dropdownItem
-                      ? Style.gradientPressed
-                      : Style.gradientIdle)
-                   : Style.gradientDisabled);
+                      ? Style.gradientPressed ()
+                      : Style.gradientIdle ())
+                   : Style.gradientDisabled ());
         border {
             width: 1;
             color: Style.colorGray;

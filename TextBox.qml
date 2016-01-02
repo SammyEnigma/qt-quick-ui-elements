@@ -32,7 +32,7 @@ FocusScope {
         id: rect;
         radius: 3;
         antialiasing: true;
-        gradient: (base.enabled ? Style.gradientEditable : Style.gradientDisabled);
+        gradient: (base.enabled ? Style.gradientEditable () : Style.gradientDisabled ());
         border {
             width: 1;
             color: (input.activeFocus ? Style.colorSteelBlue : Style.colorGray);

@@ -92,11 +92,11 @@ MouseArea {
         antialiasing: true;
         gradient: (clicker.enabled
                    ? (checked
-                      ? Style.gradientChecked
+                      ? Style.gradientChecked ()
                       : (pressed
-                         ? Style.gradientPressed
-                         : Style.gradientIdle))
-                   : Style.gradientDisabled);
+                         ? Style.gradientPressed (color)
+                         : Style.gradientIdle (color)))
+                   : Style.gradientDisabled ());
         border {
             width: 1;
             color: (checked ? Style.colorSteelBlue : Style.colorGray);

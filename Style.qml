@@ -42,6 +42,31 @@ QtObject {
                                                          ],
                                                          "monospace");
 
+    property Component templateGradientSunken : Component {
+        Gradient {
+            id: autogradient;
+            property color baseColor : "magenta";
+            GradientStop { color: Qt.darker  (autogradient.baseColor, 1.15); position: 0.0; }
+            GradientStop { color: Qt.lighter (autogradient.baseColor, 1.15); position: 1.0; }
+        }
+    }
+    property Component templateGradientRaised : Component {
+        Gradient {
+            id: autogradient;
+            property color baseColor : "magenta";
+            GradientStop { color: Qt.lighter (autogradient.baseColor, 1.15); position: 0.0; }
+            GradientStop { color: Qt.darker  (autogradient.baseColor, 1.15); position: 1.0; }
+        }
+    }
+    property Component templateGradientFlat : Component {
+        Gradient {
+            id: autogradient;
+            property color baseColor : "magenta";
+            GradientStop { color: autogradient.baseColor; position: 0.0; }
+            GradientStop { color: autogradient.baseColor; position: 1.0; }
+        }
+    }
+
     function gray (val) {
         var tmp = (val / 255);
         return Qt.rgba (tmp, tmp, tmp, 1.0);
@@ -65,28 +90,27 @@ QtObject {
         return (ret || fallback);
     }
 
-    property Gradient gradientIdle : Gradient {
-        GradientStop { color: Qt.lighter (colorLightGray, 1.15); position: 0.0; }
-        GradientStop { color: Qt.darker  (colorLightGray, 1.15); position: 1.0; }
+    function generateGradient (template, baseColor, fallbackColor) {
+        return template.createObject (style, { "baseColor" : baseColor });
     }
 
-    property Gradient gradientPressed : Gradient {
-        GradientStop { color: Qt.darker  (colorDarkGray, 1.15); position: 0.0; }
-        GradientStop { color: Qt.lighter (colorDarkGray, 1.15); position: 1.0; }
+    function gradientIdle (baseColor) {
+        return generateGradient (templateGradientRaised, baseColor || colorLightGray);
     }
 
-    property Gradient gradientChecked : Gradient {
-        GradientStop { color: Qt.darker  (colorLightBlue, 1.15); position: 0.0; }
-        GradientStop { color: Qt.lighter (colorLightBlue, 1.15); position: 1.0; }
+    function gradientPressed (baseColor) {
+        return generateGradient (templateGradientSunken, baseColor || colorDarkGray);
     }
 
-    property Gradient gradientDisabled : Gradient {
-        GradientStop { color: colorLightGray; position: 0.0; }
-        GradientStop { color: colorLightGray; position: 1.0; }
+    function gradientChecked (baseColor) {
+        return generateGradient (templateGradientSunken, baseColor || colorLightBlue);
     }
 
-    property Gradient gradientEditable : Gradient {
-        GradientStop { color: colorWhite; position: 0.0; }
-        GradientStop { color: colorWhite; position: 1.0; }
+    function gradientDisabled (baseColor) {
+        return generateGradient (templateGradientFlat, baseColor || colorLightGray);
+    }
+
+    function gradientEditable (baseColor) {
+        return generateGradient (templateGradientFlat, baseColor || colorWhite);
     }
 }
