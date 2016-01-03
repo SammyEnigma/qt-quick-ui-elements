@@ -535,5 +535,6 @@
         <file>icons/FaenzaIconsLite/places/128/folder.png</file>
         <file>icons/FaenzaIconsLite/places/128/network.png</file>
         <file>icons/FaenzaIconsLite/places/128/server.png</file>
+        <file>icons/FaenzaIconsLite/apps/128/avatar-default.png</file>
     </qresource>
 </RCC>
