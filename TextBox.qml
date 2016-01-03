@@ -16,6 +16,7 @@ FocusScope {
     property alias textHolder : holder.text;
     property alias inputMask  : input.inputMask;
     property alias validator  : input.validator;
+    property alias acceptable : input.acceptableInput;
     property alias rounding   : rect.radius;
 
     signal accepted ();

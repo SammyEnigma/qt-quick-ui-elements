@@ -86,6 +86,12 @@ MouseArea {
     property alias rounding  : rect.radius;
     property alias icon      : ico.sourceComponent;
 
+    function click () {
+        if (enabled) {
+            clicked (null);
+        }
+    }
+
     Rectangle {
         id: rect;
         radius: Style.roundness;

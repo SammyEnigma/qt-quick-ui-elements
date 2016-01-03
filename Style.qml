@@ -98,8 +98,10 @@ QtObject {
         return (ret || fallback);
     }
 
+    property Item garbage : Item { }
+
     function generateGradient (template, baseColor, fallbackColor) {
-        return template.createObject (style, { "baseColor" : baseColor });
+        return template.createObject (garbage, { "baseColor" : baseColor });
     }
 
     function gradientIdle (baseColor) {
