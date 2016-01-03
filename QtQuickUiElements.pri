@@ -6,7 +6,8 @@ QT += core qml quick svg
 INCLUDEPATH += $$PWD
 
 RESOURCES += \
-    $$PWD/qtqmltricksuielements.qrc
+    $$PWD/qtqmltricksuielements.qrc \
+    $$PWD/qtqmltricksicons.qrc
 
 HEADERS += \
     $$PWD/QQuickGridContainer.h \
@@ -15,7 +16,9 @@ HEADERS += \
     $$PWD/QQuickStretchRowContainer.h \
     $$PWD/QQuickSvgIconHelper.h \
     $$PWD/QQuickWrapLeftRightContainer.h \
-    $$PWD/QtQmlTricksPlugin.h
+    $$PWD/QtQmlTricksPlugin.h \
+    $$PWD/QQuickThemeIconProvider.h \
+    $$PWD/QQmlMimeIconsHelper.h
 
 SOURCES += \
     $$PWD/QQuickGridContainer.cpp \
@@ -23,7 +26,9 @@ SOURCES += \
     $$PWD/QQuickStretchColumnContainer.cpp \
     $$PWD/QQuickStretchRowContainer.cpp \
     $$PWD/QQuickSvgIconHelper.cpp \
-    $$PWD/QQuickWrapLeftRightContainer.cpp
+    $$PWD/QQuickWrapLeftRightContainer.cpp \
+    $$PWD/QQmlMimeIconsHelper.cpp \
+    $$PWD/QQuickThemeIconProvider.cpp
 
 OTHER_FILES += \
     $$PWD/ComboList.qml \

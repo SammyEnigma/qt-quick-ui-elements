@@ -536,5 +536,9 @@
         <file>icons/FaenzaIconsLite/places/128/network.png</file>
         <file>icons/FaenzaIconsLite/places/128/server.png</file>
         <file>icons/FaenzaIconsLite/apps/128/avatar-default.png</file>
+        <file>icons/FaenzaIconsLite/devices/128/laptop.png</file>
+        <file>icons/FaenzaIconsLite/devices/128/smartphone.png</file>
+        <file>icons/FaenzaIconsLite/devices/128/tablet.png</file>
+        <file>icons/FaenzaIconsLite/devices/128/computer.png</file>
     </qresource>
 </RCC>

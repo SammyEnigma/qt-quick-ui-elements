@@ -47,11 +47,12 @@ Window {
             TextButton {
                 text: "Parent";
                 enabled: (folder.toString () !== "file:///");
-                icon: Image {
-                    source: "image://icon-theme/go-up";
-                }
+                icon: Image { source: "image://icon-theme/go-up"; }
                 anchors.verticalCenter: parent.verticalCenter;
-                onClicked: { folder = modelFS.parentFolder; }
+                onClicked: {
+                    list.currentIndex = -1;
+                    folder = modelFS.parentFolder;
+                }
             }
             Item {
                 height: implicitHeight;
@@ -83,6 +84,7 @@ Window {
             ListView {
                 id: list;
                 model: modelFS;
+                currentIndex: -1;
                 delegate: MouseArea {
                     height: (Math.max (label.height, img.height) + label.anchors.margins * 2);
                     anchors {
@@ -90,10 +92,16 @@ Window {
                         right: parent.right;
                     }
                     onClicked: {
-                        list.currentIndex = model.index;
+                        if (!model.fileIsDir) {
+                            list.currentIndex = model.index;
+                        }
+                        else {
+                            list.currentIndex = -1;
+                        }
                     }
                     onDoubleClicked: {
                         if (model.fileIsDir) {
+                            list.currentIndex = -1;
                             folder = model.fileURL;
                         }
                         else {
@@ -129,6 +137,7 @@ Window {
                     TextLabel {
                         id: label;
                         text: model.fileName + (model.fileIsDir ? "/" : "");
+                        font.bold: (model.index === list.currentIndex);
                         elide: Text.ElideRight;
                         wrapMode: Text.WrapAtWordBoundaryOrAnywhere;
                         maximumLineCount: 3;
@@ -139,6 +148,51 @@ Window {
                             verticalCenter: parent.verticalCenter;
                         }
                     }
+                }
+            }
+        }
+        GridContainer {
+            cols: capacity;
+            capacity: 4;
+            colSpacing: Style.spacingBig;
+            anchors {
+                left: parent.left;
+                right: parent.right;
+            }
+
+            TextButton {
+                text: "Cancel";
+                icon: Image { source: "image://icon-theme/dialog-no"; }
+                anchors.verticalCenter: parent.verticalCenter;
+                onClicked: { base.close (); }
+            }
+            Item {
+                TextLabel {
+                    text: (list.currentIndex > -1 && list.currentIndex < modelFS.count
+                           ? modelFS.get (list.currentIndex, "fileName")
+                           : "");
+                    font.pixelSize: Style.fontSizeNormal;
+                    width: (parent.parent.colSpacing + parent.width * 2);
+                    elide: Text.ElideMiddle;
+                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere;
+                    verticalAlignment: Text.AlignVCenter;
+                    horizontalAlignment: Text.AlignHCenter;
+                    anchors {
+                        top: parent.top;
+                        left: parent.left;
+                        bottom: parent.bottom;
+                    }
+                }
+            }
+            Item { }
+            TextButton {
+                text: "OK";
+                enabled: (list.currentIndex > -1 && list.currentIndex < list.count);
+                icon: Image { source: "image://icon-theme/dialog-yes"; }
+                anchors.verticalCenter: parent.verticalCenter;
+                onClicked: {
+                    selected (modelFS.get (list.currentIndex, "fileURL").toString ());
+                    base.close ();
                 }
             }
         }
