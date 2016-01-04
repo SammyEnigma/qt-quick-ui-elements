@@ -540,5 +540,16 @@
         <file>icons/FaenzaIconsLite/devices/128/smartphone.png</file>
         <file>icons/FaenzaIconsLite/devices/128/tablet.png</file>
         <file>icons/FaenzaIconsLite/devices/128/computer.png</file>
+        <file>icons/FaenzaIconsLite/apps/128/call-start.png</file>
+        <file>icons/FaenzaIconsLite/apps/128/dialog-information.png</file>
+        <file>icons/FaenzaIconsLite/apps/128/dialog-question.png</file>
+        <file>icons/FaenzaIconsLite/apps/128/dialog-warning.png</file>
+        <file>icons/FaenzaIconsLite/apps/128/empathy.png</file>
+        <file>icons/FaenzaIconsLite/apps/128/evolution.png</file>
+        <file>icons/FaenzaIconsLite/apps/128/gnome-contacts.png</file>
+        <file>icons/FaenzaIconsLite/apps/128/mail-send.png</file>
+        <file>icons/FaenzaIconsLite/apps/128/notification-message-email.png</file>
+        <file>icons/FaenzaIconsLite/apps/128/user-info.png</file>
+        <file>icons/FaenzaIconsLite/apps/128/web-browser.png</file>
     </qresource>
 </RCC>
