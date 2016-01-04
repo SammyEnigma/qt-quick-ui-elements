@@ -1,22 +1,18 @@
 import QtQuick 2.1;
-import QtQuick.Window 2.1;
 import Qt.labs.folderlistmodel 2.1;
 import QtQmlTricks.UiElements 2.0;
 
-Window {
+Rectangle {
     id: base;
     color: Style.colorDarkGray;
-    width: 640;
-    height: 320;
-    flags: Qt.Dialog;
-    visible: true;
-    modality: Qt.WindowModal;
 
+    property alias title       : labelTitle.text;
     property alias folder      : modelFS.folder;
     property alias rootFolder  : modelFS.rootFolder;
     property alias nameFilters : modelFS.nameFilters;
 
     signal selected (string fileUrl);
+    signal canceled ();
 
     MimeIconsHelper {
         id: mimeHelper;
@@ -37,6 +33,11 @@ Window {
             margins: Style.spacingBig;
         }
 
+        TextLabel {
+            id: labelTitle;
+            text: "Choose a file";
+            font.pixelSize: Style.fontSizeTitle;
+        }
         StretchRowContainer {
             spacing: Style.spacingBig;
             anchors {
@@ -106,7 +107,6 @@ Window {
                         }
                         else {
                             selected (model.fileURL.toString ());
-                            base.close ();
                         }
                     }
 
@@ -164,7 +164,7 @@ Window {
                 text: "Cancel";
                 icon: Image { source: "image://icon-theme/dialog-no"; }
                 anchors.verticalCenter: parent.verticalCenter;
-                onClicked: { base.close (); }
+                onClicked: { base.canceled (); }
             }
             Item {
                 TextLabel {
@@ -187,13 +187,10 @@ Window {
             Item { }
             TextButton {
                 text: "OK";
-                enabled: (list.currentIndex > -1 && list.currentIndex < list.count);
                 icon: Image { source: "image://icon-theme/dialog-yes"; }
+                enabled: (list.currentIndex > -1 && list.currentIndex < list.count);
                 anchors.verticalCenter: parent.verticalCenter;
-                onClicked: {
-                    selected (modelFS.get (list.currentIndex, "fileURL").toString ());
-                    base.close ();
-                }
+                onClicked: { selected (modelFS.get (list.currentIndex, "fileURL").toString ()); }
             }
         }
     }
