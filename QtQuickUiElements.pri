@@ -1,7 +1,7 @@
 
 # QtQuick UI Elements
 
-QT += core qml quick svg
+QT += core gui qml quick svg
 
 INCLUDEPATH += $$PWD
 
@@ -31,11 +31,10 @@ SOURCES += \
     $$PWD/QQuickThemeIconProvider.cpp
 
 OTHER_FILES += \
-    $$PWD/ComboList.qml \
-    $$PWD/IconTextButton.qml \
-    $$PWD/ScrollContainer.qml \
-    $$PWD/SingleLineEditBox.qml \
     $$PWD/Style.qml \
+    $$PWD/ComboList.qml \
+    $$PWD/ScrollContainer.qml \
+    $$PWD/FileSelector.qml \
     $$PWD/TextBox.qml \
     $$PWD/TextButton.qml \
     $$PWD/TextLabel.qml
