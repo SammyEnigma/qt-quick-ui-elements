@@ -9,6 +9,7 @@ FocusScope {
     implicitHeight: (input.contentHeight + padding * 2);
 
     property int   padding    : Style.spacingNormal;
+    property alias readOnly   : input.readOnly;
     property alias text       : input.text;
     property alias textFont   : input.font;
     property alias textColor  : input.color;
@@ -32,6 +33,7 @@ FocusScope {
     Rectangle {
         id: rect;
         radius: Style.roundness;
+        visible: !readOnly;
         antialiasing: radius;
         gradient: (base.enabled ? Style.gradientEditable () : Style.gradientDisabled ());
         border {
@@ -51,6 +53,10 @@ FocusScope {
             id: input;
             focus: true;
             color: (base.enabled ? Style.colorBlack : Style.colorGray);
+            selectByMouse: true;
+            selectionColor: Style.colorSteelBlue;
+            selectedTextColor: Style.colorWhite;
+            activeFocusOnPress: true;
             font {
                 family: Style.fontName;
                 weight: Font.Light;
@@ -69,7 +75,7 @@ FocusScope {
         id: holder;
         font: input.font;
         color: Style.colorGray;
-        visible: (!input.activeFocus && input.text.trim ().length === 0);
+        visible: (!input.activeFocus && input.text.trim ().length === 0 && !readOnly);
         horizontalAlignment: input.horizontalAlignment;
         anchors {
             left: parent.left;

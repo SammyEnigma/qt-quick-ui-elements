@@ -5,6 +5,8 @@ QT += core gui qml quick svg
 
 INCLUDEPATH += $$PWD
 
+QML_IMPORT_PATH += $$PWD/imports
+
 RESOURCES += \
     $$PWD/qtqmltricksuielements.qrc \
     $$PWD/qtqmltricksicons.qrc
@@ -30,11 +32,3 @@ SOURCES += \
     $$PWD/QQmlMimeIconsHelper.cpp \
     $$PWD/QQuickThemeIconProvider.cpp
 
-OTHER_FILES += \
-    $$PWD/Style.qml \
-    $$PWD/ComboList.qml \
-    $$PWD/ScrollContainer.qml \
-    $$PWD/FileSelector.qml \
-    $$PWD/TextBox.qml \
-    $$PWD/TextButton.qml \
-    $$PWD/TextLabel.qml

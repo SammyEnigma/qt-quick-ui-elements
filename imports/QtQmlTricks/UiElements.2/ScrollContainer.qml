@@ -19,10 +19,10 @@ FocusScope {
 
     Rectangle {
         id: rect;
-        color: "white";
+        color: Style.colorWhite;
         border {
             width: (showBorder ? 1 : 0);
-            color: "gray";
+            color: Style.colorGray;
         }
         anchors.fill: parent;
     }
@@ -39,7 +39,7 @@ FocusScope {
         Rectangle {
             z: -1;
             gradient: Gradient {
-                GradientStop { position: 0; color: "lightgray"; }
+                GradientStop { position: 0; color: Style.colorLightGray; }
                 GradientStop { position: 1; color: rect.color; }
             }
             anchors.fill: parent;
@@ -59,7 +59,7 @@ FocusScope {
             z: -1;
             gradient: Gradient {
                 GradientStop { position: 0; color: rect.color; }
-                GradientStop { position: 1; color: "lightgray"; }
+                GradientStop { position: 1; color: Style.colorLightGray; }
             }
             anchors.fill: parent;
         }
@@ -102,13 +102,13 @@ FocusScope {
         anchors {
             left: container.left;
             right: container.right;
-            bottom: parent.bottom;
+            bottom: (loaderFooter.item ? loaderFooter.top : parent.bottom);
             rightMargin: (scrollbarY.visible ? scrollbarY.width : 0);
         }
 
         Rectangle {
             id: backBottom;
-            color: "gray";
+            color: Style.colorGray;
             opacity: (flickableItem && flickableItem.contentWidth > container.width ? 0.5 : 0.15);
             anchors.fill: parent;
         }
@@ -129,13 +129,13 @@ FocusScope {
 
             Rectangle {
                 id: handleHoriz;
-                color: "lightgray";
+                color: Style.colorLightGray;
                 radius: (indicatorOnly ? 2 : 5);
                 visible: (flickableItem && flickableItem.visibleArea.widthRatio < 1.0);
                 antialiasing: true;
                 border {
                     width: (indicatorOnly ? 1 : 2);
-                    color: "darkgray";
+                    color: Style.colorDarkGray;
                 }
                 anchors {
                     top: parent.top;
@@ -166,7 +166,7 @@ FocusScope {
 
         Rectangle {
             id: backRight;
-            color: "gray";
+            color: Style.colorGray;
             opacity: (flickableItem && flickableItem.contentHeight > container.height ? 0.5 : 0.15);
             anchors.fill: parent;
         }
@@ -187,13 +187,13 @@ FocusScope {
 
             Rectangle {
                 id: handleVertic;
-                color: "lightgray";
+                color: Style.colorLightGray;
                 radius: (indicatorOnly ? 2 : 5);
                 visible: (flickableItem && flickableItem.visibleArea.heightRatio < 1.0);
                 antialiasing: true;
                 border {
                     width: (indicatorOnly ? 1 : 2);
-                    color: "darkgray";
+                    color: Style.colorDarkGray;
                 }
                 anchors {
                     left: parent.left;
@@ -212,7 +212,7 @@ FocusScope {
         }
     }
     Rectangle {
-        color: "gray";
+        color: Style.colorGray;
         opacity: Math.max (backRight.opacity, backBottom.opacity);
         anchors {
             top: scrollbarY.bottom;

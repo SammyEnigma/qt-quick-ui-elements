@@ -1,0 +1,10 @@
+module QtQmlTricks.UiElements
+
+singleton Style     2.0 Style.qml
+
+ComboList           2.0 ComboList.qml
+FileSelector        2.0 FileSelector.qml
+ScrollContainer     2.0 ScrollContainer.qml
+TextBox             2.0 TextBox.qml
+TextButton          2.0 TextButton.qml
+TextLabel           2.0 TextLabel.qml

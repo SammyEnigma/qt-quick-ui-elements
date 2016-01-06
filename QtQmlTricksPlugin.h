@@ -14,7 +14,7 @@
 #include "QQuickStretchColumnContainer.h"
 #include "QQuickWrapLeftRightContainer.h"
 
-static void registerQtQmlTricksUiElements (void) {
+static void registerQtQmlTricksUiElements (QQmlEngine * engine = Q_NULLPTR) {
     Q_INIT_RESOURCE (qtqmltricksicons);
     Q_INIT_RESOURCE (qtqmltricksuielements);
 
@@ -40,16 +40,22 @@ static void registerQtQmlTricksUiElements (void) {
     qmlRegisterType<QQuickWrapLeftRightContainer>        (uri, maj, min, "WrapLeftRightContainer");
     qmlRegisterType<QQuickWrapLeftRightContainerBreaker> (uri, maj, min, "WrapBreaker");
 
-    // globals
-    qmlRegisterSingletonType (QUrl ("qrc:///QtQmlTricks/UiElements/Style.qml"),    uri, maj, min, "Style");
+    if (engine != Q_NULLPTR) {
+        engine->addImageProvider ("icon-theme", new QQuickThemeIconProvider);
+        engine->addImportPath ("qrc:///imports");
+    }
+    else {
+        // globals
+        qmlRegisterSingletonType (QUrl ("qrc:///QtQmlTricks/UiElements/Style.qml"),    uri, maj, min, "Style");
 
-    // widgets
-    qmlRegisterType (QUrl ("qrc:///QtQmlTricks/UiElements/ComboList.qml"),         uri, maj, min, "ComboList");
-    qmlRegisterType (QUrl ("qrc:///QtQmlTricks/UiElements/TextBox.qml"),           uri, maj, min, "TextBox");
-    qmlRegisterType (QUrl ("qrc:///QtQmlTricks/UiElements/TextButton.qml"),        uri, maj, min, "TextButton");
-    qmlRegisterType (QUrl ("qrc:///QtQmlTricks/UiElements/TextLabel.qml"),         uri, maj, min, "TextLabel");
-    qmlRegisterType (QUrl ("qrc:///QtQmlTricks/UiElements/ScrollContainer.qml"),   uri, maj, min, "ScrollContainer");
-    qmlRegisterType (QUrl ("qrc:///QtQmlTricks/UiElements/FileSelector.qml"),      uri, maj, min, "FileSelector");
+        // widgets
+        qmlRegisterType (QUrl ("qrc:///QtQmlTricks/UiElements/ComboList.qml"),         uri, maj, min, "ComboList");
+        qmlRegisterType (QUrl ("qrc:///QtQmlTricks/UiElements/TextBox.qml"),           uri, maj, min, "TextBox");
+        qmlRegisterType (QUrl ("qrc:///QtQmlTricks/UiElements/TextButton.qml"),        uri, maj, min, "TextButton");
+        qmlRegisterType (QUrl ("qrc:///QtQmlTricks/UiElements/TextLabel.qml"),         uri, maj, min, "TextLabel");
+        qmlRegisterType (QUrl ("qrc:///QtQmlTricks/UiElements/ScrollContainer.qml"),   uri, maj, min, "ScrollContainer");
+        qmlRegisterType (QUrl ("qrc:///QtQmlTricks/UiElements/FileSelector.qml"),      uri, maj, min, "FileSelector");
+    }
 }
 
 #endif // QTQMLTRICKSPLUGIN_H
