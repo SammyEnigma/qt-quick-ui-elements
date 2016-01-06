@@ -7,7 +7,8 @@ Project {
         name: "libqtqmltricks-qtquickuielements";
         type: "staticlibrary";
         targetName: "QtQuickUiElements";
-        //Qt.qml.addImportPaths: "./imports";
+
+        readonly property stringList qmlImportPaths : [sourceDirectory + "/imports"]; // equivalent to QML_IMPORT_PATH += $$PWD/imports
 
         Export {
             cpp.includePaths: ".";
