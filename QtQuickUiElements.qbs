@@ -28,6 +28,7 @@ Project {
             name: "C++ sources";
             files: [
                 "QQmlMimeIconsHelper.cpp",
+                "QQuickExtraAnchors.cpp",
                 "QQuickGridContainer.cpp",
                 "QQuickPolygon.cpp",
                 "QQuickStretchColumnContainer.cpp",
@@ -41,6 +42,7 @@ Project {
             name: "C++ headers";
             files: [
                 "QQmlMimeIconsHelper.h",
+                "QQuickExtraAnchors.h",
                 "QQuickGridContainer.h",
                 "QQuickPolygon.h",
                 "QQuickStretchColumnContainer.h",

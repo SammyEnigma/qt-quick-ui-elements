@@ -6,6 +6,7 @@
 #include <QIcon>
 
 #include "QQuickPolygon.h"
+#include "QQuickExtraAnchors.h"
 #include "QQuickSvgIconHelper.h"
 #include "QQmlMimeIconsHelper.h"
 #include "QQuickThemeIconProvider.h"
@@ -39,6 +40,8 @@ static void registerQtQmlTricksUiElements (QQmlEngine * engine = Q_NULLPTR) {
     qmlRegisterType<QQuickStretchColumnContainer>        (uri, maj, min, "StretchColumnContainer");
     qmlRegisterType<QQuickWrapLeftRightContainer>        (uri, maj, min, "WrapLeftRightContainer");
     qmlRegisterType<QQuickWrapLeftRightContainerBreaker> (uri, maj, min, "WrapBreaker");
+
+    qmlRegisterUncreatableType<QQuickExtraAnchors>       (uri, maj, min, "ExtraAnchors", "!!!");
 
     if (engine != Q_NULLPTR) {
         engine->addImageProvider ("icon-theme", new QQuickThemeIconProvider);
