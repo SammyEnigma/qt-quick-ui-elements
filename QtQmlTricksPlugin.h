@@ -2,6 +2,7 @@
 #define QTQMLTRICKSPLUGIN_H
 
 #include <QQmlEngine>
+#include <QDebug>
 #include <qqml.h>
 #include <QIcon>
 
@@ -46,6 +47,10 @@ static void registerQtQmlTricksUiElements (QQmlEngine * engine = Q_NULLPTR) {
     if (engine != Q_NULLPTR) {
         engine->addImageProvider ("icon-theme", new QQuickThemeIconProvider);
         engine->addImportPath ("qrc:///imports");
+    }
+    else {
+        qWarning () << "You didn't pass a QML engine to the register function,"
+                    << "some features (mostly plain QML components, and icon theme provider) won't work !";
     }
 }
 
