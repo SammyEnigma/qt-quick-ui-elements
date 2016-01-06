@@ -20,7 +20,8 @@ HEADERS += \
     $$PWD/QQuickWrapLeftRightContainer.h \
     $$PWD/QtQmlTricksPlugin.h \
     $$PWD/QQuickThemeIconProvider.h \
-    $$PWD/QQmlMimeIconsHelper.h
+    $$PWD/QQmlMimeIconsHelper.h \
+    $$PWD/QQuickExtraAnchors.h
 
 SOURCES += \
     $$PWD/QQuickGridContainer.cpp \
@@ -30,5 +31,6 @@ SOURCES += \
     $$PWD/QQuickSvgIconHelper.cpp \
     $$PWD/QQuickWrapLeftRightContainer.cpp \
     $$PWD/QQmlMimeIconsHelper.cpp \
-    $$PWD/QQuickThemeIconProvider.cpp
+    $$PWD/QQuickThemeIconProvider.cpp \
+    $$PWD/QQuickExtraAnchors.cpp
 
