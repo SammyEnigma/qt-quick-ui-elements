@@ -7,6 +7,7 @@ Project {
         name: "libqtqmltricks-qtquickuielements";
         type: "staticlibrary";
         targetName: "QtQuickUiElements";
+        //Qt.qml.addImportPaths: "./imports";
 
         Export {
             cpp.includePaths: ".";
@@ -51,6 +52,7 @@ Project {
         }
         Group {
             name: "QML components";
+            prefix: "imports/QtQmlTricks/UiElements.2/";
             files: [
                 "FileSelector.qml",
                 "Style.qml",
