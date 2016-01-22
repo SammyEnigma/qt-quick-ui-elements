@@ -97,7 +97,7 @@ FocusScope {
     }
     Item {
         id: scrollbarX;
-        height: (indicatorOnly ? 6 : 18);
+        height: (indicatorOnly ? Style.spacingSmall : Style.spacingBig);
         visible: (flickableItem && flickableItem.flickableDirection !== Flickable.VerticalFlick);
         anchors {
             left: container.left;
@@ -155,7 +155,7 @@ FocusScope {
     }
     Item {
         id: scrollbarY;
-        width: (indicatorOnly ? 6 : 18);
+        width: (indicatorOnly ? Style.spacingSmall : Style.spacingBig);
         visible: (flickableItem && flickableItem.flickableDirection !== Flickable.HorizontalFlick);
         anchors {
             top: container.top;
