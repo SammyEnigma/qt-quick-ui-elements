@@ -9,6 +9,7 @@ FocusScope {
     implicitHeight: (input.contentHeight + padding * 2);
 
     property int   padding    : Style.spacingNormal;
+    property bool  isPassword : false;
     property alias readOnly   : input.readOnly;
     property alias text       : input.text;
     property alias textFont   : input.font;
@@ -57,6 +58,7 @@ FocusScope {
             selectionColor: Style.colorSteelBlue;
             selectedTextColor: Style.colorWhite;
             activeFocusOnPress: true;
+            echoMode: (isPassword ? TextInput.Password : TextInput.Normal);
             font {
                 family: Style.fontName;
                 weight: Font.Light;
