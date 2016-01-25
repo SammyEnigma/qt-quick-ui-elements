@@ -2,9 +2,12 @@ module QtQmlTricks.UiElements
 
 singleton Style     2.0 Style.qml
 
+CheckableBox        2.0 CheckableBox.qml
 ComboList           2.0 ComboList.qml
 FileSelector        2.0 FileSelector.qml
+ProgressJauge       2.0 ProgressJauge.qml
 ScrollContainer     2.0 ScrollContainer.qml
+SliderBar           2.0 SliderBar.qml
 TextBox             2.0 TextBox.qml
 TextButton          2.0 TextButton.qml
 TextLabel           2.0 TextLabel.qml

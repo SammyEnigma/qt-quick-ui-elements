@@ -8,5 +8,8 @@
         <file>imports/QtQmlTricks/UiElements.2/TextBox.qml</file>
         <file>imports/QtQmlTricks/UiElements.2/TextButton.qml</file>
         <file>imports/QtQmlTricks/UiElements.2/TextLabel.qml</file>
+        <file>imports/QtQmlTricks/UiElements.2/SliderBar.qml</file>
+        <file>imports/QtQmlTricks/UiElements.2/ProgressJauge.qml</file>
+        <file>imports/QtQmlTricks/UiElements.2/CheckableBox.qml</file>
     </qresource>
 </RCC>
