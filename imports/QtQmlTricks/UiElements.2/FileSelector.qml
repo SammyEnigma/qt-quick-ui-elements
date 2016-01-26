@@ -2,9 +2,8 @@ import QtQuick 2.1;
 import Qt.labs.folderlistmodel 2.1;
 import QtQmlTricks.UiElements 2.0;
 
-Rectangle {
+Item {
     id: base;
-    color: Style.colorDarkGray;
 
     property alias title       : labelTitle.text;
     property alias folder      : modelFS.folder;
@@ -40,10 +39,7 @@ Rectangle {
         }
         StretchRowContainer {
             spacing: Style.spacingBig;
-            anchors {
-                left: parent.left;
-                right: parent.right;
-            }
+            ExtraAnchors.horizontalFill: parent;
 
             TextButton {
                 text: "Parent";
@@ -65,11 +61,8 @@ Rectangle {
                     id: path;
                     font.pixelSize: Style.fontSizeSmall;
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere;
-                    anchors {
-                        left: parent.left;
-                        right: parent.right;
-                        verticalCenter: parent.verticalCenter;
-                    }
+                    anchors.verticalCenter: parent.verticalCenter;
+                    ExtraAnchors.horizontalFill: parent;
 
                     Binding on text { value: folder; }
                 }
@@ -77,10 +70,7 @@ Rectangle {
         }
         ScrollContainer {
             implicitHeight: -1;
-            anchors {
-                left: parent.left;
-                right: parent.right;
-            }
+            ExtraAnchors.horizontalFill: parent;
 
             ListView {
                 id: list;
@@ -88,10 +78,7 @@ Rectangle {
                 currentIndex: -1;
                 delegate: MouseArea {
                     height: (Math.max (label.height, img.height) + label.anchors.margins * 2);
-                    anchors {
-                        left: parent.left;
-                        right: parent.right;
-                    }
+                    ExtraAnchors.horizontalFill: parent;
                     onClicked: {
                         if (!model.fileIsDir) {
                             list.currentIndex = model.index;
@@ -114,11 +101,7 @@ Rectangle {
                         color: Style.colorLightGray;
                         height: Style.lineSize;
                         opacity: 0.65;
-                        anchors {
-                            left: parent.left;
-                            right: parent.right;
-                            bottom: parent.bottom;
-                        }
+                        ExtraAnchors.bottomDock: parent;
                     }
                     Image {
                         id: img;
@@ -151,14 +134,9 @@ Rectangle {
                 }
             }
         }
-        GridContainer {
-            cols: capacity;
-            capacity: 4;
-            colSpacing: Style.spacingBig;
-            anchors {
-                left: parent.left;
-                right: parent.right;
-            }
+        StretchRowContainer {
+            spacing: Style.spacingBig;
+            ExtraAnchors.horizontalFill: parent;
 
             TextButton {
                 text: "Cancel";
@@ -167,6 +145,9 @@ Rectangle {
                 onClicked: { base.canceled (); }
             }
             Item {
+                implicitWidth: -1;
+                anchors.verticalCenter: parent.verticalCenter;
+
                 TextLabel {
                     text: (list.currentIndex > -1 && list.currentIndex < modelFS.count
                            ? modelFS.get (list.currentIndex, "fileName")
@@ -177,16 +158,12 @@ Rectangle {
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere;
                     verticalAlignment: Text.AlignVCenter;
                     horizontalAlignment: Text.AlignHCenter;
-                    anchors {
-                        top: parent.top;
-                        left: parent.left;
-                        bottom: parent.bottom;
-                    }
+                    anchors.verticalCenter: parent.verticalCenter;
+                    ExtraAnchors.horizontalFill: parent;
                 }
             }
-            Item { }
             TextButton {
-                text: "OK";
+                text: "Accept";
                 icon: Image { source: "image://icon-theme/dialog-yes"; }
                 enabled: (list.currentIndex > -1 && list.currentIndex < list.count);
                 anchors.verticalCenter: parent.verticalCenter;

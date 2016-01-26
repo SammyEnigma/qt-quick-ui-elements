@@ -11,5 +11,8 @@
         <file>imports/QtQmlTricks/UiElements.2/SliderBar.qml</file>
         <file>imports/QtQmlTricks/UiElements.2/ProgressJauge.qml</file>
         <file>imports/QtQmlTricks/UiElements.2/CheckableBox.qml</file>
+        <file>imports/QtQmlTricks/UiElements.2/ToolBar.qml</file>
+        <file>imports/QtQmlTricks/UiElements.2/Group.qml</file>
+        <file>imports/QtQmlTricks/UiElements.2/Accordion.qml</file>
     </qresource>
 </RCC>
