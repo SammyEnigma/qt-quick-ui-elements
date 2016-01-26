@@ -7,9 +7,15 @@ INCLUDEPATH += $$PWD
 
 QML_IMPORT_PATH += $$PWD/imports
 
+contains (CONFIG, NO_ICONS_IN_QT_RES) {
+    DEFINES += NO_ICONS_IN_QT_RES
+}
+else {
+    RESOURCES += $$PWD/qtqmltricksicons.qrc
+}
+
 RESOURCES += \
-    $$PWD/qtqmltricksuielements.qrc \
-    $$PWD/qtqmltricksicons.qrc
+    $$PWD/qtqmltricksuielements.qrc
 
 HEADERS += \
     $$PWD/QQuickGridContainer.h \
@@ -33,4 +39,3 @@ SOURCES += \
     $$PWD/QQmlMimeIconsHelper.cpp \
     $$PWD/QQuickThemeIconProvider.cpp \
     $$PWD/QQuickExtraAnchors.cpp
-

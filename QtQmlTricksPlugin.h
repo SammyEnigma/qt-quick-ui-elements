@@ -17,7 +17,9 @@
 #include "QQuickWrapLeftRightContainer.h"
 
 static void registerQtQmlTricksUiElements (QQmlEngine * engine = Q_NULLPTR) {
+#ifndef NO_ICONS_IN_QT_RES
     Q_INIT_RESOURCE (qtqmltricksicons);
+#endif
     Q_INIT_RESOURCE (qtqmltricksuielements);
 
     const char * uri = "QtQmlTricks.UiElements"; // @uri QtQmlTricks.UiElements
@@ -25,8 +27,10 @@ static void registerQtQmlTricksUiElements (QQmlEngine * engine = Q_NULLPTR) {
     const int    min = 0;
 
     // icon theme
+#ifndef NO_ICONS_IN_QT_RES
     QIcon::setThemeSearchPaths (QStringList () << ":/QtQmlTricks/UiElements/icons");
     QIcon::setThemeName ("FaenzaIconsLite");
+#endif
 
     // shapes
     qmlRegisterType<QQuickPolygon>                       (uri, maj, min, "Polygon");
