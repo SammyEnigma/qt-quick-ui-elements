@@ -4,6 +4,8 @@ import QtQmlTricks.UiElements 2.0;
 Item {
     id: accordion;
 
+    property alias background : rect.color;
+
     property Group currentTab : null;
 
     property list<Group> tabs;
@@ -13,6 +15,11 @@ Item {
     readonly property int tabSize  : (Style.spacingBig * 2);
     readonly property int paneSize :  (height - tabs.length * tabSize);
 
+    Rectangle {
+        id: rect;
+        color: Style.colorDarkGray;
+        anchors.fill: parent;
+    }
     Column {
         anchors.fill: parent;
 
@@ -61,7 +68,7 @@ Item {
 
                     Rectangle {
                         gradient: (modelData === currentTab
-                                   ? Style.gradientChecked ()
+                                   ? Style.gradientShaded (Style.colorLightBlue, Style.colorDarkGray)
                                    : (parent.pressed
                                       ? Style.gradientPressed ()
                                       : Style.gradientIdle ()));

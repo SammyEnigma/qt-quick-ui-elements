@@ -53,7 +53,9 @@ QtObject {
     property Component templateGradientSunken : Component {
         Gradient {
             id: autogradient;
+
             property color baseColor : "magenta";
+
             GradientStop { color: Qt.darker  (autogradient.baseColor, 1.15); position: 0.0; }
             GradientStop { color: Qt.lighter (autogradient.baseColor, 1.15); position: 1.0; }
         }
@@ -61,7 +63,9 @@ QtObject {
     property Component templateGradientRaised : Component {
         Gradient {
             id: autogradient;
+
             property color baseColor : "magenta";
+
             GradientStop { color: Qt.lighter (autogradient.baseColor, 1.15); position: 0.0; }
             GradientStop { color: Qt.darker  (autogradient.baseColor, 1.15); position: 1.0; }
         }
@@ -69,9 +73,22 @@ QtObject {
     property Component templateGradientFlat : Component {
         Gradient {
             id: autogradient;
+
             property color baseColor : "magenta";
+
             GradientStop { color: autogradient.baseColor; position: 0.0; }
             GradientStop { color: autogradient.baseColor; position: 1.0; }
+        }
+    }
+    property Component templateGradientShaded : Component {
+        Gradient {
+            id: autogradient;
+
+            property color baseColorTop    : "magenta";
+            property color baseColorBottom : "magenta";
+
+            GradientStop { color: autogradient.baseColorTop;    position: 0.0; }
+            GradientStop { color: autogradient.baseColorBottom; position: 1.0; }
         }
     }
 
@@ -100,7 +117,7 @@ QtObject {
 
     property Item garbage : Item { }
 
-    function generateGradient (template, baseColor, fallbackColor) {
+    function generateGradient (template, baseColor) {
         return template.createObject (garbage, { "baseColor" : baseColor });
     }
 
@@ -122,5 +139,12 @@ QtObject {
 
     function gradientEditable (baseColor) {
         return generateGradient (templateGradientFlat, baseColor || colorWhite);
+    }
+
+    function gradientShaded (baseColorTop, baseColorBottom) {
+        return templateGradientShaded.createObject (garbage, {
+                                                        "baseColorTop"    : (baseColorTop    || colorLightBlue),
+                                                        "baseColorBottom" : (baseColorBottom || colorLightGray),
+                                                    });
     }
 }

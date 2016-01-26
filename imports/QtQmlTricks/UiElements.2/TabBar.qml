@@ -4,6 +4,8 @@ import QtQmlTricks.UiElements 2.0;
 Item {
     id: base;
 
+    property alias background : rect.color;
+
     property Group currentTab : null;
 
     property list<Group> tabs;
@@ -11,11 +13,17 @@ Item {
     default property alias content : base.tabs;
 
     Rectangle {
+        id: rect;
+        color: Style.colorDarkGray;
+        anchors.bottom: bar.bottom;
+        ExtraAnchors.topDock: parent;
+    }
+    Rectangle {
         color: Style.colorGray;
         height: Style.lineSize;
         anchors {
-            leftMargin: -bar.anchors.margins;
-            rightMargin: -bar.anchors.margins;
+            leftMargin: -bar.colSpacing;
+            rightMargin: -bar.colSpacing;
         }
         ExtraAnchors.bottomDock: bar;
     }
@@ -24,7 +32,8 @@ Item {
         clip: true;
         cols: capacity;
         capacity: tabs.length;
-        anchors.margins: Style.spacingSmall;
+        colSpacing: Style.spacingSmall;
+        anchors.margins: colSpacing;
         ExtraAnchors.topDock: parent;
 
         Repeater {
@@ -70,7 +79,7 @@ Item {
                 Rectangle {
                     radius: Style.roundness;
                     visible: (currentTab === modelData || clicker.pressed);
-                    gradient: (clicker.pressed ? Style.gradientPressed () : Style.gradientIdle ());
+                    gradient: (clicker.pressed ? Style.gradientPressed () : Style.gradientShaded ());
                     antialiasing: radius;
                     border {
                         width: Style.lineSize;
