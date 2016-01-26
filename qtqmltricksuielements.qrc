@@ -14,5 +14,6 @@
         <file>imports/QtQmlTricks/UiElements.2/ToolBar.qml</file>
         <file>imports/QtQmlTricks/UiElements.2/Group.qml</file>
         <file>imports/QtQmlTricks/UiElements.2/Accordion.qml</file>
+        <file>imports/QtQmlTricks/UiElements.2/TabBar.qml</file>
     </qresource>
 </RCC>

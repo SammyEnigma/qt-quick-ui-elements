@@ -10,6 +10,7 @@ Group               2.0 Group.qml
 ProgressJauge       2.0 ProgressJauge.qml
 ScrollContainer     2.0 ScrollContainer.qml
 SliderBar           2.0 SliderBar.qml
+TabBar              2.0 TabBar.qml
 TextBox             2.0 TextBox.qml
 TextButton          2.0 TextButton.qml
 TextLabel           2.0 TextLabel.qml
