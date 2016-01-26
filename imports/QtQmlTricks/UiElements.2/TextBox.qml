@@ -73,7 +73,7 @@ FocusScope {
             onAccepted: { base.accepted (); }
         }
     }
-    Text {
+    TextLabel {
         id: holder;
         font: input.font;
         color: Style.colorGray;
