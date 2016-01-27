@@ -25,7 +25,9 @@ Item {
             width: (parent.width * (value - minValue) / (maxValue - minValue));
             radius: (Style.roundness - Style.lineSize * 2);
             antialiasing: radius;
-            gradient: (base.enabled ? Style.gradientChecked ("skyblue") : Style.gradientDisabled ());
+            gradient: (base.enabled
+                       ? Style.gradientChecked ("skyblue")
+                       : Style.gradientDisabled ());
             anchors {
                 top: parent.top;
                 left: parent.left;
@@ -47,7 +49,7 @@ Item {
     }
     Rectangle {
         id: frame;
-        color: "transparent";
+        color: Style.colorNone;
         radius: Style.roundness;
         antialiasing: radius;
         border {

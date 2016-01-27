@@ -99,8 +99,8 @@ Item {
                     ExtraAnchors.horizontalFill: parent;
 
                     Binding {
-                        target: modelData;
-                        property: "anchors.fill";
+                        target: modelData ["anchors"];
+                        property: "fill";
                         value: container;
                     }
 

@@ -26,7 +26,7 @@ Item {
             model: base.model;
             delegate: TextLabel {
                 text: model.value;
-                color: "transparent";
+                color: Style.colorNone;
             }
         }
     }

@@ -17,6 +17,7 @@ QtObject {
     property int fontSizeBig    : 16;
     property int fontSizeTitle  : 18;
 
+    property color colorNone      : "transparent";
     property color colorGray      : "gray";
     property color colorBlack     : "black";
     property color colorWhite     : "white";

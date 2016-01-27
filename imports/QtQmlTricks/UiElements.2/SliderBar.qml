@@ -11,8 +11,8 @@ Item {
 
     Rectangle {
         id: groove;
-        height: Style.spacingNormal;
         color: (base.enabled ? Style.colorWhite : Style.colorLightGray);
+        height: Style.spacingNormal;
         radius: Style.roundness;
         antialiasing: radius;
         border {
@@ -36,7 +36,9 @@ Item {
                 width: (parent.width * (value - minValue) / (maxValue - minValue));
                 radius: (Style.roundness - Style.lineSize * 2);
                 antialiasing: radius;
-                gradient: (base.enabled ? Style.gradientChecked ("skyblue") : Style.gradientDisabled ());
+                gradient: (base.enabled
+                           ? Style.gradientChecked ("skyblue")
+                           : Style.gradientDisabled ());
                 anchors {
                     top: parent.top;
                     left: parent.left;
