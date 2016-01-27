@@ -54,7 +54,7 @@ Item {
         }
 
         function createDropdown () {
-            dropdownItem = compoDropdown.createObject (rootItem, { "referenceItem" : base });
+            dropdownItem = compoDropdown.createObject (rootItem, { "refItem" : base });
         }
 
         function destroyDropdown () {
@@ -121,28 +121,29 @@ Item {
         MouseArea {
             id: dimmer;
             anchors.fill: parent;
+            states: State {
+                when: (dimmer.refItem !== null);
+
+                PropertyChanges {
+                    target: frame;
+                    x: (frame.mapFromItem (dimmer.refItem.parent, dimmer.refItem.x, 0) ["x"] || 0);
+                    y: (frame.mapFromItem (dimmer.refItem.parent, 0, dimmer.refItem.y + dimmer.refItem.height -1) ["y"] || 0);
+                    width: dimmer.refItem.width;
+                }
+            }
             onWheel: { }
             onPressed: { clicker.destroyDropdown (); }
+            onReleased: { }
 
-            property Item referenceItem : null;
+            property Item refItem : null;
 
             Rectangle {
-                color: "lightgray";
+                id: frame;
+                color: Style.colorLightGray;
                 height: Math.max (layout.height, (Style.fontSizeNormal + Style.spacingNormal * 2));
                 border {
                     width: Style.lineSize;
                     color: Style.colorGray;
-                }
-                Component.onCompleted: {
-                    if (dimmer.referenceItem) {
-                        var pos = mapFromItem (dimmer.referenceItem.parent,
-                                               dimmer.referenceItem.x,
-                                               dimmer.referenceItem.y +
-                                               dimmer.referenceItem.height);
-                        width = dimmer.referenceItem.width;
-                        x = pos ["x"];
-                        y = pos ["y"];
-                    }
                 }
 
                 Column {
