@@ -96,7 +96,7 @@ MouseArea {
         id: rect;
         radius: Style.roundness;
         antialiasing: radius;
-        gradient: (clicker.enabled
+        gradient: (enabled
                    ? (checked
                       ? Style.gradientChecked ()
                       : (pressed
@@ -117,7 +117,7 @@ MouseArea {
     }
     Text {
         id: lbl;
-        color: (clicker.enabled
+        color: (enabled
                 ? (checked
                    ? Style.colorDarkBlue
                    : Style.colorBlack)

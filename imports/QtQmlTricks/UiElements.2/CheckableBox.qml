@@ -7,7 +7,8 @@ FocusScope {
     implicitHeight: clicker.height;
     Keys.onSpacePressed: { toggle (); }
 
-    property bool value : false;
+    property bool  value : false;
+    property alias size  : shape.size;
 
     function toggle () {
         if (enabled) {
@@ -18,8 +19,8 @@ FocusScope {
 
     MouseArea {
         id: clicker;
-        width: (Style.spacingNormal * 2.5);
-        height: (Style.spacingNormal * 2.5);
+        width: size;
+        height: size;
         anchors.centerIn: parent;
         onClicked: { base.toggle (); }
 
@@ -34,13 +35,44 @@ FocusScope {
             }
             anchors.fill: parent;
         }
-        Image {
-            source: "image://icon-theme/dialog-ok";
-            visible: base.value;
-            fillMode: Image.Stretch;
-            anchors {
-                fill: parent;
-                margins: (Style.spacingNormal / 10);
+        Item {
+            id: shape;
+            visible: value;
+            anchors.fill: parent;
+
+            property int size : (Style.spacingNormal * 2.5);
+
+            readonly property real section  : (size * 0.10);
+            readonly property real diagonal : (Math.SQRT2 * section);
+
+            Rectangle {
+                id: small;
+                color: (base.enabled ? Style.colorBlack : Style.colorGray);
+                width: (shape.diagonal * 3);
+                height: shape.diagonal;
+                rotation: +45;
+                radius: (shape.diagonal / 5);
+                antialiasing: radius;
+                anchors {
+                    centerIn: parent;
+                    alignWhenCentered: false;
+                    verticalCenterOffset: shape.section;
+                    horizontalCenterOffset: (-2 * shape.section);
+                }
+            }
+            Rectangle {
+                id: big;
+                color: (base.enabled ? Style.colorBlack : Style.colorGray);
+                width: (shape.diagonal * 5);
+                height: shape.diagonal;
+                rotation: -45;
+                radius: (shape.diagonal / 5);
+                antialiasing: radius;
+                anchors {
+                    centerIn: parent;
+                    alignWhenCentered: false;
+                    horizontalCenterOffset: shape.section;
+                }
             }
         }
     }

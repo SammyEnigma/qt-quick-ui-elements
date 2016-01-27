@@ -83,7 +83,6 @@ Item {
     TextLabel {
         id: lbl;
         text: (currentValue || "");
-        color: (enabled ? Style.colorBlack : Style.colorGray);
         elide: Text.ElideRight;
         visible: (text !== "");
         anchors {
@@ -105,7 +104,7 @@ Item {
         }
 
         Rectangle {
-            color: Style.colorBlack;
+            color: (enabled ? Style.colorBlack : Style.colorGray);
             width: (parent.height * Math.SQRT2);
             height: width;
             rotation: 45;
