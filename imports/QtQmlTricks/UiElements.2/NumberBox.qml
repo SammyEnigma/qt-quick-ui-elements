@@ -69,6 +69,7 @@ FocusScope {
         focus: true;
         enabled: base.enabled;
         rounding: 0;
+        hasClear: false;
         textAlign: TextInput.AlignHCenter;
         textColor: (enabled
                     ? (notNumber || tooBig || tooSmall

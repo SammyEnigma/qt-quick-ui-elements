@@ -9,9 +9,10 @@ FocusScope {
     implicitHeight: (input.contentHeight + padding * 2);
 
     property int   padding    : Style.spacingNormal;
+    property bool  hasClear   : true;
     property bool  isPassword : false;
-    property alias readOnly   : input.readOnly;
     property alias text       : input.text;
+    property alias readOnly   : input.readOnly;
     property alias textFont   : input.font;
     property alias textColor  : input.color;
     property alias textAlign  : input.horizontalAlignment;
@@ -74,6 +75,43 @@ FocusScope {
                 verticalCenter: parent.verticalCenter;
             }
             onAccepted: { base.accepted (); }
+        }
+        MouseArea {
+            width: height;
+            enabled: base.enabled;
+            visible: (input.text !== "" && hasClear);
+            ExtraAnchors.rightDock: parent;
+            onClicked: { clear (); }
+
+            Rectangle {
+                width: (parent.width)
+                height: (parent.height * 2);
+                rotation: -90;
+                gradient: Gradient {
+                    GradientStop { position: 0.0; color: Style.colorNone;  }
+                    GradientStop { position: 0.5; color: Style.colorWhite; }
+                    GradientStop { position: 1.0; color: Style.colorWhite; }
+                }
+                anchors {
+                    verticalCenter: parent.verticalCenter;
+                    horizontalCenter: parent.left;
+                }
+            }
+            Loader {
+                id: cross;
+                enabled: base.enabled;
+                sourceComponent: Style.symbolCross;
+                states: State {
+                    when: (cross.item !== null);
+
+                    PropertyChanges {
+                        target: cross.item;
+                        size: Style.fontSizeNormal;
+                        color: (enabled ? Style.colorBlack : Style.colorGray);
+                    }
+                }
+                anchors.centerIn: parent;
+            }
         }
     }
     TextLabel {
