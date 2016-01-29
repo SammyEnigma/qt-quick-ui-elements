@@ -11,9 +11,10 @@ Item {
 
     Rectangle {
         id: groove;
-        color: (base.enabled ? Style.colorWhite : Style.colorLightGray);
+        color: (enabled ? Style.colorWhite : Style.colorLightGray);
         height: Style.spacingNormal;
         radius: Style.roundness;
+        enabled: base.enabled;
         antialiasing: radius;
         border {
             width: Style.lineSize;
@@ -26,6 +27,7 @@ Item {
         }
 
         Item {
+            enabled: base.enabled;
             anchors {
                fill: parent;
                margins: Style.lineSize;
@@ -35,8 +37,9 @@ Item {
                 id: rect;
                 width: (parent.width * (value - minValue) / (maxValue - minValue));
                 radius: (Style.roundness - Style.lineSize * 2);
+                enabled: base.enabled;
                 antialiasing: radius;
-                gradient: (base.enabled
+                gradient: (enabled
                            ? Style.gradientChecked ("skyblue")
                            : Style.gradientDisabled ());
                 anchors {
@@ -53,8 +56,9 @@ Item {
         width: size;
         height: size;
         radius: (size / 2);
+        enabled: base.enabled;
         antialiasing: radius;
-        gradient: (base.enabled
+        gradient: (enabled
                    ? (clicker.pressed
                       ? Style.gradientPressed ()
                       : Style.gradientIdle ())
@@ -76,6 +80,7 @@ Item {
                 minimumY: 0;
                 maximumY: 0;
             }
+            enabled: base.enabled;
             anchors.fill: parent;
             onPositionChanged: { value = (minValue + (maxValue - minValue) * (handle.x / (base.width - handle.width))); }
         }

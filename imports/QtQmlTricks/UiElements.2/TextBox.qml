@@ -34,6 +34,7 @@ FocusScope {
     Rectangle {
         id: rect;
         radius: Style.roundness;
+        enabled: base.enabled;
         visible: !readOnly;
         antialiasing: radius;
         gradient: (enabled ? Style.gradientEditable () : Style.gradientDisabled ());
@@ -45,6 +46,7 @@ FocusScope {
     }
     Item {
         clip: (input.contentWidth > input.width);
+        enabled: base.enabled;
         anchors {
             fill: rect;
             margins: rect.border.width;
@@ -54,6 +56,7 @@ FocusScope {
             id: input;
             focus: true;
             color: (enabled ? Style.colorBlack : Style.colorGray);
+            enabled: base.enabled;
             selectByMouse: true;
             selectionColor: Style.colorSteelBlue;
             selectedTextColor: Style.colorWhite;
@@ -77,6 +80,7 @@ FocusScope {
         id: holder;
         font: input.font;
         color: Style.colorGray;
+        enabled: base.enabled;
         visible: (!input.activeFocus && input.text.trim ().length === 0 && !readOnly);
         horizontalAlignment: input.horizontalAlignment;
         anchors {

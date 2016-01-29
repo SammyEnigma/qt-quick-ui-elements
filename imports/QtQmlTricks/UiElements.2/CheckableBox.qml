@@ -8,7 +8,7 @@ FocusScope {
     Keys.onSpacePressed: { toggle (); }
 
     property bool  value : false;
-    property alias size  : shape.size;
+    property int   size  : (Style.spacingNormal * 2.5);
 
     function toggle () {
         if (enabled) {
@@ -21,57 +21,35 @@ FocusScope {
         id: clicker;
         width: size;
         height: size;
+        enabled: base.enabled;
         anchors.centerIn: parent;
         onClicked: { base.toggle (); }
 
         Rectangle {
             id: rect;
             radius: Style.roundness;
+            enabled: base.enabled;
             antialiasing: radius;
-            gradient: (base.enabled ? Style.gradientEditable () : Style.gradientDisabled ());
+            gradient: (enabled ? Style.gradientEditable () : Style.gradientDisabled ());
             border {
                 width: Style.lineSize;
                 color: (base.activeFocus ? Style.colorSteelBlue : Style.colorGray);
             }
             anchors.fill: parent;
         }
-        Item {
+        Loader {
             id: shape;
-            visible: value;
+            enabled: base.enabled;
+            sourceComponent: Style.symbolCheck;
             anchors.fill: parent;
+            states: State {
+                when: (shape.item !== null);
 
-            property int size : (Style.spacingNormal * 2.5);
-
-            readonly property real section  : (size * 0.10);
-            readonly property real diagonal : (Math.SQRT2 * section);
-
-            Rectangle {
-                id: small;
-                color: (base.enabled ? Style.colorBlack : Style.colorGray);
-                width: (shape.diagonal * 3);
-                height: shape.diagonal;
-                rotation: +45;
-                radius: (shape.diagonal / 5);
-                antialiasing: radius;
-                anchors {
-                    centerIn: parent;
-                    alignWhenCentered: false;
-                    verticalCenterOffset: shape.section;
-                    horizontalCenterOffset: (-2 * shape.section);
-                }
-            }
-            Rectangle {
-                id: big;
-                color: (base.enabled ? Style.colorBlack : Style.colorGray);
-                width: (shape.diagonal * 5);
-                height: shape.diagonal;
-                rotation: -45;
-                radius: (shape.diagonal / 5);
-                antialiasing: radius;
-                anchors {
-                    centerIn: parent;
-                    alignWhenCentered: false;
-                    horizontalCenterOffset: shape.section;
+                PropertyChanges {
+                    target: shape.item;
+                    size: base.size;
+                    color: (base.enabled ? Style.colorBlack : Style.colorGray);
+                    visible: base.value;
                 }
             }
         }

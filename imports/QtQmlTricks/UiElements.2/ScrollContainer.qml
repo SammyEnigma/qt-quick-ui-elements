@@ -75,8 +75,8 @@ FocusScope {
             bottom: (loaderFooter.item ? loaderFooter.top : parent.bottom);
             topMargin: rect.border.width;
             leftMargin: rect.border.width;
-            rightMargin: (scrollbarY.visible ? scrollbarY.width : rect.border.width);
-            bottomMargin: (scrollbarX.visible ? scrollbarX.height : rect.border.width);
+            rightMargin: (scrollbarY.visible ? scrollbarY.width + rect.border.width : rect.border.width);
+            bottomMargin: (scrollbarX.visible ? scrollbarX.height + rect.border.width : rect.border.width);
         }
 
         Binding {
@@ -100,10 +100,12 @@ FocusScope {
         height: (indicatorOnly ? Style.spacingSmall : Style.spacingBig);
         visible: (flickableItem && flickableItem.flickableDirection !== Flickable.VerticalFlick);
         anchors {
-            left: container.left;
-            right: container.right;
+            left: parent.left;
+            right: parent.right;
             bottom: (loaderFooter.item ? loaderFooter.top : parent.bottom);
-            rightMargin: (scrollbarY.visible ? scrollbarY.width : 0);
+            leftMargin: rect.border.width;
+            rightMargin: (scrollbarY.visible ? scrollbarY.width + rect.border.width : rect.border.width);
+            bottomMargin: rect.border.width;
         }
 
         Rectangle {
@@ -111,6 +113,46 @@ FocusScope {
             color: Style.colorGray;
             opacity: (flickableItem && flickableItem.contentWidth > container.width ? 0.5 : 0.15);
             anchors.fill: parent;
+        }
+        Loader {
+            id: arrowLeft;
+            width: height;
+            visible: !indicatorOnly;
+            sourceComponent: Style.symbolArrowLeft;
+            states: State {
+                when: (arrowLeft.item !== null);
+
+                PropertyChanges {
+                    target: arrowLeft.item;
+                    size: Style.spacingNormal;
+                    color: (flickableItem && !flickableItem.atXBeginning ? Style.colorBlack : Style.colorGray);
+                }
+            }
+            anchors {
+                top: parent.top;
+                left: parent.left;
+                bottom: parent.bottom;
+            }
+        }
+        Loader {
+            id: arrowRight;
+            width: height;
+            visible: !indicatorOnly;
+            sourceComponent: Style.symbolArrowRight;
+            states: State {
+                when: (arrowRight.item !== null);
+
+                PropertyChanges {
+                    target: arrowRight.item;
+                    size: Style.spacingNormal;
+                    color: (flickableItem && !flickableItem.atXEnd ? Style.colorBlack : Style.colorGray);
+                }
+            }
+            anchors {
+                top: parent.top;
+                right: parent.right;
+                bottom: parent.bottom;
+            }
         }
         MouseArea {
             id: grooveHoriz;
@@ -122,7 +164,11 @@ FocusScope {
                 minimumX: 0;
                 maximumX: (grooveHoriz.width - handleHoriz.width);
             }
-            anchors.fill: parent;
+            anchors {
+                fill: parent;
+                leftMargin: (!indicatorOnly ? height : 0);
+                rightMargin: (!indicatorOnly ? height : 0);
+            }
             onPositionChanged: {
                 flickableItem.contentX = ((flickableItem.contentWidth - flickableItem.width) * handleHoriz.x / grooveHoriz.drag.maximumX);
             }
@@ -158,10 +204,12 @@ FocusScope {
         width: (indicatorOnly ? Style.spacingSmall : Style.spacingBig);
         visible: (flickableItem && flickableItem.flickableDirection !== Flickable.HorizontalFlick);
         anchors {
-            top: container.top;
+            top: parent.top;
             right: parent.right;
-            bottom: container.bottom;
-            bottomMargin: (scrollbarX.visible ? scrollbarX.height : 0);
+            bottom: parent.bottom;
+            topMargin: rect.border.width;
+            rightMargin: rect.border.width;
+            bottomMargin: (scrollbarX.visible ? scrollbarX.height + rect.border.width : rect.border.width);
         }
 
         Rectangle {
@@ -169,6 +217,46 @@ FocusScope {
             color: Style.colorGray;
             opacity: (flickableItem && flickableItem.contentHeight > container.height ? 0.5 : 0.15);
             anchors.fill: parent;
+        }
+        Loader {
+            id: arrowUp;
+            height: width;
+            visible: !indicatorOnly;
+            sourceComponent: Style.symbolArrowUp;
+            states: State {
+                when: (arrowUp.item !== null);
+
+                PropertyChanges {
+                    target: arrowUp.item;
+                    size: Style.spacingNormal;
+                    color: (flickableItem && !flickableItem.atYBeginning ? Style.colorBlack : Style.colorGray);
+                }
+            }
+            anchors {
+                top: parent.top;
+                left: parent.left;
+                right: parent.right;
+            }
+        }
+        Loader {
+            id: arrowDown;
+            height: width;
+            visible: !indicatorOnly;
+            sourceComponent: Style.symbolArrowDown;
+            states: State {
+                when: (arrowDown.item !== null);
+
+                PropertyChanges {
+                    target: arrowDown.item;
+                    size: Style.spacingNormal;
+                    color: (flickableItem && !flickableItem.atYEnd ? Style.colorBlack : Style.colorGray);
+                }
+            }
+            anchors {
+                left: parent.left;
+                right: parent.right;
+                bottom: parent.bottom;
+            }
         }
         MouseArea {
             id: grooveVertic;
@@ -180,7 +268,11 @@ FocusScope {
                 minimumY: 0;
                 maximumY: (grooveVertic.height - handleVertic.height);
             }
-            anchors.fill: parent;
+            anchors {
+                fill: parent;
+                topMargin: (!indicatorOnly ? width : 0);
+                bottomMargin: (!indicatorOnly ? width : 0);
+            }
             onPositionChanged: {
                 flickableItem.contentY = ((flickableItem.contentHeight - flickableItem.height) * handleVertic.y / grooveVertic.drag.maximumY);
             }
@@ -214,11 +306,13 @@ FocusScope {
     Rectangle {
         color: Style.colorGray;
         opacity: Math.max (backRight.opacity, backBottom.opacity);
+        width: scrollbarY.width;
+        height: scrollbarX.height;
+        visible: (scrollbarX.visible && scrollbarY.visible);
         anchors {
-            top: scrollbarY.bottom;
-            left: scrollbarX.right;
-            right: container.right;
-            bottom: container.bottom;
+            right: parent.right;
+            bottom: parent.bottom;
+            margins: rect.border.width;
         }
     }
 }

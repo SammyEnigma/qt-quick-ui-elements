@@ -18,11 +18,11 @@ QtObject {
     property int fontSizeTitle  : 18;
 
     property color colorNone      : "transparent";
+    property color colorWhite     : "white";
+    property color colorLightGray : "lightgray";
+    property color colorDarkGray  : "darkgray";
     property color colorGray      : "gray";
     property color colorBlack     : "black";
-    property color colorWhite     : "white";
-    property color colorDarkGray  : "darkgray";
-    property color colorLightGray : "lightgray";
     property color colorDarkRed   : "darkred";
     property color colorOrange    : "orange";
     property color colorSteelBlue : "steelblue";
@@ -50,6 +50,206 @@ QtObject {
                                                              "Lucida Console",
                                                          ],
                                                          "monospace");
+
+    property Component symbolCross : Component {
+        Item {
+            id: cross;
+            width: size;
+            height: size;
+
+            property real  size  : 10;
+            property color color : "magenta";
+
+            Rectangle {
+                color: cross.color;
+                width: cross.size;
+                height: (cross.size * 0.15);
+                rotation: +45;
+                radius: (cross.size * 0.05);
+                antialiasing: radius;
+                anchors.centerIn: parent;
+                anchors.alignWhenCentered: false;
+            }
+            Rectangle {
+                color: cross.color;
+                width: cross.size;
+                height: (cross.size * 0.15);
+                rotation: -45;
+                radius: (cross.size * 0.05);
+                antialiasing: radius;
+                anchors.centerIn: parent;
+                anchors.alignWhenCentered: false;
+            }
+        }
+    }
+
+    property Component symbolCheck : Component {
+        Item {
+            id: check;
+            width: size;
+            height: size;
+
+            property real  size  : 10;
+            property color color : "magenta";
+
+            readonly property real section  : (size * 0.10);
+            readonly property real diagonal : (Math.SQRT2 * section);
+
+            Rectangle {
+                id: small;
+                color: check.color;
+                width: (check.diagonal * 3);
+                height: check.diagonal;
+                rotation: +45;
+                radius: (check.diagonal / 5);
+                antialiasing: radius;
+                anchors {
+                    centerIn: parent;
+                    alignWhenCentered: false;
+                    verticalCenterOffset: check.section;
+                    horizontalCenterOffset: (-2 * check.section);
+                }
+            }
+            Rectangle {
+                id: big;
+                color: check.color;
+                width: (check.diagonal * 5);
+                height: check.diagonal;
+                rotation: -45;
+                radius: (check.diagonal / 5);
+                antialiasing: radius;
+                anchors {
+                    centerIn: parent;
+                    alignWhenCentered: false;
+                    horizontalCenterOffset: check.section;
+                }
+            }
+        }
+    }
+
+    property Component symbolArrowDown : Component {
+        Item {
+            id: arrow;
+            width: size;
+            height: size;
+
+            property real  size  : 10;
+            property color color : "magenta";
+
+            Item {
+                clip: true;
+                width: arrow.size;
+                height: (arrow.size / 2);
+                anchors.centerIn: parent;
+
+                Rectangle {
+                    color: arrow.color;
+                    width: (arrow.size * Math.SQRT2 / 2);
+                    height: width;
+                    rotation: 45;
+                    antialiasing: true;
+                    anchors {
+                        verticalCenter: parent.top;
+                        horizontalCenter: parent.horizontalCenter;
+                        alignWhenCentered: false;
+                    }
+                }
+            }
+        }
+    }
+
+    property Component symbolArrowUp : Component {
+        Item {
+            id: arrow;
+            width: size;
+            height: size;
+
+            property real  size  : 10;
+            property color color : "magenta";
+
+            Item {
+                clip: true;
+                width: arrow.size;
+                height: (arrow.size / 2);
+                anchors.centerIn: parent;
+
+                Rectangle {
+                    color: arrow.color;
+                    width: (arrow.size * Math.SQRT2 / 2);
+                    height: width;
+                    rotation: 45;
+                    antialiasing: true;
+                    anchors {
+                        verticalCenter: parent.bottom;
+                        horizontalCenter: parent.horizontalCenter;
+                        alignWhenCentered: false;
+                    }
+                }
+            }
+        }
+    }
+
+    property Component symbolArrowLeft : Component {
+        Item {
+            id: arrow;
+            width: size;
+            height: size;
+
+            property real  size  : 10;
+            property color color : "magenta";
+
+            Item {
+                clip: true;
+                width: (arrow.size / 2);
+                height: arrow.size;
+                anchors.centerIn: parent;
+
+                Rectangle {
+                    color: arrow.color;
+                    width: (arrow.size * Math.SQRT2 / 2);
+                    height: width;
+                    rotation: 45;
+                    antialiasing: true;
+                    anchors {
+                        verticalCenter: parent.verticalCenter;
+                        horizontalCenter: parent.right;
+                        alignWhenCentered: false;
+                    }
+                }
+            }
+        }
+    }
+
+    property Component symbolArrowRight : Component {
+        Item {
+            id: arrow;
+            width: size;
+            height: size;
+
+            property real  size  : 10;
+            property color color : "magenta";
+
+            Item {
+                clip: true;
+                width: (arrow.size / 2);
+                height: arrow.size;
+                anchors.centerIn: parent;
+
+                Rectangle {
+                    color: arrow.color;
+                    width: (arrow.size * Math.SQRT2 / 2);
+                    height: width;
+                    rotation: 45;
+                    antialiasing: true;
+                    anchors {
+                        verticalCenter: parent.verticalCenter;
+                        horizontalCenter: parent.left;
+                        alignWhenCentered: false;
+                    }
+                }
+            }
+        }
+    }
 
     property Component templateGradientSunken : Component {
         Gradient {

@@ -94,6 +94,7 @@ MouseArea {
 
     Rectangle {
         id: rect;
+        enabled: clicker.enabled;
         radius: Style.roundness;
         antialiasing: radius;
         gradient: (enabled
@@ -112,6 +113,7 @@ MouseArea {
     Loader {
         id: ico;
         active: (sourceComponent !== null);
+        enabled: clicker.enabled;
         visible: (item !== null);
         anchors.margins: padding;
     }
@@ -122,6 +124,7 @@ MouseArea {
                    ? Style.colorDarkBlue
                    : Style.colorBlack)
                 : Style.colorGray);
+        enabled: clicker.enabled;
         visible: (text !== "");
         horizontalAlignment: (ico.visible ? Text.AlignLeft : Text.AlignHCenter);
         font {

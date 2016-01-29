@@ -140,7 +140,19 @@ Item {
 
             TextButton {
                 text: "Cancel";
-                icon: Image { source: "image://icon-theme/dialog-no"; }
+                icon: Loader {
+                    id: cross;
+                    sourceComponent: Style.symbolCross;
+                    states: State {
+                        when: (cross.item !== null);
+
+                        PropertyChanges {
+                            target: cross.item;
+                            size: Style.fontSizeNormal;
+                            color: (enabled ? Style.colorBlack : Style.colorGray);
+                        }
+                    }
+                }
                 anchors.verticalCenter: parent.verticalCenter;
                 onClicked: { base.canceled (); }
             }
@@ -164,7 +176,19 @@ Item {
             }
             TextButton {
                 text: "Accept";
-                icon: Image { source: "image://icon-theme/dialog-yes"; }
+                icon: Loader {
+                    id: check;
+                    sourceComponent: Style.symbolCheck;
+                    states: State {
+                        when: (check.item !== null);
+
+                        PropertyChanges {
+                            target: check.item;
+                            size: Style.fontSizeNormal;
+                            color: (enabled ? Style.colorBlack : Style.colorGray);
+                        }
+                    }
+                }
                 enabled: (list.currentIndex > -1 && list.currentIndex < list.count);
                 anchors.verticalCenter: parent.verticalCenter;
                 onClicked: { selected (modelFS.get (list.currentIndex, "fileURL").toString ()); }

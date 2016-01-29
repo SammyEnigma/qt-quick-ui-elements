@@ -32,6 +32,7 @@ Item {
     }
     MouseArea {
         id: clicker;
+        enabled: base.enabled;
         anchors.fill: parent;
         onClicked: {
             if (dropdownItem) {
@@ -67,6 +68,7 @@ Item {
     Rectangle {
         id: rect;
         radius: Style.roundness;
+        enabled: base.enabled;
         antialiasing: true;
         gradient: (enabled
                    ? (clicker.pressed ||
@@ -84,6 +86,7 @@ Item {
         id: lbl;
         text: (currentValue || "");
         elide: Text.ElideRight;
+        enabled: base.enabled;
         visible: (text !== "");
         anchors {
             left: parent.left;
@@ -92,26 +95,22 @@ Item {
             verticalCenter: parent.verticalCenter;
         }
     }
-    Item {
+    Loader {
         id: arrow;
-        clip: true;
-        width: Style.fontSizeNormal;
-        height: (width / 2);
+        enabled: base.enabled;
+        sourceComponent: Style.symbolArrowDown;
         anchors {
             right: parent.right;
             margins: padding;
             verticalCenter: parent.verticalCenter;
         }
+        states: State {
+            when: (arrow.item !== null);
 
-        Rectangle {
-            color: (enabled ? Style.colorBlack : Style.colorGray);
-            width: (parent.height * Math.SQRT2);
-            height: width;
-            rotation: 45;
-            antialiasing: true;
-            anchors {
-                verticalCenter: parent.top;
-                horizontalCenter: parent.horizontalCenter;
+            PropertyChanges {
+                target: arrow.item;
+                size: Style.fontSizeNormal;
+                color: (enabled ? Style.colorBlack : Style.colorGray);
             }
         }
     }

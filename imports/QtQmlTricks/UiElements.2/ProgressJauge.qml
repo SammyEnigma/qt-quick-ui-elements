@@ -14,6 +14,7 @@ Item {
         id: groove;
         color: (base.enabled ? Style.colorWhite : Style.colorLightGray);
         radius: Style.roundness;
+        enabled: base.enabled;
         antialiasing: radius;
         anchors {
             fill: parent;
@@ -24,6 +25,7 @@ Item {
             id: rect;
             width: (parent.width * (value - minValue) / (maxValue - minValue));
             radius: (Style.roundness - Style.lineSize * 2);
+            enabled: base.enabled;
             antialiasing: radius;
             gradient: (base.enabled
                        ? Style.gradientChecked ("skyblue")
@@ -40,7 +42,8 @@ Item {
         delegate: Rectangle {
             x: ((parent.width / divisions) * (model.index +1));
             width: Style.lineSize;
-            color: (base.enabled ? Style.colorLightBlue : Style.colorDarkGray)
+            color: (enabled ? Style.colorLightBlue : Style.colorDarkGray)
+            enabled: base.enabled;
             anchors {
                 top: parent.top;
                 bottom: parent.bottom;
@@ -51,6 +54,7 @@ Item {
         id: frame;
         color: Style.colorNone;
         radius: Style.roundness;
+        enabled: base.enabled;
         antialiasing: radius;
         border {
             width: Style.lineSize;
