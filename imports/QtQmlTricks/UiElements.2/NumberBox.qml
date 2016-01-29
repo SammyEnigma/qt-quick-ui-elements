@@ -66,6 +66,7 @@ FocusScope {
     }
     TextBox {
         id: input;
+        focus: true;
         enabled: base.enabled;
         rounding: 0;
         textAlign: TextInput.AlignHCenter;
