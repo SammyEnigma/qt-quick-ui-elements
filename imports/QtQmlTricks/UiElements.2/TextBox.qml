@@ -9,7 +9,7 @@ FocusScope {
     implicitHeight: (input.contentHeight + padding * 2);
 
     property int   padding    : Style.spacingNormal;
-    property bool  hasClear   : true;
+    property bool  hasClear   : false;
     property bool  isPassword : false;
     property alias text       : input.text;
     property alias readOnly   : input.readOnly;
