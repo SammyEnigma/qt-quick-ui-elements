@@ -81,7 +81,10 @@ FocusScope {
             enabled: base.enabled;
             visible: (input.text !== "" && hasClear);
             ExtraAnchors.rightDock: parent;
-            onClicked: { clear (); }
+            onClicked: {
+                base.focus = false;
+                clear ();
+            }
 
             Rectangle {
                 width: (parent.width)
