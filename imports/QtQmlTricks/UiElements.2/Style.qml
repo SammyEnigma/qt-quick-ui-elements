@@ -5,18 +5,20 @@ import QtQuick.Window 2.1;
 QtObject {
     id: style;
 
+    property bool isMobile : (Qt.platform.os === "android" || Qt.platform.os === "ios");
+
     property int lineSize : (1 * Screen.devicePixelRatio);
 
     property int roundness : (3 * Screen.devicePixelRatio);
 
-    property int spacingSmall  : (3  * Screen.devicePixelRatio);
-    property int spacingNormal : (6  * Screen.devicePixelRatio);
-    property int spacingBig    : (12 * Screen.devicePixelRatio);
+    property int spacingNormal : ((isMobile ? 15 : 8) * Screen.devicePixelRatio);
+    property int spacingSmall  : Math.round (spacingNormal / 2);
+    property int spacingBig    : Math.round (spacingNormal * 2);
 
-    property int fontSizeSmall  : (11 * Screen.devicePixelRatio);
-    property int fontSizeNormal : (14 * Screen.devicePixelRatio);
-    property int fontSizeBig    : (16 * Screen.devicePixelRatio);
-    property int fontSizeTitle  : (18 * Screen.devicePixelRatio);
+    property int fontSizeNormal : ((isMobile ? 24 : 16) * Screen.devicePixelRatio);
+    property int fontSizeSmall  : Math.round (fontSizeNormal * 0.85);
+    property int fontSizeBig    : Math.round (fontSizeNormal * 1.15);
+    property int fontSizeTitle  : Math.round (fontSizeNormal * 1.25);
 
     property color colorNone      : "transparent";
     property color colorWhite     : "white";
