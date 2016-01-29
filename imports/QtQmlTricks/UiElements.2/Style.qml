@@ -83,6 +83,57 @@ QtObject {
         }
     }
 
+    property Component symbolPlus : Component {
+        Item {
+            id: plus;
+            width: size;
+            height: size;
+
+            property real  size  : 10;
+            property color color : "magenta";
+
+            Rectangle {
+                color: plus.color;
+                width: plus.size;
+                height: (plus.size * 0.15);
+                radius: (plus.size * 0.05);
+                antialiasing: radius;
+                anchors.centerIn: parent;
+                anchors.alignWhenCentered: false;
+            }
+            Rectangle {
+                color: plus.color;
+                width: (plus.size * 0.15);
+                height: plus.size;
+                radius: (plus.size * 0.05);
+                antialiasing: radius;
+                anchors.centerIn: parent;
+                anchors.alignWhenCentered: false;
+            }
+        }
+    }
+
+    property Component symbolMinus : Component {
+        Item {
+            id: minus;
+            width: size;
+            height: size;
+
+            property real  size  : 10;
+            property color color : "magenta";
+
+            Rectangle {
+                color: minus.color;
+                width: minus.size;
+                height: (minus.size * 0.15);
+                radius: (minus.size * 0.05);
+                antialiasing: radius;
+                anchors.centerIn: parent;
+                anchors.alignWhenCentered: false;
+            }
+        }
+    }
+
     property Component symbolCheck : Component {
         Item {
             id: check;
