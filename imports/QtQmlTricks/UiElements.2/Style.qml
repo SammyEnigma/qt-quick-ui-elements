@@ -1,21 +1,22 @@
 pragma Singleton;
-import QtQuick 2.0;
+import QtQuick 2.1;
+import QtQuick.Window 2.1;
 
 QtObject {
     id: style;
 
-    property int lineSize : 1;
+    property int lineSize : (1 * Screen.devicePixelRatio);
 
-    property int roundness : 3;
+    property int roundness : (3 * Screen.devicePixelRatio);
 
-    property int spacingSmall  :  3;
-    property int spacingNormal :  6;
-    property int spacingBig    : 12;
+    property int spacingSmall  : (3  * Screen.devicePixelRatio);
+    property int spacingNormal : (6  * Screen.devicePixelRatio);
+    property int spacingBig    : (12 * Screen.devicePixelRatio);
 
-    property int fontSizeSmall  : 11;
-    property int fontSizeNormal : 14;
-    property int fontSizeBig    : 16;
-    property int fontSizeTitle  : 18;
+    property int fontSizeSmall  : (11 * Screen.devicePixelRatio);
+    property int fontSizeNormal : (14 * Screen.devicePixelRatio);
+    property int fontSizeBig    : (16 * Screen.devicePixelRatio);
+    property int fontSizeTitle  : (18 * Screen.devicePixelRatio);
 
     property color colorNone      : "transparent";
     property color colorWhite     : "white";
@@ -39,15 +40,19 @@ QtObject {
                                                         "Trebuchet MS",
                                                         "Deja Vu Sans",
                                                         "Tahoma",
+                                                        "Helvetica",
                                                         "Arial",
                                                     ],
                                                     "sans-serif");
 
     readonly property string fontFixedName : selectFont ([
                                                              "Ubuntu Mono",
+                                                             "Roboto Mono",
+                                                             "Liberation Mono",
+                                                             "Droid Mono",
                                                              "Deja Vu Mono",
-                                                             "Courier New",
                                                              "Lucida Console",
+                                                             "Courier New",
                                                          ],
                                                          "monospace");
 
@@ -367,10 +372,10 @@ QtObject {
         return (ret || fallback);
     }
 
-    property Item garbage : Item { }
+    property Item _garbage_ : Item { }
 
     function generateGradient (template, baseColor) {
-        return template.createObject (garbage, { "baseColor" : baseColor });
+        return template.createObject (_garbage_, { "baseColor" : baseColor });
     }
 
     function gradientIdle (baseColor) {
@@ -394,7 +399,7 @@ QtObject {
     }
 
     function gradientShaded (baseColorTop, baseColorBottom) {
-        return templateGradientShaded.createObject (garbage, {
+        return templateGradientShaded.createObject (_garbage_, {
                                                         "baseColorTop"    : (baseColorTop    || colorLightBlue),
                                                         "baseColorBottom" : (baseColorBottom || colorLightGray),
                                                     });
