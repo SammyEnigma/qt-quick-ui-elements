@@ -61,6 +61,12 @@ Project {
             ]
         }
         Group {
+            name: "Markdown documents";
+            files: [
+                "README.md",
+            ]
+        }
+        Group {
             qbs.install: true;
             fileTagsFilter: product.type;
         }

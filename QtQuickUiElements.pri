@@ -14,6 +14,9 @@ else {
     RESOURCES += $$PWD/qtqmltricksicons.qrc
 }
 
+OTHER_FILES += \
+    $$PWD/README.md
+
 RESOURCES += \
     $$PWD/qtqmltricksuielements.qrc
 
