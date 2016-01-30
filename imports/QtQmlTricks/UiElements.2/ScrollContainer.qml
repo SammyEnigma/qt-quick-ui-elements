@@ -130,6 +130,8 @@ FocusScope {
                         target: arrowLeft.item;
                         size: Style.spacingNormal;
                         color: (flickableItem && !flickableItem.atXBeginning ? Style.colorBlack : Style.colorGray);
+                        width: arrowLeft.width;
+                        height: arrowLeft.height;
                     }
                 }
                 anchors {
@@ -150,6 +152,8 @@ FocusScope {
                         target: arrowRight.item;
                         size: Style.spacingNormal;
                         color: (flickableItem && !flickableItem.atXEnd ? Style.colorBlack : Style.colorGray);
+                        width: arrowRight.width;
+                        height: arrowRight.height;
                     }
                 }
                 anchors {
@@ -232,6 +236,8 @@ FocusScope {
                         target: arrowUp.item;
                         size: Style.spacingNormal;
                         color: (flickableItem && !flickableItem.atYBeginning ? Style.colorBlack : Style.colorGray);
+                        width: arrowUp.width;
+                        height: arrowUp.height;
                     }
                 }
                 anchors {
@@ -252,6 +258,8 @@ FocusScope {
                         target: arrowDown.item;
                         size: Style.spacingNormal;
                         color: (flickableItem && !flickableItem.atYEnd ? Style.colorBlack : Style.colorGray);
+                        width: arrowDown.width;
+                        height: arrowDown.height;
                     }
                 }
                 anchors {
