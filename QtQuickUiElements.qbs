@@ -54,19 +54,6 @@ Project {
             ]
         }
         Group {
-            name: "QML components";
-            prefix: "imports/QtQmlTricks/UiElements.2/";
-            files: [
-                "FileSelector.qml",
-                "Style.qml",
-                "ComboList.qml",
-                "ScrollContainer.qml",
-                "TextBox.qml",
-                "TextButton.qml",
-                "TextLabel.qml",
-            ]
-        }
-        Group {
             name: "Qt resources bundle";
             files: [
                 "qtqmltricksicons.qrc",
