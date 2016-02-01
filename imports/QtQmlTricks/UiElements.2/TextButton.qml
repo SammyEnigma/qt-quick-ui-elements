@@ -80,9 +80,9 @@ MouseArea {
     property int   padding   : Style.spacingNormal;
     property bool  checked   : false;
     property color backColor : Style.colorWindow;
+    property color textColor : Style.colorForeground;
     property alias text      : lbl.text;
     property alias textFont  : lbl.font;
-    property alias textColor : lbl.color;
     property alias rounding  : rect.radius;
     property alias icon      : ico.sourceComponent;
 
@@ -122,7 +122,7 @@ MouseArea {
         color: (enabled
                 ? (checked
                    ? Style.colorLink
-                   : Style.colorForeground)
+                   : textColor)
                 : Style.colorBorder);
         enabled: clicker.enabled;
         visible: (text !== "");
