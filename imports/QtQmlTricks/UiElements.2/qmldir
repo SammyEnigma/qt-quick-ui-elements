@@ -3,12 +3,15 @@ module QtQmlTricks.UiElements
 singleton Style     2.0 Style.qml
 
 Accordion           2.0 Accordion.qml
+Balloon             2.0 Balloon.qml
 CheckableBox        2.0 CheckableBox.qml
 ComboList           2.0 ComboList.qml
 FileSelector        2.0 FileSelector.qml
 Group               2.0 Group.qml
+MultiLineTextBox    2.0 MultiLineTextBox.qml
 NumberBox           2.0 NumberBox.qml
 ProgressJauge       2.0 ProgressJauge.qml
+RegularPolygon      2.0 RegularPolygon.qml
 ScrollContainer     2.0 ScrollContainer.qml
 SliderBar           2.0 SliderBar.qml
 TabBar              2.0 TabBar.qml
