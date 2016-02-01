@@ -32,8 +32,8 @@ FocusScope {
             antialiasing: radius;
             gradient: (enabled ? Style.gradientEditable () : Style.gradientDisabled ());
             border {
-                width: Style.lineSize;
-                color: (base.activeFocus ? Style.colorSteelBlue : Style.colorGray);
+                width: (base.activeFocus ? Style.lineSize * 2 : Style.lineSize);
+                color: (base.activeFocus ? Style.colorSelection : Style.colorBorder);
             }
             anchors.fill: parent;
         }
@@ -48,7 +48,7 @@ FocusScope {
                 PropertyChanges {
                     target: shape.item;
                     size: base.size;
-                    color: (base.enabled ? Style.colorBlack : Style.colorGray);
+                    color: (base.enabled ? Style.colorForeground : Style.colorBorder);
                     visible: base.value;
                 }
             }

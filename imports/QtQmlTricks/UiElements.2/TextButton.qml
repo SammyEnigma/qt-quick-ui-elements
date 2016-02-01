@@ -79,7 +79,7 @@ MouseArea {
 
     property int   padding   : Style.spacingNormal;
     property bool  checked   : false;
-    property color backColor : Style.colorLightGray;
+    property color backColor : Style.colorWindow;
     property alias text      : lbl.text;
     property alias textFont  : lbl.font;
     property alias textColor : lbl.color;
@@ -106,7 +106,7 @@ MouseArea {
                    : Style.gradientDisabled ());
         border {
             width: Style.lineSize;
-            color: (checked ? Style.colorSteelBlue : Style.colorGray);
+            color: (checked ? Style.colorSelection : Style.colorBorder);
         }
         anchors.fill: parent;
     }
@@ -121,9 +121,9 @@ MouseArea {
         id: lbl;
         color: (enabled
                 ? (checked
-                   ? Style.colorDarkBlue
-                   : Style.colorBlack)
-                : Style.colorGray);
+                   ? Style.colorLink
+                   : Style.colorForeground)
+                : Style.colorBorder);
         enabled: clicker.enabled;
         visible: (text !== "");
         horizontalAlignment: (ico.visible ? Text.AlignLeft : Text.AlignHCenter);

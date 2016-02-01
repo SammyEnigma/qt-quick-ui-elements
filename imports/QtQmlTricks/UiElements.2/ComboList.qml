@@ -78,7 +78,7 @@ Item {
                    : Style.gradientDisabled ());
         border {
             width: Style.lineSize;
-            color: Style.colorGray;
+            color: Style.colorBorder;
         }
         anchors.fill: parent;
     }
@@ -110,7 +110,7 @@ Item {
             PropertyChanges {
                 target: arrow.item;
                 size: Style.fontSizeNormal;
-                color: (enabled ? Style.colorBlack : Style.colorGray);
+                color: (enabled ? Style.colorForeground : Style.colorBorder);
             }
         }
     }
@@ -138,11 +138,11 @@ Item {
 
             Rectangle {
                 id: frame;
-                color: Style.colorLightGray;
+                color: Style.colorWindow;
                 height: Math.max (layout.height, (Style.fontSizeNormal + Style.spacingNormal * 2));
                 border {
                     width: Style.lineSize;
-                    color: Style.colorGray;
+                    color: Style.colorBorder;
                 }
 
                 Column {

@@ -9,11 +9,7 @@ Rectangle {
 
     default property alias content : layout.data;
 
-    Rectangle {
-        color: Style.colorGray;
-        height: Style.lineSize;
-        ExtraAnchors.bottomDock: parent;
-    }
+    Line { ExtraAnchors.bottomDock: parent; }
     StretchRowContainer {
         id: layout;
         spacing: Style.spacingNormal;

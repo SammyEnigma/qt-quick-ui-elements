@@ -11,14 +11,14 @@ Item {
 
     Rectangle {
         id: groove;
-        color: (enabled ? Style.colorWhite : Style.colorLightGray);
+        color: (enabled ? Style.colorEditable : Style.colorWindow);
         height: Style.spacingNormal;
         radius: Style.roundness;
         enabled: base.enabled;
         antialiasing: radius;
         border {
             width: Style.lineSize;
-            color: Style.colorGray;
+            color: Style.colorBorder;
         }
         anchors {
             left: parent.left;
@@ -40,7 +40,7 @@ Item {
                 enabled: base.enabled;
                 antialiasing: radius;
                 gradient: (enabled
-                           ? Style.gradientChecked ("skyblue")
+                           ? Style.gradientChecked ()
                            : Style.gradientDisabled ());
                 anchors {
                     top: parent.top;
@@ -65,7 +65,7 @@ Item {
                    : Style.gradientDisabled ());
         border {
             width: Style.lineSize;
-            color: Style.colorGray;
+            color: Style.colorBorder;
         }
         anchors.verticalCenter: parent.verticalCenter;
 

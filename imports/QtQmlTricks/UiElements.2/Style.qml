@@ -20,17 +20,19 @@ QtObject {
     property int fontSizeBig    : Math.round (fontSizeNormal * 1.15);
     property int fontSizeTitle  : Math.round (fontSizeNormal * 1.25);
 
-    property color colorNone      : "transparent";
-    property color colorWhite     : "white";
-    property color colorLightGray : "lightgray";
-    property color colorDarkGray  : "darkgray";
-    property color colorGray      : "gray";
-    property color colorBlack     : "black";
-    property color colorDarkRed   : "darkred";
-    property color colorOrange    : "orange";
-    property color colorSteelBlue : "steelblue";
-    property color colorDarkBlue  : "darkblue";
-    property color colorLightBlue : "lightblue";
+    property color colorNone       : "transparent";
+    property color colorDumb       : "#FF00FF"; // magenta
+    property color colorHighlight  : "#85D3FF"; // light blue
+    property color colorSelection  : "#238FCD"; // dark blue
+    property color colorSecondary  : "#A9A9A9"; // dark gray
+    property color colorWindow     : "#D3D3D3"; // light gray
+    property color colorEditable   : "#FFFFFF"; // white
+    property color colorForeground : "#000000"; // black
+    property color colorBorder     : "#808088"; // mid gray
+    property color colorLink       : "#113487"; // dark blue
+    property color colorError      : "#B30000"; // dark red
+    property color colorValid      : "#1F7A1F"; // dark green
+    property color colorBubble     : "#FFF5C1"; // sand yellow
 
     readonly property string fontName : selectFont ([
                                                         "Sail Sans Pro",
@@ -65,7 +67,7 @@ QtObject {
             height: size;
 
             property real  size  : 10;
-            property color color : "magenta";
+            property color color : colorDumb;
 
             Rectangle {
                 color: cross.color;
@@ -97,7 +99,7 @@ QtObject {
             height: size;
 
             property real  size  : 10;
-            property color color : "magenta";
+            property color color : colorDumb;
 
             Rectangle {
                 color: plus.color;
@@ -127,7 +129,7 @@ QtObject {
             height: size;
 
             property real  size  : 10;
-            property color color : "magenta";
+            property color color : colorDumb;
 
             Rectangle {
                 color: minus.color;
@@ -148,7 +150,7 @@ QtObject {
             height: size;
 
             property real  size  : 10;
-            property color color : "magenta";
+            property color color : colorDumb;
 
             readonly property real section  : (size * 0.10);
             readonly property real diagonal : (Math.SQRT2 * section);
@@ -192,7 +194,7 @@ QtObject {
             height: size;
 
             property real  size  : 10;
-            property color color : "magenta";
+            property color color : colorDumb;
 
             Item {
                 clip: true;
@@ -223,7 +225,7 @@ QtObject {
             height: size;
 
             property real  size  : 10;
-            property color color : "magenta";
+            property color color : colorDumb;
 
             Item {
                 clip: true;
@@ -254,7 +256,7 @@ QtObject {
             height: size;
 
             property real  size  : 10;
-            property color color : "magenta";
+            property color color : colorDumb;
 
             Item {
                 clip: true;
@@ -285,7 +287,7 @@ QtObject {
             height: size;
 
             property real  size  : 10;
-            property color color : "magenta";
+            property color color : colorDumb;
 
             Item {
                 clip: true;
@@ -313,7 +315,7 @@ QtObject {
         Gradient {
             id: autogradient;
 
-            property color baseColor : "magenta";
+            property color baseColor : colorDumb;
 
             GradientStop { color: Qt.darker  (autogradient.baseColor, 1.15); position: 0.0; }
             GradientStop { color: Qt.lighter (autogradient.baseColor, 1.15); position: 1.0; }
@@ -323,7 +325,7 @@ QtObject {
         Gradient {
             id: autogradient;
 
-            property color baseColor : "magenta";
+            property color baseColor : colorDumb;
 
             GradientStop { color: Qt.lighter (autogradient.baseColor, 1.15); position: 0.0; }
             GradientStop { color: Qt.darker  (autogradient.baseColor, 1.15); position: 1.0; }
@@ -333,7 +335,7 @@ QtObject {
         Gradient {
             id: autogradient;
 
-            property color baseColor : "magenta";
+            property color baseColor : colorDumb;
 
             GradientStop { color: autogradient.baseColor; position: 0.0; }
             GradientStop { color: autogradient.baseColor; position: 1.0; }
@@ -343,8 +345,8 @@ QtObject {
         Gradient {
             id: autogradient;
 
-            property color baseColorTop    : "magenta";
-            property color baseColorBottom : "magenta";
+            property color baseColorTop    : colorDumb;
+            property color baseColorBottom : colorDumb;
 
             GradientStop { color: autogradient.baseColorTop;    position: 0.0; }
             GradientStop { color: autogradient.baseColorBottom; position: 1.0; }
@@ -381,29 +383,29 @@ QtObject {
     }
 
     function gradientIdle (baseColor) {
-        return generateGradient (templateGradientRaised, baseColor || colorLightGray);
+        return generateGradient (templateGradientRaised, baseColor || colorWindow);
     }
 
     function gradientPressed (baseColor) {
-        return generateGradient (templateGradientSunken, baseColor || colorDarkGray);
+        return generateGradient (templateGradientSunken, baseColor || colorWindow);
     }
 
     function gradientChecked (baseColor) {
-        return generateGradient (templateGradientSunken, baseColor || colorLightBlue);
+        return generateGradient (templateGradientSunken, baseColor || colorHighlight);
     }
 
     function gradientDisabled (baseColor) {
-        return generateGradient (templateGradientFlat, baseColor || colorLightGray);
+        return generateGradient (templateGradientFlat, baseColor || colorWindow);
     }
 
     function gradientEditable (baseColor) {
-        return generateGradient (templateGradientFlat, baseColor || colorWhite);
+        return generateGradient (templateGradientFlat, baseColor || colorEditable);
     }
 
     function gradientShaded (baseColorTop, baseColorBottom) {
         return templateGradientShaded.createObject (_garbage_, {
-                                                        "baseColorTop"    : (baseColorTop    || colorLightBlue),
-                                                        "baseColorBottom" : (baseColorBottom || colorLightGray),
+                                                        "baseColorTop"    : (baseColorTop    || colorHighlight),
+                                                        "baseColorBottom" : (baseColorBottom || colorWindow),
                                                     });
     }
 }

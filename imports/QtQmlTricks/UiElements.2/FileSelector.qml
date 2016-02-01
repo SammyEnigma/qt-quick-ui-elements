@@ -97,9 +97,7 @@ Item {
                         }
                     }
 
-                    Rectangle {
-                        color: Style.colorLightGray;
-                        height: Style.lineSize;
+                    Line {
                         opacity: 0.65;
                         ExtraAnchors.bottomDock: parent;
                     }
@@ -149,7 +147,7 @@ Item {
                         PropertyChanges {
                             target: cross.item;
                             size: Style.fontSizeNormal;
-                            color: (enabled ? Style.colorBlack : Style.colorGray);
+                            color: (enabled ? Style.colorForeground : Style.colorBorder);
                         }
                     }
                 }
@@ -185,7 +183,7 @@ Item {
                         PropertyChanges {
                             target: check.item;
                             size: Style.fontSizeNormal;
-                            color: (enabled ? Style.colorBlack : Style.colorGray);
+                            color: (enabled ? Style.colorForeground : Style.colorBorder);
                         }
                     }
                 }

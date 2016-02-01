@@ -35,7 +35,7 @@ FocusScope {
                 PropertyChanges {
                     target: minus.item;
                     size: Style.fontSizeNormal;
-                    color: (enabled ? Style.colorBlack : Style.colorGray);
+                    color: (enabled ? Style.colorForeground : Style.colorBorder);
                 }
             }
         }
@@ -55,7 +55,7 @@ FocusScope {
                 PropertyChanges {
                     target: plus.item;
                     size: Style.fontSizeNormal;
-                    color: (enabled ? Style.colorBlack : Style.colorGray);
+                    color: (enabled ? Style.colorForeground : Style.colorBorder);
                 }
             }
         }
@@ -73,9 +73,9 @@ FocusScope {
         textAlign: TextInput.AlignHCenter;
         textColor: (enabled
                     ? (notNumber || tooBig || tooSmall
-                       ? Style.colorDarkRed
-                       : Style.colorBlack)
-                    : Style.colorGray);
+                       ? Style.colorError
+                       : Style.colorForeground)
+                    : Style.colorBorder);
         implicitWidth: (metricsValue.contentWidth + padding * 2);
         anchors {
             left: btnDecrease.right;

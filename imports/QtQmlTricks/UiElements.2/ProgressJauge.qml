@@ -12,7 +12,7 @@ Item {
 
     Rectangle {
         id: groove;
-        color: (base.enabled ? Style.colorWhite : Style.colorLightGray);
+        color: (base.enabled ? Style.colorEditable : Style.colorWindow);
         radius: Style.roundness;
         enabled: base.enabled;
         antialiasing: radius;
@@ -28,7 +28,7 @@ Item {
             enabled: base.enabled;
             antialiasing: radius;
             gradient: (base.enabled
-                       ? Style.gradientChecked ("skyblue")
+                       ? Style.gradientChecked ()
                        : Style.gradientDisabled ());
             anchors {
                 top: parent.top;
@@ -42,7 +42,7 @@ Item {
         delegate: Rectangle {
             x: ((parent.width / divisions) * (model.index +1));
             width: Style.lineSize;
-            color: (enabled ? Style.colorLightBlue : Style.colorDarkGray)
+            color: (enabled ? Style.colorHighlight : Style.colorSecondary)
             enabled: base.enabled;
             anchors {
                 top: parent.top;
@@ -58,7 +58,7 @@ Item {
         antialiasing: radius;
         border {
             width: Style.lineSize;
-            color: Style.colorGray;
+            color: Style.colorBorder;
         }
         anchors.fill: parent;
     }

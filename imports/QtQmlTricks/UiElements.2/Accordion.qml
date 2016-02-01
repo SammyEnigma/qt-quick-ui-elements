@@ -17,7 +17,7 @@ Item {
 
     Rectangle {
         id: rect;
-        color: Style.colorDarkGray;
+        color: Style.colorSecondary;
         anchors.fill: parent;
     }
     Column {
@@ -68,7 +68,7 @@ Item {
 
                     Rectangle {
                         gradient: (modelData === currentTab
-                                   ? Style.gradientShaded (Style.colorLightBlue, Style.colorDarkGray)
+                                   ? Style.gradientShaded (Style.colorHighlight, Style.colorSecondary)
                                    : (parent.pressed
                                       ? Style.gradientPressed ()
                                       : Style.gradientIdle ()));
@@ -106,11 +106,7 @@ Item {
 
                     // NOTE : tab content here
                 }
-                Rectangle {
-                    color: Style.colorGray;
-                    height: Style.lineSize;
-                    ExtraAnchors.horizontalFill: parent;
-                }
+                Line { ExtraAnchors.horizontalFill: parent; }
             }
         }
     }

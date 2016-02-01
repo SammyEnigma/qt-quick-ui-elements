@@ -14,13 +14,11 @@ Item {
 
     Rectangle {
         id: rect;
-        color: Style.colorDarkGray;
+        color: Style.colorSecondary;
         anchors.bottom: bar.bottom;
         ExtraAnchors.topDock: parent;
     }
-    Rectangle {
-        color: Style.colorGray;
-        height: Style.lineSize;
+    Line {
         anchors {
             leftMargin: -bar.colSpacing;
             rightMargin: -bar.colSpacing;
@@ -83,7 +81,7 @@ Item {
                     antialiasing: radius;
                     border {
                         width: Style.lineSize;
-                        color: Style.colorGray;
+                        color: Style.colorBorder;
                     }
                     states: State {
                         when: (modelData !== null);

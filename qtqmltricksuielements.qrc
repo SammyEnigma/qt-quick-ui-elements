@@ -16,6 +16,8 @@
         <file>imports/QtQmlTricks/UiElements.2/Accordion.qml</file>
         <file>imports/QtQmlTricks/UiElements.2/TabBar.qml</file>
         <file>imports/QtQmlTricks/UiElements.2/NumberBox.qml</file>
+        <file>imports/QtQmlTricks/UiElements.2/Line.qml</file>
+        <file>imports/QtQmlTricks/UiElements.2/Stretcher.qml</file>
         <file>imports/QtQmlTricks/UiElements.2/MultiLineTextBox.qml</file>
         <file>imports/QtQmlTricks/UiElements.2/Balloon.qml</file>
         <file>imports/QtQmlTricks/UiElements.2/RegularPolygon.qml</file>

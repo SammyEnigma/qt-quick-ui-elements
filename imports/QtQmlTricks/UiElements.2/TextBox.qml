@@ -40,8 +40,8 @@ FocusScope {
         antialiasing: radius;
         gradient: (enabled ? Style.gradientEditable () : Style.gradientDisabled ());
         border {
-            width: Style.lineSize;
-            color: (input.activeFocus ? Style.colorSteelBlue : Style.colorGray);
+            width: (input.activeFocus ? Style.lineSize * 2 : Style.lineSize);
+            color: (input.activeFocus ? Style.colorSelection : Style.colorBorder);
         }
         anchors.fill: parent;
     }
@@ -56,11 +56,11 @@ FocusScope {
         TextInput {
             id: input;
             focus: true;
-            color: (enabled ? Style.colorBlack : Style.colorGray);
+            color: (enabled ? Style.colorForeground : Style.colorBorder);
             enabled: base.enabled;
             selectByMouse: true;
-            selectionColor: Style.colorSteelBlue;
-            selectedTextColor: Style.colorWhite;
+            selectionColor: Style.colorSelection;
+            selectedTextColor: Style.colorEditable;
             activeFocusOnPress: true;
             echoMode: (isPassword ? TextInput.Password : TextInput.Normal);
             font {
@@ -92,8 +92,8 @@ FocusScope {
                 rotation: -90;
                 gradient: Gradient {
                     GradientStop { position: 0.0; color: Style.colorNone;  }
-                    GradientStop { position: 0.5; color: Style.colorWhite; }
-                    GradientStop { position: 1.0; color: Style.colorWhite; }
+                    GradientStop { position: 0.5; color: Style.colorEditable; }
+                    GradientStop { position: 1.0; color: Style.colorEditable; }
                 }
                 anchors {
                     verticalCenter: parent.verticalCenter;
@@ -110,7 +110,7 @@ FocusScope {
                     PropertyChanges {
                         target: cross.item;
                         size: Style.fontSizeNormal;
-                        color: (enabled ? Style.colorBlack : Style.colorGray);
+                        color: (enabled ? Style.colorForeground : Style.colorBorder);
                     }
                 }
                 anchors.centerIn: parent;
@@ -120,7 +120,7 @@ FocusScope {
     TextLabel {
         id: holder;
         font: input.font;
-        color: Style.colorGray;
+        color: Style.colorBorder;
         enabled: base.enabled;
         visible: (!input.activeFocus && input.text.trim ().length === 0 && !readOnly);
         horizontalAlignment: input.horizontalAlignment;
