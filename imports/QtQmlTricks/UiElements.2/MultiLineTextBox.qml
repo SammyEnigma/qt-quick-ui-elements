@@ -33,8 +33,8 @@ FocusScope {
         antialiasing: radius;
         gradient: (enabled ? Style.gradientEditable () : Style.gradientDisabled ());
         border {
-            width: Style.lineSize;
-            color: (input.activeFocus ? Style.colorSteelBlue : Style.colorGray);
+            width: (input.activeFocus ? Style.lineSize * 2 : Style.lineSize);
+            color: (input.activeFocus ? Style.colorSelection : Style.colorBorder);
         }
         anchors.fill: parent;
     }
@@ -49,11 +49,11 @@ FocusScope {
         TextEdit {
             id: input;
             focus: true;
-            color: (enabled ? Style.colorBlack : Style.colorGray);
+            color: (enabled ? Style.colorForeground: Style.colorBorder);
             enabled: base.enabled;
             selectByMouse: true;
-            selectionColor: Style.colorSteelBlue;
-            selectedTextColor: Style.colorWhite;
+            selectionColor: Style.colorSelection;
+            selectedTextColor: Style.colorEditable;
             activeFocusOnPress: true;
             font {
                 family: Style.fontName;
@@ -69,7 +69,7 @@ FocusScope {
     TextLabel {
         id: holder;
         font: input.font;
-        color: Style.colorGray;
+        color: Style.colorSecondary;
         enabled: base.enabled;
         visible: (!input.activeFocus && input.text.trim ().length === 0 && !readOnly);
         horizontalAlignment: input.horizontalAlignment;

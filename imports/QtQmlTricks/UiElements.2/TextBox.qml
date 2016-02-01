@@ -120,7 +120,7 @@ FocusScope {
     TextLabel {
         id: holder;
         font: input.font;
-        color: Style.colorBorder;
+        color: Style.colorSecondary;
         enabled: base.enabled;
         visible: (!input.activeFocus && input.text.trim ().length === 0 && !readOnly);
         horizontalAlignment: input.horizontalAlignment;

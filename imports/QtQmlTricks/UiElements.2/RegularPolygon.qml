@@ -12,8 +12,8 @@ Item {
     property int   angle       : 0;
     property int   diameter    : 0;
     property int   strokeSize  : 0;
-    property color strokeColor : Style.colorBlack;
-    property color fillColor   : Style.colorBlack;
+    property color strokeColor : Style.colorForeground;
+    property color fillColor   : Style.colorForeground;
 
     readonly property int minSides : 3;
     readonly property int maxSides : 360;

@@ -3,14 +3,14 @@ import QtQmlTricks.UiElements 2.0;
 
 Rectangle {
     id: base;
-    color: "#FFF5C1";
+    color: Style.colorBubble;
     width: implicitWidth;
     height: implicitHeight;
     radius: Style.roundness;
     antialiasing: radius;
     border {
         width: Style.lineSize;
-        color: "#FFB329";
+        color: Qt.darker (color);
     }
     implicitWidth: 100;
     implicitHeight: (layout.height + layout.anchors.margins * 2);
@@ -31,7 +31,6 @@ Rectangle {
 
         TextLabel {
             id: lblTitle;
-            color: Style.colorBlack;
             visible: (text !== "");
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere;
             horizontalAlignment: Text.AlignJustify;
@@ -42,7 +41,6 @@ Rectangle {
         }
         TextLabel {
             id: lblContent;
-            color: Style.colorBlack;
             visible: (text !== "");
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere;
             horizontalAlignment: Text.AlignJustify;
