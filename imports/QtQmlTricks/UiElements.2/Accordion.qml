@@ -13,7 +13,7 @@ Item {
     default property alias content : accordion.tabs;
 
     readonly property int tabSize  : (Style.spacingBig * 2);
-    readonly property int paneSize :  (height - tabs.length * tabSize);
+    readonly property int paneSize : (height - tabs.length * tabSize);
 
     Rectangle {
         id: rect;
@@ -62,7 +62,7 @@ Item {
                 ExtraAnchors.horizontalFill: parent;
 
                 MouseArea {
-                    height: tabSize;
+                    height: (tabSize -1);
                     ExtraAnchors.horizontalFill: parent;
                     onClicked: { currentTab = (currentTab !== modelData ? modelData : null); }
 
