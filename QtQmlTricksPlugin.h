@@ -15,6 +15,7 @@
 #include "QQuickStretchRowContainer.h"
 #include "QQuickStretchColumnContainer.h"
 #include "QQuickWrapLeftRightContainer.h"
+#include "QQuickRoundedRectanglePaintedItem.h"
 
 static void registerQtQmlTricksUiElements (QQmlEngine * engine = Q_NULLPTR) {
 #ifndef NO_ICONS_IN_QT_RES
@@ -34,6 +35,7 @@ static void registerQtQmlTricksUiElements (QQmlEngine * engine = Q_NULLPTR) {
 
     // shapes
     qmlRegisterType<QQuickPolygon>                       (uri, maj, min, "Polygon");
+    qmlRegisterType<QQuickRoundedRectanglePaintedItem>   (uri, maj, min, "RoundedRectangle");
 
     // icons
     qmlRegisterType<QQuickSvgIconHelper>                 (uri, maj, min, "SvgIconHelper");
