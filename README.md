@@ -70,3 +70,5 @@ There are the helpers and utilities that don't fit in previous categories :
 * `MimeIconsHelper` : a simple non-visual helper that can  return the icon name to use for a given MIME-type.
 
 * `Polygon` : a simple QtQuick item that takes a list of points and draw them with a provided fill color and stroke width, either as a closed or open shape.
+
+> NOTE : If you want to donate, use this link : [![Flattr this](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=thebootroo&url=http://gitlab.unique-conception.org/qt-qml-tricks/qt-quick-ui-elements)
