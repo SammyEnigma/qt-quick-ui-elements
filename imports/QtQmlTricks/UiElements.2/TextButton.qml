@@ -78,6 +78,7 @@ MouseArea {
     ]
 
     property int   padding   : Style.spacingNormal;
+    property bool  flat      : false;
     property bool  checked   : false;
     property color backColor : Style.colorWindow;
     property color textColor : Style.colorForeground;
@@ -102,10 +103,10 @@ MouseArea {
                       ? Style.gradientChecked ()
                       : (pressed
                          ? Style.gradientPressed (backColor)
-                         : Style.gradientIdle (backColor)))
+                         : Style.gradientIdle (flat ? Style.colorNone : backColor)))
                    : Style.gradientDisabled ());
         border {
-            width: Style.lineSize;
+            width: (!flat || pressed || checked ? Style.lineSize : 0);
             color: (checked ? Style.colorSelection : Style.colorBorder);
         }
         anchors.fill: parent;
