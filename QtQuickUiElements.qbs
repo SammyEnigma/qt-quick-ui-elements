@@ -29,6 +29,7 @@ Project {
             files: [
                 "QQmlMimeIconsHelper.cpp",
                 "QQuickExtraAnchors.cpp",
+                "QQuickFormContainer.cpp",
                 "QQuickGridContainer.cpp",
                 "QQuickPolygon.cpp",
                 "QQuickRoundedRectanglePaintedItem.cpp",
@@ -44,6 +45,7 @@ Project {
             files: [
                 "QQmlMimeIconsHelper.h",
                 "QQuickExtraAnchors.h",
+                "QQuickFormContainer.h",
                 "QQuickGridContainer.h",
                 "QQuickPolygon.h",
                 "QQuickRoundedRectanglePaintedItem.h",

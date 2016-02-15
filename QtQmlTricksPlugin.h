@@ -12,6 +12,7 @@
 #include "QQmlMimeIconsHelper.h"
 #include "QQuickThemeIconProvider.h"
 #include "QQuickGridContainer.h"
+#include "QQuickFormContainer.h"
 #include "QQuickStretchRowContainer.h"
 #include "QQuickStretchColumnContainer.h"
 #include "QQuickWrapLeftRightContainer.h"
@@ -43,6 +44,7 @@ static void registerQtQmlTricksUiElements (QQmlEngine * engine = Q_NULLPTR) {
 
     // layouts
     qmlRegisterType<QQuickGridContainer>                 (uri, maj, min, "GridContainer");
+    qmlRegisterType<QQuickFormContainer>                 (uri, maj, min, "FormContainer");
     qmlRegisterType<QQuickStretchRowContainer>           (uri, maj, min, "StretchRowContainer");
     qmlRegisterType<QQuickStretchColumnContainer>        (uri, maj, min, "StretchColumnContainer");
     qmlRegisterType<QQuickWrapLeftRightContainer>        (uri, maj, min, "WrapLeftRightContainer");
