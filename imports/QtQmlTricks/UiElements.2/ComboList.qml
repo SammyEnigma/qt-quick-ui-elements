@@ -19,6 +19,19 @@ Item {
     readonly property var currentValue : (model && currentIdx >= 0 && currentIdx < model.count ? model.get (currentIdx) ["value"] : undefined);
     readonly property var currentKey   : (model && currentIdx >= 0 && currentIdx < model.count ? model.get (currentIdx) ["key"]   : undefined);
 
+    function selectByKey (key) {
+        if (model !== null) {
+            var tmp = -1;
+            for (var idx = 0; idx < model.count; idx++) {
+                if (model.get (idx) ["key"] === key) {
+                    tmp = idx;
+                    break;
+                }
+            }
+            currentIdx = tmp;
+        }
+    }
+
     Column {
         id: dumbLayout;
 
