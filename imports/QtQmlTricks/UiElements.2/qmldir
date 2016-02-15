@@ -15,6 +15,7 @@ ProgressJauge       2.0 ProgressJauge.qml
 RegularPolygon      2.0 RegularPolygon.qml
 ScrollContainer     2.0 ScrollContainer.qml
 SliderBar           2.0 SliderBar.qml
+StatusBar           2.0 StatusBar.qml
 Stretcher           2.0 Stretcher.qml
 TabBar              2.0 TabBar.qml
 TextBox             2.0 TextBox.qml
