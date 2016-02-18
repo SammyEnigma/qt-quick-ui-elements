@@ -47,9 +47,10 @@ void QQuickFormContainer::updatePolish (void) {
     const QList<QQuickItem *> childrenList = childItems ();
     /// find max children size and count
     int count = 0;
-    qreal maxChildHeight     = 0;
     qreal leftMaxChildWidth  = 0;
     qreal rightMaxChildWidth = 0;
+    QList<qreal> leftChildHeight;
+    QList<qreal> rightChildHeight;
     for (QList<QQuickItem *>::const_iterator it = childrenList.constBegin (); it != childrenList.constEnd (); it++) {
         QQuickItem * child = (* it);
         if (child != Q_NULLPTR && !child->inherits ("QQuickRepeater") && child->isVisible ()) {
@@ -57,37 +58,46 @@ void QQuickFormContainer::updatePolish (void) {
                 if (child->implicitWidth () > leftMaxChildWidth) {
                     leftMaxChildWidth = child->implicitWidth ();
                 }
+                leftChildHeight.append (child->implicitHeight ());
             }
             else {
                 if (child->implicitWidth () > rightMaxChildWidth) {
                     rightMaxChildWidth = child->implicitWidth ();
                 }
-            }
-            if (child->implicitHeight () > maxChildHeight) {
-                maxChildHeight = child->implicitHeight ();
+                rightChildHeight.append (child->implicitHeight ());
             }
             count++;
         }
+    }
+    QList<qreal> childHeight;
+    int line = 0;
+    qreal total = 0;
+    while (line < leftChildHeight.size () && line < rightChildHeight.size ()) {
+        const qreal tmp = qMax (leftChildHeight.at (line), rightChildHeight.at (line));
+        childHeight.append (tmp);
+        total += tmp;
+        line++;
     }
     /// recompute rows count
     const int cols = 2;
     const int rows = qCeil (qreal (count) / qreal (cols));
     /// recompute implicit size
     setImplicitWidth  (leftMaxChildWidth + rightMaxChildWidth + m_colSpacing);
-    setImplicitHeight (maxChildHeight * rows);
+    setImplicitHeight (total + (rows > 1 ? m_rowSpacing * (rows -1) : 0));
     /// relayout children
     const qreal layoutWidth    = width ();
-    const qreal layoutHeight   = height ();
-    const qreal itemHeight     = ((qreal (layoutHeight  + m_rowSpacing) / qreal (rows)) - qreal (m_rowSpacing));
     const qreal leftItemWidth  = (leftMaxChildWidth);
     const qreal rightItemWidth = (layoutWidth - leftItemWidth - m_colSpacing);
     if (rows > 0 && cols > 0) {
         int nb = 0;
+        int line = 0;
+        qreal currentY = 0;
         for (QList<QQuickItem *>::const_iterator it = childrenList.constBegin (); it != childrenList.constEnd (); it++) {
             QQuickItem * child = (* it);
             if (child != Q_NULLPTR && !child->inherits ("QQuickRepeater") && child->isVisible ()) {
-                child->setY ((nb / 2) * (itemHeight + m_rowSpacing));
-                child->setHeight (itemHeight);
+                const qreal lineHeight = childHeight.at (line);
+                child->setY (currentY);
+                child->setHeight (lineHeight);
                 if (nb % 2 == 0) {
                     child->setX (0);
                     child->setWidth (leftItemWidth);
@@ -95,6 +105,8 @@ void QQuickFormContainer::updatePolish (void) {
                 else {
                     child->setX (leftItemWidth + m_colSpacing);
                     child->setWidth (rightItemWidth);
+                    currentY += (lineHeight + m_rowSpacing);
+                    line++;
                 }
                 nb++;
             }
