@@ -10,6 +10,7 @@ FocusScope {
 
     property bool      showBorder    : true;
     property bool      indicatorOnly : false;
+    property alias     placeholder   : lbl.text;
     property alias     background    : rect.color;
     property alias     headerItem    : loaderHeader.sourceComponent;
     property alias     footerItem    : loaderFooter.sourceComponent;
@@ -113,6 +114,17 @@ FocusScope {
             }
 
             // CONTENT HERE
+        }
+        TextLabel {
+            id: lbl;
+            color: Style.colorBorder;
+            font.pixelSize: Style.fontSizeBig;
+            verticalAlignment: Text.AlignVCenter;
+            horizontalAlignment: Text.AlignHCenter;
+            anchors {
+                fill: parent;
+                margins: Style.spacingBig;
+            }
         }
         Item {
             id: scrollbarX;
