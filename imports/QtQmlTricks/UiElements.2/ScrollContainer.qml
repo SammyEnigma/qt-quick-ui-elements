@@ -5,8 +5,8 @@ FocusScope {
     id: base;
     width: implicitWidth;
     height: implicitHeight;
-    implicitWidth: 200;
-    implicitHeight: 200;
+    implicitWidth: -1;
+    implicitHeight: -1;
 
     property bool      showBorder    : true;
     property bool      indicatorOnly : false;
@@ -39,6 +39,7 @@ FocusScope {
 
         Rectangle {
             z: -1;
+            width: Math.round (parent.width);
             radius: Style.roundness;
             antialiasing: radius;
             gradient: Gradient {
@@ -49,10 +50,8 @@ FocusScope {
                 color: Style.colorBorder;
                 width: (showBorder ? Style.lineSize : 0);
             }
-            anchors {
-                fill: parent;
-                bottomMargin: -radius;
-            }
+            anchors.bottomMargin: -radius;
+            ExtraAnchors.leftDock: parent;
         }
     }
     Loader {
@@ -63,6 +62,7 @@ FocusScope {
 
         Rectangle {
             z: -1;
+            width: Math.round (parent.width);
             radius: Style.roundness;
             antialiasing: radius;
             gradient: Gradient {
@@ -73,10 +73,8 @@ FocusScope {
                 color: Style.colorBorder;
                 width: (showBorder ? Style.lineSize : 0);
             }
-            anchors {
-                fill: parent;
-                topMargin: -radius;
-            }
+            anchors.topMargin: -radius;
+            ExtraAnchors.leftDock: parent;
         }
     }
     Item {
