@@ -22,5 +22,9 @@
         <file>imports/QtQmlTricks/UiElements.2/Balloon.qml</file>
         <file>imports/QtQmlTricks/UiElements.2/RegularPolygon.qml</file>
         <file>imports/QtQmlTricks/UiElements.2/StatusBar.qml</file>
+        <file>imports/QtQmlTricks/UiElements.2/ComboListDelegate.qml</file>
+        <file>imports/QtQmlTricks/UiElements.2/ComboListDelegateForModelWithRoles.qml</file>
+        <file>imports/QtQmlTricks/UiElements.2/ComboListDelegateForSimpleVar.qml</file>
+        <file>imports/QtQmlTricks/UiElements.2/ComboListDelegateForModelDataAttributes.qml</file>
     </qresource>
 </RCC>

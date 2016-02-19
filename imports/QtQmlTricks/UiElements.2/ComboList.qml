@@ -6,40 +6,68 @@ Item {
     width: implicitWidth;
     height: implicitHeight;
     implicitWidth: (dumbLayout.width + arrow.width + padding * 3);
-    implicitHeight: (lbl.contentHeight + padding * 2);
+    implicitHeight: (loaderCurrent.height + padding * 2);
 
     property int   padding   : Style.spacingNormal;
-    property alias textColor : lbl.color;
     property alias backColor : rect.color;
     property alias rounding  : rect.radius;
 
-    property ListModel model : null;
+    property var       model      : undefined;
+    property Component delegate   : ComboListDelegateForModelWithRoles { }
+    property int       currentIdx : -1;
 
-    property int          currentIdx   : -1;
-    readonly property var currentValue : (model && currentIdx >= 0 && currentIdx < model.count ? model.get (currentIdx) ["value"] : undefined);
-    readonly property var currentKey   : (model && currentIdx >= 0 && currentIdx < model.count ? model.get (currentIdx) ["key"]   : undefined);
+    readonly property var currentValue : (currentIdx >= 0 && currentIdx < repeater.count
+                                          ? repeater.itemAt (currentIdx) ["value"]
+                                          : undefined);
+
+    readonly property var currentKey   : (currentIdx >= 0 && currentIdx < repeater.count
+                                          ? repeater.itemAt (currentIdx) ["key"]
+                                          : undefined);
 
     function selectByKey (key) {
-        if (model !== null) {
-            var tmp = -1;
-            for (var idx = 0; idx < model.count; idx++) {
-                if (model.get (idx) ["key"] === key) {
-                    tmp = idx;
-                    break;
-                }
+        for (var idx = 0; idx < repeater.count; idx++) {
+            var item = repeater.itemAt (idx);
+            if (item ["key"] === key) {
+                currentIdx = idx;
+                break;
             }
-            currentIdx = tmp;
         }
     }
 
-    Column {
+    StretchColumnContainer {
         id: dumbLayout;
+        opacity: 0;
 
         Repeater {
+            id: repeater;
             model: base.model;
-            delegate: TextLabel {
-                text: model.value;
-                color: Style.colorNone;
+            delegate: Loader {
+                id: loader;
+                sourceComponent: base.delegate;
+
+                readonly property var value : (item ? item ["value"] : undefined);
+                readonly property var key   : (item ? item ["key"]   : undefined);
+
+                Binding {
+                    target: loader.item;
+                    property: "index";
+                    value: model.index;
+                }
+                Binding {
+                    target: loader.item;
+                    property: "model";
+                    value: (typeof (model) !== "undefined" ? model : undefined);
+                }
+                Binding {
+                    target: loader.item;
+                    property: "modelData";
+                    value: (typeof (modelData) !== "undefined" ? modelData : undefined);
+                }
+                Binding {
+                    target: loader.item;
+                    property: "active";
+                    value: true;
+                }
             }
         }
     }
@@ -95,17 +123,38 @@ Item {
         }
         anchors.fill: parent;
     }
-    TextLabel {
-        id: lbl;
-        text: (currentValue || "");
-        elide: Text.ElideRight;
+    Loader {
+        id: loaderCurrent;
         enabled: base.enabled;
-        visible: (text !== "");
+        sourceComponent: base.delegate;
         anchors {
             left: parent.left;
             right: arrow.left;
             margins: padding;
             verticalCenter: parent.verticalCenter;
+        }
+
+        property color color ;
+
+        Binding {
+            target: loaderCurrent.item;
+            property: "index";
+            value: currentIdx;
+        }
+        Binding {
+            target: loaderCurrent.item;
+            property: "key";
+            value: currentKey;
+        }
+        Binding {
+            target: loaderCurrent.item;
+            property: "value";
+            value: currentValue;
+        }
+        Binding {
+            target: loaderCurrent.item;
+            property: "active";
+            value: false;
         }
     }
     Loader {
@@ -158,38 +207,51 @@ Item {
                     color: Style.colorBorder;
                 }
 
-                Column {
+                StretchColumnContainer {
                     id: layout;
-                    anchors {
-                        top: parent.top;
-                        left: parent.left;
-                        right: parent.right;
-                    }
+                    ExtraAnchors.topDock: parent;
 
                     Repeater {
                         model: base.model;
                         delegate: MouseArea {
-                            height: (label.height + label.anchors.margins * 2);
-                            anchors {
-                                left: layout.left;
-                                right: layout.right;
-                            }
+                            width: implicitWidth;
+                            height: implicitHeight;
+                            implicitWidth: (loader.width + padding * 2);
+                            implicitHeight: (loader.height + padding * 2);
                             onClicked: {
                                 currentIdx = model.index;
                                 clicker.destroyDropdown ();
                             }
+                            ExtraAnchors.horizontalFill: parent;
 
-                            TextLabel {
-                                id: label;
-                                clip: true;
-                                text: (model ["value"] || "");
-                                font.bold: (model.index === currentIdx);
+                            Loader {
+                                id: loader;
+                                sourceComponent: base.delegate;
                                 anchors {
-                                    left: parent.left;
-                                    right: parent.right;
                                     margins: padding;
                                     verticalCenter: parent.verticalCenter;
                                 }
+                                ExtraAnchors.horizontalFill: parent;
+                            }
+                            Binding {
+                                target: loader.item;
+                                property: "index";
+                                value: model.index;
+                            }
+                            Binding {
+                                target: loader.item;
+                                property: "model";
+                                value: (typeof (model) !== "undefined" ? model : undefined);
+                            }
+                            Binding {
+                                target: loader.item;
+                                property: "modelData";
+                                value: (typeof (modelData) !== "undefined" ? modelData : undefined);
+                            }
+                            Binding {
+                                target: loader.item;
+                                property: "active";
+                                value: (model.index === base.currentIdx);
                             }
                         }
                     }
