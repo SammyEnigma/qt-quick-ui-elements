@@ -181,6 +181,7 @@ Item {
 
         MouseArea {
             id: dimmer;
+            z: 999999999;
             anchors.fill: parent;
             states: State {
                 when: (dimmer.refItem !== null);
