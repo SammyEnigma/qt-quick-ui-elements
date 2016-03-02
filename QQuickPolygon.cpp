@@ -80,6 +80,7 @@ void QQuickPolygon::setStroke (const QColor & stroke) {
     }
 }
 void QQuickPolygon::setPoints (const QVariantList & points) {
+    static const qreal BOUNDS = 999999999;
     bool dirty = false;
     const int count = points.size ();
     if (m_points.size () != count) {
@@ -87,10 +88,20 @@ void QQuickPolygon::setPoints (const QVariantList & points) {
         dirty = true;
     }
     for (int idx = 0; idx < count; idx++) {
-        QPointF pt = points.at (idx).value<QPointF> ();
+        const QPointF pt = points.at (idx).value<QPointF> ();
         if (pt != m_points.at (idx)) {
-            m_points [idx] = pt;
-            dirty = true;
+            if (pt.x () <= +BOUNDS &&
+                pt.x () >= -BOUNDS &&
+                pt.y () <= +BOUNDS &&
+                pt.y () >= -BOUNDS) {
+                m_points [idx] = pt;
+                dirty = true;
+            }
+            else {
+                m_points.clear();
+                dirty = true;
+                break;
+            }
         }
     }
     if (dirty) {
@@ -162,17 +173,17 @@ QSGNode * QQuickPolygon::updatePaintNode (QSGNode * oldNode, UpdatePaintNodeData
             const bool isLast  = (endPointIdx   == pointsCount -1);
             const QPointF startPoint = m_points [startPointIdx];
             const QPointF endPoint   = m_points [endPointIdx];
-            qreal currAngle = getAngleFromSegment (startPoint, endPoint);
-            qreal prevAngle = (!isFirst ? getAngleFromSegment (startPoint, m_points [startPointIdx -1]) : (m_closed ? getAngleFromSegment (startPoint, m_points.last ()) : currAngle + M_PI));
-            qreal nextAngle = (!isLast  ? getAngleFromSegment (m_points [endPointIdx +1], endPoint)     : (m_closed ? getAngleFromSegment (m_points.first (), endPoint)  : currAngle + M_PI));
-            qreal startAngle = ((currAngle + prevAngle) * 0.5);
-            qreal endAngle   = ((currAngle + nextAngle) * 0.5);
-            QPointF startPolar = QPointF (qCos (startAngle), qSin (startAngle));
-            QPointF endPolar   = QPointF (qCos (endAngle),   qSin (endAngle));
-            QPointF startVec1 = (startPoint + startPolar * (halfStroke / qSin (startAngle - currAngle)));
-            QPointF startVec2 = (startPoint + startPolar * (halfStroke / qSin (currAngle  - startAngle)));
-            QPointF endVec1   = (endPoint   + endPolar   * (halfStroke / qSin (endAngle   - currAngle)));
-            QPointF endVec2   = (endPoint   + endPolar   * (halfStroke / qSin (currAngle  - endAngle)));
+            const qreal currAngle = getAngleFromSegment (startPoint, endPoint);
+            const qreal prevAngle = (!isFirst ? getAngleFromSegment (startPoint, m_points [startPointIdx -1]) : (m_closed ? getAngleFromSegment (startPoint, m_points.last ()) : currAngle + M_PI));
+            const qreal nextAngle = (!isLast  ? getAngleFromSegment (m_points [endPointIdx +1], endPoint)     : (m_closed ? getAngleFromSegment (m_points.first (), endPoint)  : currAngle + M_PI));
+            const qreal startAngle = ((currAngle + prevAngle) * 0.5);
+            const qreal endAngle   = ((currAngle + nextAngle) * 0.5);
+            const QPointF startPolar = QPointF (qCos (startAngle), qSin (startAngle));
+            const QPointF endPolar   = QPointF (qCos (endAngle),   qSin (endAngle));
+            const QPointF startVec1 = (startPoint + startPolar * (halfStroke / qSin (startAngle - currAngle)));
+            const QPointF startVec2 = (startPoint + startPolar * (halfStroke / qSin (currAngle  - startAngle)));
+            const QPointF endVec1   = (endPoint   + endPolar   * (halfStroke / qSin (endAngle   - currAngle)));
+            const QPointF endVec2   = (endPoint   + endPolar   * (halfStroke / qSin (currAngle  - endAngle)));
             trianglesStroke << startVec1 << startVec2 << endVec2;
             trianglesStroke << endVec1   << endVec2   << startVec1;
             if (m_closed) {
