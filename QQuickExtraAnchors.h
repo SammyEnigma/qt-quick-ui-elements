@@ -2,6 +2,7 @@
 #define QQUICKEXTRAANCHORS_H
 
 #include <QObject>
+#include <QString>
 #include <QQuickItem>
 
 class QQuickExtraAnchors : public QObject {
@@ -24,6 +25,12 @@ public:
     explicit QQuickExtraAnchors (QObject * parent = Q_NULLPTR);
 
     static QQuickExtraAnchors * qmlAttachedProperties (QObject * object);
+
+    static const QString TOP;
+    static const QString LEFT;
+    static const QString RIGHT;
+    static const QString BOTTOM;
+    static const QString ANCHORS;
 
     QQuickItem * getTopDock           (void) const;
     QQuickItem * getLeftDock          (void) const;
@@ -64,7 +71,7 @@ protected:
     void defineAnchorLine (QQuickItem * other, const QString & lineName);
 
 private:
-    QQuickItem * m_item;
+    QObject    * m_anchors;
     QQuickItem * m_dockTop;
     QQuickItem * m_dockLeft;
     QQuickItem * m_dockRight;

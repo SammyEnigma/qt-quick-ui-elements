@@ -2,11 +2,16 @@
 #include "QQuickExtraAnchors.h"
 
 #include <QQmlProperty>
-#include <QStringBuilder>
+
+const QString QQuickExtraAnchors::TOP     = QStringLiteral ("top");
+const QString QQuickExtraAnchors::LEFT    = QStringLiteral ("left");
+const QString QQuickExtraAnchors::RIGHT   = QStringLiteral ("right");
+const QString QQuickExtraAnchors::BOTTOM  = QStringLiteral ("bottom");
+const QString QQuickExtraAnchors::ANCHORS = QStringLiteral ("anchors");
 
 QQuickExtraAnchors::QQuickExtraAnchors (QObject * parent)
     : QObject (parent)
-    , m_item (qobject_cast<QQuickItem *> (parent))
+    , m_anchors (parent != Q_NULLPTR ? QQmlProperty (parent, ANCHORS).read ().value<QObject *> () : Q_NULLPTR)
     , m_dockTop (Q_NULLPTR)
     , m_dockLeft (Q_NULLPTR)
     , m_dockRight (Q_NULLPTR)
@@ -24,10 +29,9 @@ QQuickExtraAnchors * QQuickExtraAnchors::qmlAttachedProperties (QObject * object
 }
 
 void QQuickExtraAnchors::defineAnchorLine (QQuickItem * otherItem, const QString & lineName) {
-    static const QString ANCHORS = QStringLiteral ("anchors.");
-    if (m_item != Q_NULLPTR) {
-        QQmlProperty prop (m_item, ANCHORS % lineName);
-        prop.write (otherItem != Q_NULLPTR ? QQmlProperty (otherItem, lineName).read () : QVariant ());
+    static const QVariant UNDEFINED = QVariant ();
+    if (m_anchors != Q_NULLPTR) {
+        QQmlProperty (m_anchors, lineName).write (otherItem != Q_NULLPTR ? QQmlProperty (otherItem, lineName).read () : UNDEFINED);
     }
 }
 
@@ -78,9 +82,9 @@ QQuickItem * QQuickExtraAnchors::getBottomRightCorner (void) const {
 void QQuickExtraAnchors::setTopDock (QQuickItem * dockTop) {
     if (m_dockTop != dockTop) {
         m_dockTop = dockTop;
-        defineAnchorLine (m_dockTop, "top");
-        defineAnchorLine (m_dockTop, "left");
-        defineAnchorLine (m_dockTop, "right");
+        defineAnchorLine (m_dockTop, TOP);
+        defineAnchorLine (m_dockTop, LEFT);
+        defineAnchorLine (m_dockTop, RIGHT);
         emit topDockChanged (m_dockTop);
     }
 }
@@ -88,9 +92,9 @@ void QQuickExtraAnchors::setTopDock (QQuickItem * dockTop) {
 void QQuickExtraAnchors::setLeftDock (QQuickItem * dockLeft) {
     if (m_dockLeft != dockLeft) {
         m_dockLeft = dockLeft;
-        defineAnchorLine (m_dockLeft, "top");
-        defineAnchorLine (m_dockLeft, "left");
-        defineAnchorLine (m_dockLeft, "bottom");
+        defineAnchorLine (m_dockLeft, TOP);
+        defineAnchorLine (m_dockLeft, LEFT);
+        defineAnchorLine (m_dockLeft, BOTTOM);
         emit leftDockChanged (m_dockLeft);
     }
 }
@@ -98,9 +102,9 @@ void QQuickExtraAnchors::setLeftDock (QQuickItem * dockLeft) {
 void QQuickExtraAnchors::setRightDock (QQuickItem * dockRight) {
     if (m_dockRight != dockRight) {
         m_dockRight = dockRight;
-        defineAnchorLine (m_dockRight, "top");
-        defineAnchorLine (m_dockRight, "right");
-        defineAnchorLine (m_dockRight, "bottom");
+        defineAnchorLine (m_dockRight, TOP);
+        defineAnchorLine (m_dockRight, RIGHT);
+        defineAnchorLine (m_dockRight, BOTTOM);
         emit rightDockChanged (m_dockRight);
     }
 }
@@ -108,9 +112,9 @@ void QQuickExtraAnchors::setRightDock (QQuickItem * dockRight) {
 void QQuickExtraAnchors::setBottomDock (QQuickItem * dockBottom) {
     if (m_dockBottom != dockBottom) {
         m_dockBottom = dockBottom;
-        defineAnchorLine (m_dockBottom, "left");
-        defineAnchorLine (m_dockBottom, "right");
-        defineAnchorLine (m_dockBottom, "bottom");
+        defineAnchorLine (m_dockBottom, LEFT);
+        defineAnchorLine (m_dockBottom, RIGHT);
+        defineAnchorLine (m_dockBottom, BOTTOM);
         emit bottomDockChanged (m_dockBottom);
     }
 }
@@ -118,8 +122,8 @@ void QQuickExtraAnchors::setBottomDock (QQuickItem * dockBottom) {
 void QQuickExtraAnchors::setVerticalFill (QQuickItem * verticalFill) {
     if (m_verticalFill != verticalFill) {
         m_verticalFill = verticalFill;
-        defineAnchorLine (m_verticalFill, "top");
-        defineAnchorLine (m_verticalFill, "bottom");
+        defineAnchorLine (m_verticalFill, TOP);
+        defineAnchorLine (m_verticalFill, BOTTOM);
         emit verticalFillChanged (m_verticalFill);
     }
 }
@@ -127,8 +131,8 @@ void QQuickExtraAnchors::setVerticalFill (QQuickItem * verticalFill) {
 void QQuickExtraAnchors::setHorizontalFill (QQuickItem * horizontalFill) {
     if (m_horizontalFill != horizontalFill) {
         m_horizontalFill = horizontalFill;
-        defineAnchorLine (m_horizontalFill, "left");
-        defineAnchorLine (m_horizontalFill, "right");
+        defineAnchorLine (m_horizontalFill, LEFT);
+        defineAnchorLine (m_horizontalFill, RIGHT);
         emit horizontalFillChanged (m_horizontalFill);
     }
 }
@@ -136,8 +140,8 @@ void QQuickExtraAnchors::setHorizontalFill (QQuickItem * horizontalFill) {
 void QQuickExtraAnchors::setTopLeftCorner (QQuickItem * topLeftCorner) {
     if (m_topLeftCorner != topLeftCorner) {
         m_topLeftCorner = topLeftCorner;
-        defineAnchorLine (m_topLeftCorner, "top");
-        defineAnchorLine (m_topLeftCorner, "left");
+        defineAnchorLine (m_topLeftCorner, TOP);
+        defineAnchorLine (m_topLeftCorner, LEFT);
         emit topLeftCornerChanged (m_topLeftCorner);
     }
 }
@@ -145,8 +149,8 @@ void QQuickExtraAnchors::setTopLeftCorner (QQuickItem * topLeftCorner) {
 void QQuickExtraAnchors::setTopRightCorner (QQuickItem * topRightCorner) {
     if (m_topRightCorner != topRightCorner) {
         m_topRightCorner = topRightCorner;
-        defineAnchorLine (m_topRightCorner, "top");
-        defineAnchorLine (m_topRightCorner, "right");
+        defineAnchorLine (m_topRightCorner, TOP);
+        defineAnchorLine (m_topRightCorner, RIGHT);
         emit topRightCornerChanged (m_topRightCorner);
     }
 }
@@ -154,8 +158,8 @@ void QQuickExtraAnchors::setTopRightCorner (QQuickItem * topRightCorner) {
 void QQuickExtraAnchors::setBottomLeftCorner (QQuickItem * bottomLeftCorner) {
     if (m_bottomLeftCorner != bottomLeftCorner) {
         m_bottomLeftCorner = bottomLeftCorner;
-        defineAnchorLine (m_bottomLeftCorner, "left");
-        defineAnchorLine (m_bottomLeftCorner, "bottom");
+        defineAnchorLine (m_bottomLeftCorner, LEFT);
+        defineAnchorLine (m_bottomLeftCorner, BOTTOM);
         emit bottomLeftCornerChanged (m_bottomLeftCorner);
     }
 }
@@ -163,8 +167,8 @@ void QQuickExtraAnchors::setBottomLeftCorner (QQuickItem * bottomLeftCorner) {
 void QQuickExtraAnchors::setBottomRightCorner(QQuickItem * bottomRightCorner) {
     if (m_bottomRightCorner != bottomRightCorner) {
         m_bottomRightCorner = bottomRightCorner;
-        defineAnchorLine (m_bottomRightCorner, "right");
-        defineAnchorLine (m_bottomRightCorner, "bottom");
+        defineAnchorLine (m_bottomRightCorner, RIGHT);
+        defineAnchorLine (m_bottomRightCorner, BOTTOM);
         emit bottomRightCornerChanged (m_bottomRightCorner);
     }
 }
