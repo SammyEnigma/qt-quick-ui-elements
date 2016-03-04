@@ -6,6 +6,8 @@ MouseArea {
     width: implicitWidth;
     height: implicitHeight;
     hoverEnabled: Style.useHovering;
+    implicitWidth: contentWidth;
+    implicitHeight: contentHeight;
     states: [
         State {
             name: "icon_and_text";
@@ -13,8 +15,8 @@ MouseArea {
 
             PropertyChanges {
                 target: clicker;
-                implicitWidth: (ico.width + lbl.contentWidth + padding * 3);
-                implicitHeight: (ico.height > lbl.contentHeight ? ico.height + padding * 2: lbl.contentHeight + padding * 2);
+                contentWidth: (ico.width + lbl.contentWidth + padding * 3);
+                contentHeight: (ico.height > lbl.contentHeight ? ico.height + padding * 2: lbl.contentHeight + padding * 2);
             }
             AnchorChanges {
                 target: ico;
@@ -38,8 +40,8 @@ MouseArea {
 
             PropertyChanges {
                 target: clicker;
-                implicitWidth: Math.max (lbl.contentWidth + padding * 2, implicitHeight);
-                implicitHeight: (lbl.contentHeight + padding * 2);
+                contentWidth: Math.max (lbl.contentWidth + padding * 2, contentHeight);
+                contentHeight: (lbl.contentHeight + padding * 2);
             }
             AnchorChanges {
                 target: lbl;
@@ -55,8 +57,8 @@ MouseArea {
 
             PropertyChanges {
                 target: clicker;
-                implicitWidth: (ico.width + padding * 2);
-                implicitHeight: (ico.height + padding * 2);
+                contentWidth: (ico.width + padding * 2);
+                contentHeight: (ico.height + padding * 2);
             }
             AnchorChanges {
                 target: ico;
@@ -72,22 +74,24 @@ MouseArea {
 
             PropertyChanges {
                 target: clicker;
-                implicitWidth: 0;
-                implicitHeight: 0;
+                contentWidth: 0;
+                contentHeight: 0;
             }
         }
     ]
 
-    property int   padding   : Style.spacingNormal;
-    property bool  flat      : false;
-    property bool  checked   : false;
-    property color backColor : Style.colorWindow;
-    property color textColor : Style.colorForeground;
-    property alias text      : lbl.text;
-    property alias textFont  : lbl.font;
-    property alias rounding  : rect.radius;
-    property alias icon      : ico.sourceComponent;
-    property alias hovered   : clicker.containsMouse;
+    property int   padding       : Style.spacingNormal;
+    property bool  flat          : false;
+    property bool  checked       : false;
+    property color backColor     : Style.colorWindow;
+    property color textColor     : Style.colorForeground;
+    property alias text          : lbl.text;
+    property alias textFont      : lbl.font;
+    property alias rounding      : rect.radius;
+    property alias icon          : ico.sourceComponent;
+    property alias hovered       : clicker.containsMouse;
+    property int   contentWidth  : 0;
+    property int   contentHeight : 0;
 
     function click () {
         if (enabled) {
