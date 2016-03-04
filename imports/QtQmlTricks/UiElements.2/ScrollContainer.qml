@@ -161,7 +161,6 @@ FocusScope {
                 id: grooveHoriz;
                 clip: true;
                 enabled: !indicatorOnly;
-                hoverEnabled: Style.useHovering;
                 drag {
                     axis: Drag.XAxis;
                     target: handleHoriz;
@@ -179,7 +178,7 @@ FocusScope {
 
                 Rectangle {
                     id: handleHoriz;
-                    color: Qt.lighter (Style.colorWindow, grooveHoriz.containsMouse ? 1.15 : 1.0);
+                    color: Style.colorWindow;
                     radius: (indicatorOnly ? 2 : 5);
                     visible: (flickableItem && flickableItem.visibleArea.widthRatio < 1.0);
                     antialiasing: true;
@@ -237,7 +236,6 @@ FocusScope {
                 id: grooveVertic;
                 clip: true;
                 enabled: !indicatorOnly;
-                hoverEnabled: Style.useHovering;
                 drag {
                     axis: Drag.YAxis;
                     target: handleVertic;
@@ -255,7 +253,7 @@ FocusScope {
 
                 Rectangle {
                     id: handleVertic;
-                    color: Qt.lighter (Style.colorWindow, grooveVertic.containsMouse ? 1.15 : 1.0);
+                    color: Style.colorWindow;
                     radius: (indicatorOnly ? 2 : 5);
                     visible: (flickableItem && flickableItem.visibleArea.heightRatio < 1.0);
                     antialiasing: true;
