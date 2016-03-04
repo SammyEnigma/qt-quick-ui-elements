@@ -61,7 +61,7 @@ Item {
         gradient: (enabled
                    ? (clicker.pressed
                       ? Style.gradientPressed ()
-                      : Style.gradientIdle ())
+                      : Style.gradientIdle (Qt.lighter (Style.colorWindow, clicker.containsMouse ? 1.15 : 1.0)))
                    : Style.gradientDisabled ());
         border {
             width: Style.lineSize;
@@ -81,6 +81,7 @@ Item {
                 maximumY: 0;
             }
             enabled: base.enabled;
+            hoverEnabled: Style.useHovering;
             anchors.fill: parent;
             onPositionChanged: { value = (minValue + (maxValue - minValue) * (handle.x / (base.width - handle.width))); }
         }

@@ -5,6 +5,7 @@ MouseArea {
     id: clicker;
     width: implicitWidth;
     height: implicitHeight;
+    hoverEnabled: Style.useHovering;
     states: [
         State {
             name: "icon_and_text";
@@ -86,6 +87,7 @@ MouseArea {
     property alias textFont  : lbl.font;
     property alias rounding  : rect.radius;
     property alias icon      : ico.sourceComponent;
+    property alias hovered   : clicker.containsMouse;
 
     function click () {
         if (enabled) {
@@ -103,10 +105,10 @@ MouseArea {
                       ? Style.gradientChecked ()
                       : (pressed
                          ? Style.gradientPressed (backColor)
-                         : Style.gradientIdle (flat ? Style.colorNone : backColor)))
+                         : Style.gradientIdle (flat ? Style.colorNone : Qt.lighter (backColor, hovered ? 1.15 : 1.0))))
                    : Style.gradientDisabled ());
         border {
-            width: (!flat || pressed || checked ? Style.lineSize : 0);
+            width: (!flat || pressed || checked || hovered ? Style.lineSize : 0);
             color: (checked ? Style.colorSelection : Style.colorBorder);
         }
         anchors.fill: parent;

@@ -10,6 +10,8 @@ QtObject {
 
     property bool useNativeText : false;
 
+    property bool useHovering : true;
+
     property int lineSize : (1 * Screen.devicePixelRatio);
 
     property int roundness : (3 * Screen.devicePixelRatio);

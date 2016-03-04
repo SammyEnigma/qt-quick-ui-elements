@@ -74,6 +74,7 @@ Item {
     MouseArea {
         id: clicker;
         enabled: base.enabled;
+        hoverEnabled: Style.useHovering;
         anchors.fill: parent;
         onClicked: {
             if (dropdownItem) {
@@ -115,7 +116,7 @@ Item {
                    ? (clicker.pressed ||
                       clicker.dropdownItem
                       ? Style.gradientPressed ()
-                      : Style.gradientIdle ())
+                      : Style.gradientIdle (Qt.lighter (Style.colorWindow, clicker.containsMouse ? 1.15 : 1.0)))
                    : Style.gradientDisabled ());
         border {
             width: Style.lineSize;
