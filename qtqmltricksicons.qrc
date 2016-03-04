@@ -401,5 +401,6 @@
         <file>icons/FaenzaIconsLite/apps/128/notification-message-email.png</file>
         <file>icons/FaenzaIconsLite/apps/128/user-info.png</file>
         <file>icons/FaenzaIconsLite/apps/128/web-browser.png</file>
+        <file>icons/FaenzaIconsLite/actions/24/gtk-edit.png</file>
     </qresource>
 </RCC>
