@@ -1,17 +1,10 @@
 import QtQuick 2.1;
 import QtQmlTricks.UiElements 2.0;
 
-Rectangle {
+MouseArea {
     id: base;
-    color: Style.colorBubble;
     width: implicitWidth;
     height: implicitHeight;
-    radius: Style.roundness;
-    antialiasing: radius;
-    border {
-        width: Style.lineSize;
-        color: Qt.darker (color);
-    }
     implicitWidth: 100;
     implicitHeight: (layout.height + layout.anchors.margins * 2);
 
@@ -19,15 +12,22 @@ Rectangle {
     property alias title   : lblTitle.text;
     property alias content : lblContent.text;
 
+    Rectangle {
+        id: rect;
+        color: Style.colorBubble;
+        radius: Style.roundness;
+        antialiasing: radius;
+        border {
+            width: Style.lineSize;
+            color: Qt.darker (color);
+        }
+        anchors.fill: parent;
+    }
     StretchColumnContainer {
         id: layout;
         spacing: Style.spacingSmall;
-        anchors {
-            top: parent.top;
-            left: parent.left;
-            right: parent.right;
-            margins: Style.spacingNormal;
-        }
+        anchors.margins: Style.spacingNormal;
+        ExtraAnchors.topDock: parent;
 
         TextLabel {
             id: lblTitle;
@@ -44,9 +44,7 @@ Rectangle {
             visible: (text !== "");
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere;
             horizontalAlignment: Text.AlignJustify;
-            font {
-                pixelSize: Style.fontSizeSmall;
-            }
+            font.pixelSize: Style.fontSizeSmall;
         }
         Item {
             implicitHeight: Math.min (img.sourceSize.height, img.sourceSize.height * width / img.sourceSize.width);
