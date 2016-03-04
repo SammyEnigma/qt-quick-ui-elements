@@ -10,7 +10,7 @@ QtObject {
 
     property bool useNativeText : false;
 
-    property bool useHovering : true;
+    property bool useHovering : !isMobile;
 
     property int lineSize : (1 * Screen.devicePixelRatio);
 
