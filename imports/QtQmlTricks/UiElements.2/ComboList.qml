@@ -157,23 +157,16 @@ Item {
             value: false;
         }
     }
-    Loader {
+    SymbolLoader {
         id: arrow;
+        size: Style.fontSizeNormal;
+        color: (enabled ? Style.colorForeground : Style.colorBorder);
+        symbol: Style.symbolArrowDown;
         enabled: base.enabled;
-        sourceComponent: Style.symbolArrowDown;
         anchors {
             right: parent.right;
             margins: padding;
             verticalCenter: parent.verticalCenter;
-        }
-        states: State {
-            when: (arrow.item !== null);
-
-            PropertyChanges {
-                target: arrow.item;
-                size: Style.fontSizeNormal;
-                color: (enabled ? Style.colorForeground : Style.colorBorder);
-            }
         }
     }
     Component {

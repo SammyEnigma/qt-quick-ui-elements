@@ -26,18 +26,10 @@ FocusScope {
     }
     TextButton {
         id: btnDecrease;
-        icon: Loader {
-            id: minus;
-            sourceComponent: Style.symbolMinus;
-            states: State {
-                when: (minus.item !== null);
-
-                PropertyChanges {
-                    target: minus.item;
-                    size: Style.fontSizeNormal;
-                    color: (enabled ? Style.colorForeground : Style.colorBorder);
-                }
-            }
+        icon: SymbolLoader {
+            size: Style.fontSizeNormal;
+            color: (enabled ? Style.colorForeground : Style.colorBorder);
+            symbol: Style.symbolMinus;
         }
         width: (height + Style.roundness);
         enabled: (base.enabled && value - step >= minValue);
@@ -46,18 +38,10 @@ FocusScope {
     }
     TextButton {
         id: btnIncrease;
-        icon: Loader {
-            id: plus;
-            sourceComponent: Style.symbolPlus;
-            states: State {
-                when: (plus.item !== null);
-
-                PropertyChanges {
-                    target: plus.item;
-                    size: Style.fontSizeNormal;
-                    color: (enabled ? Style.colorForeground : Style.colorBorder);
-                }
-            }
+        icon: SymbolLoader {
+            size: Style.fontSizeNormal;
+            color: (enabled ? Style.colorForeground : Style.colorBorder);
+            symbol: Style.symbolPlus;
         }
         width: (height + Style.roundness);
         enabled: (base.enabled && value + step <= maxValue);

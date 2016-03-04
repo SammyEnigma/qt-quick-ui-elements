@@ -2,6 +2,7 @@ module QtQmlTricks.UiElements
 
 singleton Style                         2.0 Style.qml
 
+AbstractSymbol                          2.0 AbstractSymbol.qml
 Accordion                               2.0 Accordion.qml
 Balloon                                 2.0 Balloon.qml
 CheckableBox                            2.0 CheckableBox.qml
@@ -21,6 +22,7 @@ ScrollContainer                         2.0 ScrollContainer.qml
 SliderBar                               2.0 SliderBar.qml
 StatusBar                               2.0 StatusBar.qml
 Stretcher                               2.0 Stretcher.qml
+SymbolLoader                            2.0 SymbolLoader.qml
 TabBar                                  2.0 TabBar.qml
 TextBox                                 2.0 TextBox.qml
 TextButton                              2.0 TextButton.qml

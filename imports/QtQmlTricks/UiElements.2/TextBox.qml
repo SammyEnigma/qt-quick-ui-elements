@@ -100,19 +100,12 @@ FocusScope {
                     horizontalCenter: parent.left;
                 }
             }
-            Loader {
+            SymbolLoader {
                 id: cross;
+                size: Style.fontSizeNormal;
+                color: (enabled ? Style.colorForeground : Style.colorBorder);
+                symbol: Style.symbolCross;
                 enabled: base.enabled;
-                sourceComponent: Style.symbolCross;
-                states: State {
-                    when: (cross.item !== null);
-
-                    PropertyChanges {
-                        target: cross.item;
-                        size: Style.fontSizeNormal;
-                        color: (enabled ? Style.colorForeground : Style.colorBorder);
-                    }
-                }
                 anchors.centerIn: parent;
             }
         }

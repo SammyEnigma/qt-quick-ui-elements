@@ -137,40 +137,24 @@ FocusScope {
                 opacity: (flickableItem && flickableItem.contentWidth > container.width ? 0.5 : 0.15);
                 anchors.fill: parent;
             }
-            Loader {
+            SymbolLoader {
                 id: arrowLeft;
+                size: Style.spacingNormal;
+                color: (flickableItem && !flickableItem.atXBeginning ? Style.colorForeground : Style.colorBorder);
                 width: height;
+                symbol: Style.symbolArrowLeft;
                 visible: !indicatorOnly;
-                sourceComponent: Style.symbolArrowLeft;
-                states: State {
-                    when: (arrowLeft.item !== null);
-
-                    PropertyChanges {
-                        target: arrowLeft.item;
-                        size: Style.spacingNormal;
-                        color: (flickableItem && !flickableItem.atXBeginning ? Style.colorForeground : Style.colorBorder);
-                        width: arrowLeft.width;
-                        height: arrowLeft.height;
-                    }
-                }
+                autoSize: false;
                 ExtraAnchors.leftDock: parent;
             }
-            Loader {
+            SymbolLoader {
                 id: arrowRight;
+                size: Style.spacingNormal;
+                color: (flickableItem && !flickableItem.atXEnd ? Style.colorForeground : Style.colorBorder);
                 width: height;
+                symbol: Style.symbolArrowRight;
                 visible: !indicatorOnly;
-                sourceComponent: Style.symbolArrowRight;
-                states: State {
-                    when: (arrowRight.item !== null);
-
-                    PropertyChanges {
-                        target: arrowRight.item;
-                        size: Style.spacingNormal;
-                        color: (flickableItem && !flickableItem.atXEnd ? Style.colorForeground : Style.colorBorder);
-                        width: arrowRight.width;
-                        height: arrowRight.height;
-                    }
-                }
+                autoSize: false;
                 ExtraAnchors.rightDock: parent;
             }
             MouseArea {
@@ -228,40 +212,24 @@ FocusScope {
                 opacity: (flickableItem && flickableItem.contentHeight > container.height ? 0.5 : 0.15);
                 anchors.fill: parent;
             }
-            Loader {
+            SymbolLoader {
                 id: arrowUp;
+                size: Style.spacingNormal;
+                color: (flickableItem && !flickableItem.atYBeginning ? Style.colorForeground : Style.colorBorder);
+                symbol: Style.symbolArrowUp;
                 height: width;
                 visible: !indicatorOnly;
-                sourceComponent: Style.symbolArrowUp;
-                states: State {
-                    when: (arrowUp.item !== null);
-
-                    PropertyChanges {
-                        target: arrowUp.item;
-                        size: Style.spacingNormal;
-                        color: (flickableItem && !flickableItem.atYBeginning ? Style.colorForeground : Style.colorBorder);
-                        width: arrowUp.width;
-                        height: arrowUp.height;
-                    }
-                }
+                autoSize: false;
                 ExtraAnchors.topDock: parent;
             }
-            Loader {
+            SymbolLoader {
                 id: arrowDown;
+                size: Style.spacingNormal;
+                color: (flickableItem && !flickableItem.atYEnd ? Style.colorForeground : Style.colorBorder);
                 height: width;
+                symbol: Style.symbolArrowDown;
                 visible: !indicatorOnly;
-                sourceComponent: Style.symbolArrowDown;
-                states: State {
-                    when: (arrowDown.item !== null);
-
-                    PropertyChanges {
-                        target: arrowDown.item;
-                        size: Style.spacingNormal;
-                        color: (flickableItem && !flickableItem.atYEnd ? Style.colorForeground : Style.colorBorder);
-                        width: arrowDown.width;
-                        height: arrowDown.height;
-                    }
-                }
+                autoSize: false;
                 ExtraAnchors.bottomDock: parent;
             }
             MouseArea {

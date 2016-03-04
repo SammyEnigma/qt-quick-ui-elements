@@ -37,21 +37,15 @@ FocusScope {
             }
             anchors.fill: parent;
         }
-        Loader {
+        SymbolLoader {
             id: shape;
+            size: base.size;
+            color: (base.enabled ? Style.colorForeground : Style.colorBorder);
+            symbol: Style.symbolCheck;
+            visible: base.value;
             enabled: base.enabled;
-            sourceComponent: Style.symbolCheck;
+            autoSize: false;
             anchors.fill: parent;
-            states: State {
-                when: (shape.item !== null);
-
-                PropertyChanges {
-                    target: shape.item;
-                    size: base.size;
-                    color: (base.enabled ? Style.colorForeground : Style.colorBorder);
-                    visible: base.value;
-                }
-            }
         }
     }
 }

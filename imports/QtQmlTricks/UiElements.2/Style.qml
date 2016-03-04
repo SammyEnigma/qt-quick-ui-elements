@@ -1,6 +1,7 @@
 pragma Singleton;
 import QtQuick 2.1;
 import QtQuick.Window 2.1;
+import QtQmlTricks.UiElements 2.0;
 
 QtObject {
     id: style;
@@ -63,13 +64,8 @@ QtObject {
                                                          "monospace");
 
     property Component symbolCross : Component {
-        Item {
+        AbstractSymbol {
             id: cross;
-            width: size;
-            height: size;
-
-            property real  size  : 10;
-            property color color : colorDumb;
 
             Rectangle {
                 color: cross.color;
@@ -95,13 +91,8 @@ QtObject {
     }
 
     property Component symbolPlus : Component {
-        Item {
+        AbstractSymbol {
             id: plus;
-            width: size;
-            height: size;
-
-            property real  size  : 10;
-            property color color : colorDumb;
 
             Rectangle {
                 color: plus.color;
@@ -125,13 +116,8 @@ QtObject {
     }
 
     property Component symbolMinus : Component {
-        Item {
+        AbstractSymbol {
             id: minus;
-            width: size;
-            height: size;
-
-            property real  size  : 10;
-            property color color : colorDumb;
 
             Rectangle {
                 color: minus.color;
@@ -146,13 +132,8 @@ QtObject {
     }
 
     property Component symbolCheck : Component {
-        Item {
+        AbstractSymbol {
             id: check;
-            width: size;
-            height: size;
-
-            property real  size  : 10;
-            property color color : colorDumb;
 
             readonly property real section  : (size * 0.10);
             readonly property real diagonal : (Math.SQRT2 * section);
@@ -190,13 +171,8 @@ QtObject {
     }
 
     property Component symbolArrowDown : Component {
-        Item {
+        AbstractSymbol {
             id: arrow;
-            width: size;
-            height: size;
-
-            property real  size  : 10;
-            property color color : colorDumb;
 
             Item {
                 clip: true;
@@ -221,13 +197,8 @@ QtObject {
     }
 
     property Component symbolArrowUp : Component {
-        Item {
+        AbstractSymbol {
             id: arrow;
-            width: size;
-            height: size;
-
-            property real  size  : 10;
-            property color color : colorDumb;
 
             Item {
                 clip: true;
@@ -252,13 +223,8 @@ QtObject {
     }
 
     property Component symbolArrowLeft : Component {
-        Item {
+        AbstractSymbol {
             id: arrow;
-            width: size;
-            height: size;
-
-            property real  size  : 10;
-            property color color : colorDumb;
 
             Item {
                 clip: true;
@@ -283,13 +249,8 @@ QtObject {
     }
 
     property Component symbolArrowRight : Component {
-        Item {
+        AbstractSymbol {
             id: arrow;
-            width: size;
-            height: size;
-
-            property real  size  : 10;
-            property color color : colorDumb;
 
             Item {
                 clip: true;

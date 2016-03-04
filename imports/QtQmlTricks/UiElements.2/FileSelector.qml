@@ -138,18 +138,10 @@ Item {
 
             TextButton {
                 text: "Cancel";
-                icon: Loader {
-                    id: cross;
-                    sourceComponent: Style.symbolCross;
-                    states: State {
-                        when: (cross.item !== null);
-
-                        PropertyChanges {
-                            target: cross.item;
-                            size: Style.fontSizeNormal;
-                            color: (enabled ? Style.colorForeground : Style.colorBorder);
-                        }
-                    }
+                icon: SymbolLoader {
+                    size: Style.fontSizeNormal;
+                    color: (enabled ? Style.colorForeground : Style.colorBorder);
+                    symbol: Style.symbolCross;
                 }
                 anchors.verticalCenter: parent.verticalCenter;
                 onClicked: { base.canceled (); }
@@ -174,18 +166,10 @@ Item {
             }
             TextButton {
                 text: "Accept";
-                icon: Loader {
-                    id: check;
-                    sourceComponent: Style.symbolCheck;
-                    states: State {
-                        when: (check.item !== null);
-
-                        PropertyChanges {
-                            target: check.item;
-                            size: Style.fontSizeNormal;
-                            color: (enabled ? Style.colorForeground : Style.colorBorder);
-                        }
-                    }
+                icon: SymbolLoader {
+                    size: Style.fontSizeNormal;
+                    color: (enabled ? Style.colorForeground : Style.colorBorder);
+                    symbol: Style.symbolCheck;
                 }
                 enabled: (list.currentIndex > -1 && list.currentIndex < list.count);
                 anchors.verticalCenter: parent.verticalCenter;

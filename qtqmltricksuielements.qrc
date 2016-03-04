@@ -26,5 +26,7 @@
         <file>imports/QtQmlTricks/UiElements.2/ComboListDelegateForModelWithRoles.qml</file>
         <file>imports/QtQmlTricks/UiElements.2/ComboListDelegateForSimpleVar.qml</file>
         <file>imports/QtQmlTricks/UiElements.2/ComboListDelegateForModelDataAttributes.qml</file>
+        <file>imports/QtQmlTricks/UiElements.2/SymbolLoader.qml</file>
+        <file>imports/QtQmlTricks/UiElements.2/AbstractSymbol.qml</file>
     </qresource>
 </RCC>
