@@ -15,6 +15,7 @@ else {
 }
 
 OTHER_FILES += \
+    $$PWD/LICENSE.md \
     $$PWD/README.md
 
 RESOURCES += \

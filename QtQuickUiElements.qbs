@@ -27,6 +27,7 @@ Project {
         Group {
             name: "C++ sources";
             files: [
+                "QQmlIntrospector.cpp",
                 "QQmlMimeIconsHelper.cpp",
                 "QQuickExtraAnchors.cpp",
                 "QQuickFormContainer.cpp",
@@ -43,6 +44,7 @@ Project {
         Group {
             name: "C++ headers";
             files: [
+                "QQmlIntrospector.h",
                 "QQmlMimeIconsHelper.h",
                 "QQuickExtraAnchors.h",
                 "QQuickFormContainer.h",
