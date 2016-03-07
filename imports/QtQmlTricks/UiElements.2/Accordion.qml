@@ -8,17 +8,35 @@ Item {
 
     property Group currentTab : null;
 
-    property list<Group> tabs;
+    default property alias content : container.children;
 
-    default property alias content : accordion.tabs;
+    readonly property var tabs : {
+        var ret = [];
+        for (var idx = 0; idx < content.length; idx++) {
+            var item = content [idx];
+            if (Introspector.inherits (item, testGroup)) {
+                ret.push (item);
+            }
+        }
+        return ret;
+    }
 
     readonly property int tabSize  : (Style.spacingBig * 2);
-    readonly property int paneSize : (height - tabs.length * tabSize - Style.lineSize);
+    readonly property int paneSize : (height - tabs.length * (tabSize + Style.lineSize));
 
+    Group { id: testGroup; }
     Rectangle {
         id: rect;
         color: Style.colorSecondary;
         anchors.fill: parent;
+    }
+    Item {
+        id: container;
+        height: paneSize;
+        anchors.topMargin: ((tabSize + Style.lineSize) * (tabs.indexOf (currentTab) +1));
+        ExtraAnchors.topDock: parent;
+
+        // NOTE : tabs content here
     }
     Column {
         anchors.fill: parent;
@@ -91,20 +109,21 @@ Item {
                         anchors.margins: Style.spacingNormal;
                     }
                 }
-                FocusScope {
-                    id: container;
+                Binding {
+                    target: modelData ["anchors"];
+                    property: "fill";
+                    value: container;
+                }
+                Binding {
+                    target: modelData;
+                    property: "visible";
+                    value: (modelData === currentTab);
+                }
+                Stretcher {
+                    id: placeholder;
                     height: paneSize;
                     visible: (modelData === currentTab);
-                    children: modelData;
                     ExtraAnchors.horizontalFill: parent;
-
-                    Binding {
-                        target: modelData ["anchors"];
-                        property: "fill";
-                        value: container;
-                    }
-
-                    // NOTE : tab content here
                 }
                 Line { ExtraAnchors.horizontalFill: parent; }
             }

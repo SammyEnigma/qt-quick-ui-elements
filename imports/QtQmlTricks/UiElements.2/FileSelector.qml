@@ -27,10 +27,7 @@ Item {
     }
     StretchColumnContainer {
         spacing: Style.spacingNormal;
-        anchors {
-            fill: parent;
-            margins: Style.spacingBig;
-        }
+        anchors.fill: parent;
 
         TextLabel {
             id: labelTitle;

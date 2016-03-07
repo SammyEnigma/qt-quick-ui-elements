@@ -17,6 +17,7 @@
 #include "QQuickStretchColumnContainer.h"
 #include "QQuickWrapLeftRightContainer.h"
 #include "QQuickRoundedRectanglePaintedItem.h"
+#include "QQmlIntrospector.h"
 
 static void registerQtQmlTricksUiElements (QQmlEngine * engine = Q_NULLPTR) {
 #ifndef NO_ICONS_IN_QT_RES
@@ -51,6 +52,8 @@ static void registerQtQmlTricksUiElements (QQmlEngine * engine = Q_NULLPTR) {
     qmlRegisterType<QQuickWrapLeftRightContainerBreaker> (uri, maj, min, "WrapBreaker");
 
     qmlRegisterUncreatableType<QQuickExtraAnchors>       (uri, maj, min, "ExtraAnchors", "!!!");
+
+    qmlRegisterSingletonType <QQmlIntrospector>          (uri, maj, min, "Introspector", &QQmlIntrospector::qmlSingletonProvider);
 
     if (engine != Q_NULLPTR) {
         engine->addImageProvider ("icon-theme", new QQuickThemeIconProvider);

@@ -8,10 +8,20 @@ Item {
 
     property Group currentTab : null;
 
-    property list<Group> tabs;
+    default property alias content : container.children;
 
-    default property alias content : base.tabs;
+    readonly property var tabs : {
+        var ret = [];
+        for (var idx = 0; idx < content.length; idx++) {
+            var item = content [idx];
+            if (Introspector.inherits (item, testGroup)) {
+                ret.push (item);
+            }
+        }
+        return ret;
+    }
 
+    Group { id: testGroup; }
     Rectangle {
         id: rect;
         color: Style.colorSecondary;
@@ -118,7 +128,6 @@ Item {
     }
     FocusScope {
         id: container;
-        children: tabs;
         anchors.top: bar.bottom;
         ExtraAnchors.bottomDock: parent;
 
