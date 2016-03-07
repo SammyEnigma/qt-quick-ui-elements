@@ -3,12 +3,29 @@ import qbs;
 Project {
     name: "QtQuick UI Elements";
 
+    property bool noQtPrivateLibs : false;
+
     Product {
         name: "libqtqmltricks-qtquickuielements";
         type: "staticlibrary";
         targetName: "QtQuickUiElements";
+        cpp.defines: {
+            var ret = [];
+            if (project.noQtPrivateLibs) {
+                ret.push ("NO_QT_PRIVATE_LIBS=1");
+            }
+            return ret;
+        }
 
         readonly property stringList qmlImportPaths : [sourceDirectory + "/imports"]; // equivalent to QML_IMPORT_PATH += $$PWD/imports
+        readonly property stringList qtModules : {
+             var ret = ["core", "gui", "qml", "quick", "svg"];
+             if (!project.noQtPrivateLibs) {
+                 ret.push ("core-private");
+                 ret.push ("qml-private");
+             }
+             return ret;
+         }
 
         Export {
             cpp.includePaths: ".";
@@ -16,13 +33,13 @@ Project {
             Depends { name: "cpp"; }
             Depends {
                 name: "Qt";
-                submodules: ["core", "gui", "qml", "quick", "svg"];
+                submodules: product.qtModules;
             }
         }
         Depends { name: "cpp"; }
         Depends {
             name: "Qt";
-            submodules: ["core", "gui", "qml", "quick", "svg"];
+            submodules: product.qtModules;
         }
         Group {
             name: "C++ sources";

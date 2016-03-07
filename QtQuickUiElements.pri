@@ -8,10 +8,21 @@ INCLUDEPATH += $$PWD
 QML_IMPORT_PATH += $$PWD/imports
 
 contains (CONFIG, NO_ICONS_IN_QT_RES) {
+    warning ("QtQmlTricks.UiElements : You disabled icons in QRC, the Faenza Lite icon theme won't be available !")
+
     DEFINES += NO_ICONS_IN_QT_RES
 }
 else {
     RESOURCES += $$PWD/qtqmltricksicons.qrc
+}
+
+contains (CONFIG, NO_QT_PRIVATE_LIBS) {
+    warning ("QtQmlTricks.UiElements : You disabled Qt private libs, some cases won't be handled by QQmlIntrospector::inherits() method !")
+
+    DEFINES += NO_QT_PRIVATE_LIBS
+}
+else {
+    QT += core-private qml-private
 }
 
 OTHER_FILES += \
