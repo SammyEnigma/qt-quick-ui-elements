@@ -12,6 +12,8 @@ QtObject {
 
     property bool useHovering : !isMobile;
 
+    property bool useDarkTheme : false;
+
     property int lineSize : (1 * Screen.devicePixelRatio);
 
     property int roundness : (3 * Screen.devicePixelRatio);
@@ -27,17 +29,17 @@ QtObject {
 
     property color colorNone       : "transparent";
     property color colorDumb       : "#FF00FF"; // magenta
-    property color colorHighlight  : "#85D3FF"; // light blue
-    property color colorSelection  : "#238FCD"; // dark blue
-    property color colorSecondary  : "#A9A9A9"; // dark gray
-    property color colorWindow     : "#D3D3D3"; // light gray
-    property color colorEditable   : "#FFFFFF"; // white
-    property color colorForeground : "#000000"; // black
-    property color colorBorder     : "#808088"; // mid gray
-    property color colorLink       : "#113487"; // dark blue
-    property color colorError      : "#B30000"; // dark red
-    property color colorValid      : "#1F7A1F"; // dark green
-    property color colorBubble     : "#FFF5C1"; // sand yellow
+    property color colorHighlight  : (useDarkTheme ? "#00648B" : "#85D3FF"); // deep blue | light blue
+    property color colorSelection  : (useDarkTheme ? "#0076A8" : "#238FCD"); // water blue | dark blue
+    property color colorSecondary  : (useDarkTheme ? "#333333" : "#A9A9A9"); // darker gray | dark gray
+    property color colorWindow     : (useDarkTheme ? "#212121" : "#D3D3D3"); // very dark gray | light gray
+    property color colorEditable   : (useDarkTheme ? "#000000" : "#FFFFFF"); // black | white
+    property color colorForeground : (useDarkTheme ? "#FFFFFF" : "#000000"); // white | black
+    property color colorBorder     : (useDarkTheme ? "#4F4F4F" : "#808088"); // dark gray | mid gray
+    property color colorLink       : (useDarkTheme ? "#5BBDFF" : "#113487"); // light blue | dark blue
+    property color colorError      : (useDarkTheme ? "#FF5B6B" : "#B30000"); // light red | dark red
+    property color colorValid      : (useDarkTheme ? "#14C321" : "#1F7A1F"); // light green | dark green
+    property color colorBubble     : (useDarkTheme ? "#4F4130" : "#FFF5C1"); // coffee brown | sand yellow
 
     readonly property string fontName : selectFont ([
                                                         "Sail Sans Pro",
