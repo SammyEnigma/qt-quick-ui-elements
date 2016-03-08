@@ -6,9 +6,14 @@ Item {
 
     property alias background : rect.color;
 
+    property int extraPaddingBeforeTabs : 0;
+    property int extraPaddingAfterTabs  : 0;
+
     property Group currentTab : null;
 
     default property alias content : container.children;
+
+    readonly property int tabsSize : (Style.spacingBig * 2);
 
     readonly property var tabs : {
         var ret = [];
@@ -29,11 +34,8 @@ Item {
         ExtraAnchors.topDock: parent;
     }
     Line {
-        anchors {
-            leftMargin: -bar.colSpacing;
-            rightMargin: -bar.colSpacing;
-        }
-        ExtraAnchors.bottomDock: bar;
+        anchors.bottom: bar.bottom;
+        ExtraAnchors.horizontalFill: parent;
     }
     GridContainer {
         id: bar;
@@ -41,14 +43,18 @@ Item {
         cols: capacity;
         capacity: tabs.length;
         colSpacing: Style.spacingSmall;
-        anchors.margins: colSpacing;
+        anchors {
+            topMargin: bar.colSpacing;
+            leftMargin: (bar.colSpacing + extraPaddingBeforeTabs);
+            rightMargin: (bar.colSpacing + extraPaddingAfterTabs);
+        }
         ExtraAnchors.topDock: parent;
 
         Repeater {
             model: tabs;
             delegate: MouseArea {
                 id: clicker;
-                implicitHeight: (Style.spacingBig * 2);
+                implicitHeight: tabsSize;
                 states: [
                     State {
                         name: "text_and_icon";
