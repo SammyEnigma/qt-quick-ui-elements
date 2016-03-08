@@ -11,6 +11,7 @@ FocusScope {
     property int   padding    : Style.spacingNormal;
     property bool  hasClear   : false;
     property bool  isPassword : false;
+    property color backColor  : Style.colorEditable;
     property alias text       : input.text;
     property alias readOnly   : input.readOnly;
     property alias textFont   : input.font;
@@ -38,7 +39,7 @@ FocusScope {
         enabled: base.enabled;
         visible: !readOnly;
         antialiasing: radius;
-        gradient: (enabled ? Style.gradientEditable () : Style.gradientDisabled ());
+        gradient: (enabled ? Style.gradientEditable (backColor) : Style.gradientDisabled ());
         border {
             width: (input.activeFocus ? Style.lineSize * 2 : Style.lineSize);
             color: (input.activeFocus ? Style.colorSelection : Style.colorBorder);
@@ -92,8 +93,8 @@ FocusScope {
                 rotation: -90;
                 gradient: Gradient {
                     GradientStop { position: 0.0; color: Style.colorNone;  }
-                    GradientStop { position: 0.5; color: Style.colorEditable; }
-                    GradientStop { position: 1.0; color: Style.colorEditable; }
+                    GradientStop { position: 0.5; color: backColor; }
+                    GradientStop { position: 1.0; color: backColor; }
                 }
                 anchors {
                     verticalCenter: parent.verticalCenter;
