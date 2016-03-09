@@ -29,5 +29,6 @@
         <file>imports/QtQmlTricks/UiElements.2/SymbolLoader.qml</file>
         <file>imports/QtQmlTricks/UiElements.2/AbstractSymbol.qml</file>
         <file>imports/QtQmlTricks/UiElements.2/Calendar.qml</file>
+        <file>imports/QtQmlTricks/UiElements.2/TimePicker.qml</file>
     </qresource>
 </RCC>
