@@ -5,6 +5,7 @@ singleton Style                         2.0 Style.qml
 AbstractSymbol                          2.0 AbstractSymbol.qml
 Accordion                               2.0 Accordion.qml
 Balloon                                 2.0 Balloon.qml
+Calendar                                2.0 Calendar.qml
 CheckableBox                            2.0 CheckableBox.qml
 ComboList                               2.0 ComboList.qml
 ComboListDelegate                       2.0 ComboListDelegate.qml

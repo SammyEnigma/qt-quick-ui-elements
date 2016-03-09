@@ -28,5 +28,6 @@
         <file>imports/QtQmlTricks/UiElements.2/ComboListDelegateForModelDataAttributes.qml</file>
         <file>imports/QtQmlTricks/UiElements.2/SymbolLoader.qml</file>
         <file>imports/QtQmlTricks/UiElements.2/AbstractSymbol.qml</file>
+        <file>imports/QtQmlTricks/UiElements.2/Calendar.qml</file>
     </qresource>
 </RCC>
