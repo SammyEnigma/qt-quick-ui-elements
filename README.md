@@ -47,7 +47,7 @@ These elements are used as parents for controls :
 
 * `StatusBar` : a simple horizontal set of controls that will be positioned inside a bar at bottom of a page.
 
-* `ZoomAndMoveArea` : an easy-to-use view that can be dragged in X/Y axis and zoomed under cursor using mouse-wheel (just like the Google Maps central view).
+* `ZoomAndMoveArea` : an easy-to-use view that can be dragged in X/Y axis and zoomed under cursor using mouse-wheel (just like the Google Maps central view). It also strouts nice indicators of positions and zoom level while moving or zooming (they disappear after a while). The wheel sensitivity is adjustable, and zoom min/max boundaries too.
 
 
 ## Layouts
