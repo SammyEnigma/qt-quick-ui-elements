@@ -111,13 +111,18 @@ Item {
         onWheel: { priv.doZoomAtPos (wheel.x, wheel.y, wheel.angleDelta.y); }
         onPressed: { priv.doSavePos (mouse.x, mouse.y); }
         onPositionChanged: { priv.doMoveToPos (mouse.x, mouse.y); }
+
+    }
+    Item {
+        id: container;
+        clip: true;
+        children: contentItem;
         states: State {
             when: (contentItem !== null);
 
             PropertyChanges {
                 target: contentItem;
                 scale: contentZoom;
-                parent: container;
                 anchors {
                     verticalCenterOffset: priv.contentOffsetY;
                     horizontalCenterOffset: priv.contentOffsetX;
@@ -131,13 +136,7 @@ Item {
                 }
             }
         }
-    }
-    Item {
-        id: container;
-        clip: true;
         anchors.fill: parent;
-
-        // CONTENT HERE
     }
     Rectangle {
         id: indicatorY;
