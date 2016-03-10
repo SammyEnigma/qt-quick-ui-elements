@@ -5,14 +5,15 @@ FocusScope {
     id: base;
     width: implicitWidth;
     height: implicitHeight;
-    implicitWidth: (input.implicitWidth + input.height * 2);
+    implicitWidth: (showButtons ? input.implicitWidth + input.height * 2 : input.implicitWidth);
     implicitHeight: input.implicitHeight;
 
-    property real step      : 1;
-    property real value     : 0;
-    property real minValue  : 0;
-    property real maxValue  : 100;
-    property int  decimals  : 0;
+    property real step        : 1;
+    property real value       : 0;
+    property real minValue    : 0;
+    property real maxValue    : 100;
+    property int  decimals    : 0;
+    property bool showButtons : true;
 
     TextLabel {
         id: metricsValue;
@@ -32,6 +33,7 @@ FocusScope {
             symbol: Style.symbolMinus;
         }
         width: (height + Style.roundness);
+        visible: showButtons;
         enabled: (base.enabled && value - step >= minValue);
         ExtraAnchors.leftDock: parent;
         onClicked: { value -= step; }
@@ -44,6 +46,7 @@ FocusScope {
             symbol: Style.symbolPlus;
         }
         width: (height + Style.roundness);
+        visible: showButtons;
         enabled: (base.enabled && value + step <= maxValue);
         ExtraAnchors.rightDock: parent;
         onClicked: { value += step; }
@@ -52,20 +55,18 @@ FocusScope {
         id: input;
         focus: true;
         enabled: base.enabled;
-        rounding: 0;
+        rounding: (showButtons ? 0 : Style.roundness);
         hasClear: false;
         textAlign: TextInput.AlignHCenter;
-        textColor: (enabled
-                    ? (notNumber || tooBig || tooSmall
-                       ? Style.colorError
-                       : Style.colorForeground)
-                    : Style.colorBorder);
+        backColor: (flashEffect ? Style.colorError : Style.colorEditable);
+        textColor: (flashEffect ? Style.colorEditable : (hasError ? Style.colorError : Style.colorForeground));
         implicitWidth: (metricsValue.contentWidth + padding * 2);
+        validator: RegExpValidator { regExp: (decimals > 0 ? /\d+\.\d+/ : /\d+/); }
         anchors {
-            left: btnDecrease.right;
-            right: btnIncrease.left;
-            leftMargin: -Style.roundness;
-            rightMargin: -Style.roundness;
+            left: (showButtons ? btnDecrease.right : parent.left);
+            right: (showButtons ? btnIncrease.left : parent.right);
+            leftMargin: (showButtons ? -Style.roundness : 0);
+            rightMargin: (showButtons ? -Style.roundness : 0);
         }
         ExtraAnchors.verticalFill: parent;
         onActiveFocusChanged: {
@@ -84,10 +85,13 @@ FocusScope {
         Keys.onUpPressed:   { btnIncrease.click (); }
         Keys.onDownPressed: { btnDecrease.click (); }
 
+        property bool flashEffect : false;
+
         readonly property var  number    : parseFloat (text);
         readonly property bool notNumber : isNaN (number);
         readonly property bool tooBig    : (!notNumber ? number > maxValue : false);
         readonly property bool tooSmall  : (!notNumber ? number < minValue : false);
+        readonly property bool hasError  : (notNumber || tooBig || tooSmall);
 
         function apply () {
             if (!notNumber && !tooBig && !tooSmall) {
@@ -95,9 +99,21 @@ FocusScope {
             }
             else {
                 text = (base.value.toFixed (decimals));
+                animFlash.start ();
             }
         }
 
         Binding on text { value: (base.value.toFixed (decimals)); }
+        SequentialAnimation on flashEffect {
+            id: animFlash;
+            loops: 2;
+            running: false;
+            alwaysRunToEnd: true;
+
+            PropertyAction { value: true; }
+            PauseAnimation { duration: 100; }
+            PropertyAction { value: false; }
+            PauseAnimation { duration: 100; }
+        }
     }
 }

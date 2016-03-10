@@ -12,10 +12,10 @@ FocusScope {
     property bool  hasClear   : false;
     property bool  isPassword : false;
     property color backColor  : Style.colorEditable;
+    property color textColor  : Style.colorForeground;
     property alias text       : input.text;
     property alias readOnly   : input.readOnly;
     property alias textFont   : input.font;
-    property alias textColor  : input.color;
     property alias textAlign  : input.horizontalAlignment;
     property alias textHolder : holder.text;
     property alias inputMask  : input.inputMask;
@@ -57,7 +57,7 @@ FocusScope {
         TextInput {
             id: input;
             focus: true;
-            color: (enabled ? Style.colorForeground : Style.colorBorder);
+            color: (enabled ? textColor : Style.colorBorder);
             enabled: base.enabled;
             selectByMouse: true;
             selectionColor: Style.colorSelection;
