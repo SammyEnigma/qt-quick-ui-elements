@@ -175,15 +175,10 @@ Item {
             }
         }
     }
-    TextLabel {
-        text: "%1 %".arg ((contentZoom * 100).toFixed (2));
-        color: Style.colorSelection;
+    Column {
+        spacing: Style.spacingSmall;
         visible: showIndicators;
         opacity: (priv.motion ? 1.0 : 0.0);
-        style: Text.Outline;
-        styleColor: Style.colorEditable;
-        font.bold: true;
-        font.pixelSize: Style.fontSizeTitle;
         anchors.margins: Style.spacingNormal;
         ExtraAnchors.topLeftCorner: parent;
 
@@ -191,6 +186,32 @@ Item {
             NumberAnimation {
                 duration: 250;
             }
+        }
+        Rectangle {
+            id: zoomScale;
+            color: Style.colorSelection;
+            width: (Style.spacingBig * 4);
+            height: (Style.lineSize * 2);
+            visible: showIndicators;
+            opacity: (priv.motion ? 1.0 : 0.0);
+
+            Rectangle {
+                id: zoomTick;
+                x: ((parent.width - width) * (contentZoom - contentZoomMin) / (contentZoomMax - contentZoomMin));
+                color: Style.colorSelection;
+                width: (Style.lineSize * 2);
+                height: Style.spacingNormal;
+                anchors.verticalCenter: parent.verticalCenter;
+            }
+        }
+        TextLabel {
+            id: lblZoomPercent;
+            text: "%1 %".arg ((contentZoom * 100).toFixed (2));
+            color: Style.colorSelection;
+            style: Text.Outline;
+            styleColor: Style.colorEditable;
+            font.bold: true;
+            font.pixelSize: Style.fontSizeTitle;
         }
     }
 }
