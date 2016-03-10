@@ -30,3 +30,4 @@ TextButton                              2.0 TextButton.qml
 TextLabel                               2.0 TextLabel.qml
 TimePicker                              2.0 TimePicker.qml
 ToolBar                                 2.0 ToolBar.qml
+ZoomAndMoveArea                         2.0 ZoomAndMoveArea.qml
