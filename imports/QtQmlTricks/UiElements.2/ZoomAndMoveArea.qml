@@ -6,8 +6,9 @@ Item {
 
     property int wheelResolution : 1200; // NOTE : change if zoom is too slow / too fast
 
-    property bool enableMoving  : true;
-    property bool enableZooming : true;
+    property bool enableMoving   : true;
+    property bool enableZooming  : true;
+    property bool showIndicators : true;
 
     property real contentZoom    : 1;
     property real contentZoomMin : 0.05;
@@ -18,8 +19,17 @@ Item {
 
     default property alias content : base.contentItem;
 
+    Timer {
+        id: timer;
+        repeat: false;
+        running: false;
+        interval: 1000;
+        onTriggered: { priv.motion = false; }
+    }
     QtObject {
         id: priv;
+
+        property bool motion : false;
 
         property real lastPosX : 0;
         property real lastPosY : 0;
@@ -32,6 +42,12 @@ Item {
 
         readonly property real contentOffsetXLimit : ((contentZoomedWidth  / 2) - (width  / 2) + contentPadding);
         readonly property real contentOffsetYLimit : ((contentZoomedHeight / 2) - (height / 2) + contentPadding);
+
+        readonly property real positionRatioX : (contentOffsetX + contentOffsetXLimit) / (contentOffsetXLimit * 2);
+        readonly property real positionRatioY : (contentOffsetY + contentOffsetYLimit) / (contentOffsetYLimit * 2);
+
+        readonly property real sizeRatioX : (width  / (contentZoomedWidth  + contentPadding * 2));
+        readonly property real sizeRatioY : (height / (contentZoomedHeight + contentPadding * 2));
 
         function clamp (value, min, max) {
             return (min !== undefined && value < min
@@ -57,8 +73,14 @@ Item {
                               : 0);
         }
 
+        function doRecordMotion () {
+            motion = true;
+            timer.restart ();
+        }
+
         function doSavePos (posX, posY) {
             if (enableMoving) {
+                doRecordMotion ();
                 lastPosX = posX;
                 lastPosY = posY;
             }
@@ -66,6 +88,7 @@ Item {
 
         function doZoomAtPos (posX, posY, zoomDelta) {
             if (enableZooming) {
+                doRecordMotion ();
                 var posOnContentBeforeZoom = mapToItem (contentItem, posX, posY);
                 applyZoom (contentZoom + (contentZoom * (zoomDelta / wheelResolution)));
                 var posOnContentAfterZoom = mapToItem (contentItem, posX, posY);
@@ -76,6 +99,7 @@ Item {
 
         function doMoveToPos (posX, posY) {
             if (enableMoving) {
+                doRecordMotion ();
                 applyOffsetX (contentOffsetX + posX - lastPosX);
                 applyOffsetY (contentOffsetY + posY - lastPosY);
                 doSavePos (posX, posY);
@@ -93,7 +117,7 @@ Item {
             PropertyChanges {
                 target: contentItem;
                 scale: contentZoom;
-                parent: base;
+                parent: container;
                 anchors {
                     verticalCenterOffset: priv.contentOffsetY;
                     horizontalCenterOffset: priv.contentOffsetX;
@@ -102,9 +126,52 @@ Item {
             AnchorChanges {
                 target: contentItem;
                 anchors {
-                    verticalCenter: base.verticalCenter;
-                    horizontalCenter: base.horizontalCenter;
+                    verticalCenter: container.verticalCenter;
+                    horizontalCenter: container.horizontalCenter;
                 }
+            }
+        }
+    }
+    Item {
+        id: container;
+        clip: true;
+        anchors.fill: parent;
+
+        // CONTENT HERE
+    }
+    Rectangle {
+        id: indicatorY;
+        y: (roomY - roomY * priv.positionRatioY);
+        color: Style.colorSelection;
+        width: Style.spacingNormal;
+        height: Math.max (base.height * priv.sizeRatioY, Style.spacingBig * 2);
+        visible: (showIndicators && height < parent.height);
+        opacity: (priv.motion ? 1.0 : 0.0);
+        anchors.right: parent.right;
+
+        readonly property real roomY : (base.height - height);
+
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 250;
+            }
+        }
+    }
+    Rectangle {
+        id: indicatorX;
+        x: (roomX - roomX * priv.positionRatioX);
+        color: Style.colorSelection;
+        width: Math.max (base.width * priv.sizeRatioX, Style.spacingBig * 2);
+        height: Style.spacingNormal;
+        visible: (showIndicators && width < parent.width);
+        opacity: (priv.motion ? 1.0 : 0.0);
+        anchors.bottom: parent.bottom;
+
+        readonly property real roomX : (base.width - width);
+
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 250;
             }
         }
     }
