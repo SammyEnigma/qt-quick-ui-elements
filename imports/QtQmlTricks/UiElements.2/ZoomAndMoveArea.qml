@@ -175,4 +175,22 @@ Item {
             }
         }
     }
+    TextLabel {
+        text: "%1 %".arg ((contentZoom * 100).toFixed (2));
+        color: Style.colorSelection;
+        visible: showIndicators;
+        opacity: (priv.motion ? 1.0 : 0.0);
+        style: Text.Outline;
+        styleColor: Style.colorEditable;
+        font.bold: true;
+        font.pixelSize: Style.fontSizeTitle;
+        anchors.margins: Style.spacingNormal;
+        ExtraAnchors.topLeftCorner: parent;
+
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 250;
+            }
+        }
+    }
 }
