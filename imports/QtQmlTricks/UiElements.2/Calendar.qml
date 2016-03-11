@@ -226,20 +226,30 @@ Item {
                                                             Qt.formatDate (value,     "yyyy-MM-dd"));
 
                         MouseArea {
-                            anchors.fill: parent;
+                            id: clicker;
+                            hoverEnabled: Style.useHovering;
+                            anchors {
+                                fill: parent;
+                                margins: (-Style.spacingNormal / 2);
+                            }
                             onClicked: { value = modelData; }
                         }
                         Rectangle {
                             z: -1;
-                            color: (enabled ? Style.colorSelection : Style.colorSecondary);
+                            color: (enabled
+                                    ? (clicker.containsMouse
+                                       ? Style.opacify ( Style.colorHighlight, 0.65)
+                                       : Style.colorSelection)
+                                    : Style.colorSecondary);
                             width: size;
                             height: size;
                             radius: (size / 2);
-                            visible: day.isCurrent;
+                            visible: (day.isCurrent || clicker.containsMouse );
                             antialiasing: radius;
                             anchors.centerIn: parent;
 
-                            readonly property int size : Math.max (parent.contentHeight, parent.contentWidth) + Style.spacingNormal;
+                            readonly property int size : Math.max (parent.contentHeight,
+                                                                   parent.contentWidth) + Style.spacingNormal;
                         }
                     }
                 }
