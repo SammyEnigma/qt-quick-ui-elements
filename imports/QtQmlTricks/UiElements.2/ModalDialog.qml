@@ -134,24 +134,41 @@ FocusScope {
             spacing: Style.spacingNormal;
 
             Stretcher { }
-            Repeater {
-                model: [
-                    { "type" : buttonCancel, "label" : qsTr ("Cancel"), "symbol" : Style.symbolCross },
-                    { "type" : buttonNo,     "label" : qsTr ("No"),     "symbol" : Style.symbolCross },
-                    { "type" : buttonReject, "label" : qsTr ("Reject"), "symbol" : Style.symbolCross },
-                    { "type" : buttonAccept, "label" : qsTr ("Accept"), "symbol" : Style.symbolCheck },
-                    { "type" : buttonYes,    "label" : qsTr ("Yes"),    "symbol" : Style.symbolCheck },
-                    { "type" : buttonOk,     "label" : qsTr ("Ok"),     "symbol" : Style.symbolCheck },
-                ];
-                delegate: TextButton {
-                    text: (modelData ["label"] || "");
-                    icon: SymbolLoader {
-                        size: Style.fontSizeNormal;
-                        color: Style.colorForeground;
-                        symbol: (modelData ["symbol"] || null);
+            GridContainer {
+                cols: capacity;
+                capacity: repeater.entries.length;
+                colSpacing: Style.spacingNormal;
+
+                Repeater {
+                    id: repeater;
+                    model: entries;
+                    delegate: TextButton {
+                        text: (modelData ["label"] || "");
+                        icon: SymbolLoader {
+                            size: Style.fontSizeNormal;
+                            color: Style.colorForeground;
+                            symbol: (modelData ["symbol"] || null);
+                        }
+                        onClicked: { base.buttonClicked (modelData ["type"] || 0); }
                     }
-                    visible: (buttons & (modelData ["type"] || 0));
-                    onClicked: { base.buttonClicked (modelData ["type"] || 0); }
+
+                    readonly property var entries : {
+                        var ret = [];
+                        var tmp = [
+                                    { "type" : buttonCancel, "label" : qsTr ("Cancel"), "symbol" : Style.symbolCross },
+                                    { "type" : buttonNo,     "label" : qsTr ("No"),     "symbol" : Style.symbolCross },
+                                    { "type" : buttonReject, "label" : qsTr ("Reject"), "symbol" : Style.symbolCross },
+                                    { "type" : buttonAccept, "label" : qsTr ("Accept"), "symbol" : Style.symbolCheck },
+                                    { "type" : buttonYes,    "label" : qsTr ("Yes"),    "symbol" : Style.symbolCheck },
+                                    { "type" : buttonOk,     "label" : qsTr ("Ok"),     "symbol" : Style.symbolCheck },
+                                ];
+                        tmp.forEach (function (item) {
+                            if (buttons & (item ["type"] || 0)) {
+                                ret.push (item);
+                            }
+                        });
+                        return ret;
+                    }
                 }
             }
             Stretcher { }
