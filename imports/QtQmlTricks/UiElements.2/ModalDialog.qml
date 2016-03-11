@@ -85,9 +85,10 @@ FocusScope {
         TextLabel {
             id: lblTitle;
             text: base.title;
+            visible: (text.trim () !== "");
             font.pixelSize: Style.fontSizeTitle;
         }
-        Line { }
+        Line { visible: lblTitle.visible; }
         Stretcher {
             implicitHeight: lblMsg.contentHeight;
             implicitWidth: Math.max (Math.min (lblMsg.contentWidth, 600), 400);
@@ -106,6 +107,7 @@ FocusScope {
                     }
                     return ret;
                 }
+                visible: (text.trim () !== "");
                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere;
                 horizontalAlignment: Text.AlignJustify;
                 ExtraAnchors.horizontalFill: parent;
