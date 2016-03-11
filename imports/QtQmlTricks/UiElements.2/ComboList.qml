@@ -211,6 +211,7 @@ Item {
                         delegate: MouseArea {
                             width: implicitWidth;
                             height: implicitHeight;
+                            hoverEnabled: Style.useHovering;
                             implicitWidth: (loader.width + padding * 2);
                             implicitHeight: (loader.height + padding * 2);
                             onClicked: {
@@ -219,6 +220,13 @@ Item {
                             }
                             ExtraAnchors.horizontalFill: parent;
 
+                            Rectangle {
+                                color: Style.colorHighlight;
+                                opacity: 0.65;
+                                visible: parent.containsMouse;
+                                anchors.fill: parent;
+                                anchors.margins: frame.border.width;
+                            }
                             Loader {
                                 id: loader;
                                 sourceComponent: base.delegate;
