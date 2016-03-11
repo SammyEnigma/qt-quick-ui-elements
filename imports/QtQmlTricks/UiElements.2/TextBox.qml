@@ -66,7 +66,7 @@ FocusScope {
             echoMode: (isPassword ? TextInput.Password : TextInput.Normal);
             font {
                 family: Style.fontName;
-                weight: Font.Light;
+                weight: (Style.useSlimFonts ? Font.Light : Font.Normal);
                 pixelSize: Style.fontSizeNormal;
             }
             anchors {

@@ -15,7 +15,7 @@ ComboListDelegate {
     TextLabel {
         id: lbl;
         text: base.value;
-        font.weight: (base.active ? Font.Bold : Font.Light);
+        font.weight: (base.active ? Font.Bold : (Style.useSlimFonts ? Font.Light : Font.Normal));
         anchors.verticalCenter: parent.verticalCenter;
     }
 }

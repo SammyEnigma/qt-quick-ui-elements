@@ -124,7 +124,7 @@ MouseArea {
         visible: (item !== null);
         anchors.margins: padding;
     }
-    Text {
+    TextLabel {
         id: lbl;
         color: (enabled
                 ? (checked
@@ -136,7 +136,6 @@ MouseArea {
         horizontalAlignment: (ico.visible ? Text.AlignLeft : Text.AlignHCenter);
         font {
             family: Style.fontName;
-            weight: Font.Light;
             pixelSize: Style.fontSizeNormal;
         }
         anchors.margins: padding;

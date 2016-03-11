@@ -7,7 +7,7 @@ Text {
     renderType: (Style.useNativeText ? Text.NativeRendering : Text.QtRendering);
     verticalAlignment: Text.AlignVCenter;
     font {
-        weight: Font.Light;
+        weight: (Style.useSlimFonts ? Font.Light : Font.Normal);
         family: Style.fontName;
         pixelSize: Style.fontSizeNormal;
     }

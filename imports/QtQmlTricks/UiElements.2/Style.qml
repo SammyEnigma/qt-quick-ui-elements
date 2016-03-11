@@ -10,6 +10,8 @@ QtObject {
 
     property bool useNativeText : false;
 
+    property bool useSlimFonts : true;
+
     property bool useHovering : !isMobile;
 
     property bool useDarkTheme : false;
