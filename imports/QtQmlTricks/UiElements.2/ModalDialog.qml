@@ -123,6 +123,7 @@ FocusScope {
 
             StretchColumnContainer {
                 id: container;
+                spacing: Style.spacingBig;
                 ExtraAnchors.topDock: parent;
             }
         }

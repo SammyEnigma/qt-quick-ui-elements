@@ -5,13 +5,11 @@ import QtQmlTricks.UiElements 2.0;
 Item {
     id: base;
 
-    property alias title       : labelTitle.text;
+    property string fileUrl : "";
+
     property alias folder      : modelFS.folder;
     property alias rootFolder  : modelFS.rootFolder;
     property alias nameFilters : modelFS.nameFilters;
-
-    signal selected (string fileUrl);
-    signal canceled ();
 
     MimeIconsHelper {
         id: mimeHelper;
@@ -29,11 +27,6 @@ Item {
         spacing: Style.spacingNormal;
         anchors.fill: parent;
 
-        TextLabel {
-            id: labelTitle;
-            text: "Choose a file";
-            font.pixelSize: Style.fontSizeTitle;
-        }
         StretchRowContainer {
             spacing: Style.spacingBig;
             ExtraAnchors.horizontalFill: parent;
@@ -79,6 +72,7 @@ Item {
                     onClicked: {
                         if (!model.fileIsDir) {
                             list.currentIndex = model.index;
+                            fileUrl = model.fileURL.toString ();
                         }
                         else {
                             list.currentIndex = -1;
@@ -90,7 +84,7 @@ Item {
                             folder = model.fileURL;
                         }
                         else {
-                            selected (model.fileURL.toString ());
+                            fileUrl = model.fileURL.toString ();
                         }
                     }
 
@@ -129,49 +123,15 @@ Item {
                 }
             }
         }
-        StretchRowContainer {
-            spacing: Style.spacingBig;
-            ExtraAnchors.horizontalFill: parent;
-
-            TextButton {
-                text: "Cancel";
-                icon: SymbolLoader {
-                    size: Style.fontSizeNormal;
-                    color: (enabled ? Style.colorForeground : Style.colorBorder);
-                    symbol: Style.symbolCross;
-                }
-                anchors.verticalCenter: parent.verticalCenter;
-                onClicked: { base.canceled (); }
-            }
-            Item {
-                implicitWidth: -1;
-                anchors.verticalCenter: parent.verticalCenter;
-
-                TextLabel {
-                    text: (list.currentIndex > -1 && list.currentIndex < modelFS.count
-                           ? modelFS.get (list.currentIndex, "fileName")
-                           : "");
-                    font.pixelSize: Style.fontSizeNormal;
-                    width: (parent.parent.colSpacing + parent.width * 2);
-                    elide: Text.ElideMiddle;
-                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere;
-                    verticalAlignment: Text.AlignVCenter;
-                    horizontalAlignment: Text.AlignHCenter;
-                    anchors.verticalCenter: parent.verticalCenter;
-                    ExtraAnchors.horizontalFill: parent;
-                }
-            }
-            TextButton {
-                text: "Accept";
-                icon: SymbolLoader {
-                    size: Style.fontSizeNormal;
-                    color: (enabled ? Style.colorForeground : Style.colorBorder);
-                    symbol: Style.symbolCheck;
-                }
-                enabled: (list.currentIndex > -1 && list.currentIndex < list.count);
-                anchors.verticalCenter: parent.verticalCenter;
-                onClicked: { selected (modelFS.get (list.currentIndex, "fileURL").toString ()); }
-            }
+        TextLabel {
+            text: (list.currentIndex > -1 && list.currentIndex < modelFS.count
+                   ? modelFS.get (list.currentIndex, "fileName")
+                   : "");
+            font.pixelSize: Style.fontSizeNormal;
+            elide: Text.ElideMiddle;
+            wrapMode: Text.WrapAtWordBoundaryOrAnywhere;
+            verticalAlignment: Text.AlignVCenter;
+            horizontalAlignment: Text.AlignHCenter;
         }
     }
 }
