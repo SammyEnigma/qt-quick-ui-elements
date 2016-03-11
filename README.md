@@ -98,5 +98,7 @@ These are the helpers and utilities that don't fit in previous categories :
 
 * `Balloon` : a nice component that can contain a title, a text block and an image, and can be used to provide help or hints in the UI (e.g: in the side bars, or as temporary OSD...).
 
+* `ModalDialog` : a configurable dialog, with title/message, and standard buttons (OK, Yes/No, Cancel, etc...), which can have custom components added to it (like text input, or file selector or anything else), packaged in a nice event-based API that is easy to use. As a bonus, there is a "shake" effect that can be triggered when wanted (for example if the input is not correct).
+
 
 > NOTE : If you want to donate, use this link : [![Flattr this](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=thebootroo&url=http://gitlab.unique-conception.org/qt-qml-tricks/qt-quick-ui-elements)
