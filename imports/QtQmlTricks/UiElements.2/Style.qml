@@ -6,33 +6,32 @@ import QtQmlTricks.UiElements 2.0;
 QtObject {
     id: style;
 
-    property bool isMobile : (Qt.platform.os === "android" || Qt.platform.os === "ios");
+    property bool isMobile : (Qt.platform.os === "android"   ||
+                              Qt.platform.os === "ios"       ||
+                              Qt.platform.os === "winphone"  ||
+                              Qt.platform.os === "blackberry");
 
+    property bool useHovering   : !isMobile;
+    property bool useSlimFonts  : true;
+    property bool useDarkTheme  : false;
     property bool useNativeText : false;
-
-    property bool useSlimFonts : true;
-
-    property bool useHovering : !isMobile;
-
-    property bool useDarkTheme : false;
 
     property int themeFadeTime : 850;
 
-    property int lineSize : (1 * Screen.devicePixelRatio);
-
+    property int lineSize  : (1 * Screen.devicePixelRatio);
     property int roundness : (3 * Screen.devicePixelRatio);
 
     property int spacingNormal : ((isMobile ? 15 : 8) * Screen.devicePixelRatio);
     property int spacingSmall  : Math.round (spacingNormal / 2);
     property int spacingBig    : Math.round (spacingNormal * 2);
 
-    property int fontSizeNormal : ((isMobile ? 24 : 16) * Screen.devicePixelRatio);
+    property int fontSizeNormal : ((isMobile ? 24 : 14) * Screen.devicePixelRatio);
     property int fontSizeSmall  : Math.round (fontSizeNormal * 0.85);
     property int fontSizeBig    : Math.round (fontSizeNormal * 1.15);
     property int fontSizeTitle  : Math.round (fontSizeNormal * 1.25);
 
-    property color colorNone       : "transparent";
     property color colorDumb       : "#FF00FF"; // magenta
+    property color colorNone       : "transparent";
     property color colorHighlight  : (useDarkTheme ? "#00648B" : "#85D3FF"); // deep blue | light blue
     property color colorSelection  : (useDarkTheme ? "#0076A8" : "#238FCD"); // water blue | dark blue
     property color colorSecondary  : (useDarkTheme ? "#333333" : "#A9A9A9"); // darker gray | dark gray
@@ -59,31 +58,31 @@ QtObject {
     Behavior on colorValid      { ColorAnimation { duration: themeFadeTime; } }
     Behavior on colorBubble     { ColorAnimation { duration: themeFadeTime; } }
 
-    readonly property string fontName : selectFont ([
-                                                        "Sail Sans Pro",
-                                                        "Source Sans Pro",
-                                                        "Ubuntu",
-                                                        "Roboto",
-                                                        "Droid Sans",
-                                                        "Liberation Sans",
-                                                        "Trebuchet MS",
-                                                        "Deja Vu Sans",
-                                                        "Tahoma",
-                                                        "Helvetica",
-                                                        "Arial",
-                                                    ],
-                                                    "sans-serif");
+    property string fontName : selectFont ([
+                                               "Sail Sans Pro",
+                                               "Source Sans Pro",
+                                               "Ubuntu",
+                                               "Roboto",
+                                               "Droid Sans",
+                                               "Liberation Sans",
+                                               "Trebuchet MS",
+                                               "Deja Vu Sans",
+                                               "Tahoma",
+                                               "Helvetica",
+                                               "Arial",
+                                           ],
+                                           "sans-serif");
 
-    readonly property string fontFixedName : selectFont ([
-                                                             "Ubuntu Mono",
-                                                             "Roboto Mono",
-                                                             "Liberation Mono",
-                                                             "Droid Mono",
-                                                             "Deja Vu Mono",
-                                                             "Lucida Console",
-                                                             "Courier New",
-                                                         ],
-                                                         "monospace");
+    property string fontFixedName : selectFont ([
+                                                    "Ubuntu Mono",
+                                                    "Roboto Mono",
+                                                    "Liberation Mono",
+                                                    "Droid Mono",
+                                                    "Deja Vu Mono",
+                                                    "Lucida Console",
+                                                    "Courier New",
+                                                ],
+                                                "monospace");
 
     property Component symbolCross : Component {
         AbstractSymbol {
