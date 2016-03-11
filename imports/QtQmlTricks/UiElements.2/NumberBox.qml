@@ -103,7 +103,7 @@ FocusScope {
             }
         }
 
-        Binding on text { value: (base.value.toFixed (decimals)); }
+        Binding on text { value: (isNaN (base.value) ? "" : base.value.toFixed (decimals)); }
         SequentialAnimation on flashEffect {
             id: animFlash;
             loops: 2;
