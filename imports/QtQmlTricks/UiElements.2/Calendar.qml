@@ -99,11 +99,36 @@ Item {
                 }
             }
             Stretcher { }
-            TextLabel {
-                text: currentYear;
-                horizontalAlignment: Text.AlignHCenter;
-                font.pixelSize: Style.fontSizeTitle;
+            MouseArea {
+                implicitWidth: editYear.implicitWidth;
+                implicitHeight: editYear.implicitHeight
                 anchors.verticalCenter: parent.verticalCenter;
+                onClicked: {
+                    editYear.visible = true;
+                    editYear.forceActiveFocus ();
+                }
+
+                TextLabel {
+                    visible: !editYear.visible;
+                    anchors.centerIn: parent;
+
+                    Binding on text { value: currentYear; }
+                }
+                NumberBox {
+                    id: editYear;
+                    visible: false;
+                    minValue: -3000;
+                    maxValue: +3000;
+                    showButtons: false;
+                    anchors.centerIn: parent;
+                    onValueChanged: {
+                        currentYear = value;
+                        focus = false;
+                        visible = false;
+                    }
+
+                    Binding on value { value: currentYear; }
+                }
             }
             Stretcher { }
             SymbolLoader {
@@ -232,7 +257,10 @@ Item {
                                 fill: parent;
                                 margins: (-Style.spacingNormal / 2);
                             }
-                            onClicked: { value = modelData; }
+                            onClicked: {
+                                day.forceActiveFocus ();
+                                value = modelData;
+                            }
                         }
                         Rectangle {
                             z: -1;
