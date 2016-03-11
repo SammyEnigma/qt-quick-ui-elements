@@ -40,8 +40,8 @@ FocusScope {
     }
     Rectangle {
         id: dimmer;
-        color: Style.colorForeground;
-        opacity: 0.65;
+        color: Style.colorEditable;
+        opacity: 0.45;
         anchors.fill: parent;
     }
     Rectangle {
