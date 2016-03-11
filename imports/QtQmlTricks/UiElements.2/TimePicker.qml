@@ -44,8 +44,9 @@ Item {
                 symbol: Style.symbolArrowUp;
                 anchors.horizontalCenter: parent.horizontalCenter;
 
-                MouseArea {
+                AutoRepeatableClicker {
                     id: clickerIncrHours;
+                    autoRepeat: true;
                     hoverEnabled: Style.useHovering;
                     anchors.fill: parent;
                     onClicked: { hours = (hours < 23 ? hours +1 : 0); }
@@ -95,8 +96,9 @@ Item {
                 symbol: Style.symbolArrowDown;
                 anchors.horizontalCenter: parent.horizontalCenter;
 
-                MouseArea {
+                AutoRepeatableClicker {
                     id: clickerDecrHours;
+                    autoRepeat: true;
                     hoverEnabled: Style.useHovering;
                     anchors.fill: parent;
                     onClicked: { hours = (hours > 0 ? hours -1 : 23); }
@@ -122,8 +124,9 @@ Item {
                 symbol: Style.symbolArrowUp;
                 anchors.horizontalCenter: parent.horizontalCenter;
 
-                MouseArea {
+                AutoRepeatableClicker {
                     id: clickerIncrMinutes;
+                    autoRepeat: true;
                     hoverEnabled: Style.useHovering;
                     anchors.fill: parent;
                     onClicked: { minutes = (minutes < 59 ? minutes +1 : 0); }
@@ -173,8 +176,9 @@ Item {
                 symbol: Style.symbolArrowDown;
                 anchors.horizontalCenter: parent.horizontalCenter;
 
-                MouseArea {
+                AutoRepeatableClicker {
                     id: clickerDecrMinutes;
+                    autoRepeat: true;
                     hoverEnabled: Style.useHovering;
                     anchors.fill: parent;
                     onClicked: { minutes = (minutes > 0 ? minutes -1 : 59); }
@@ -200,8 +204,9 @@ Item {
                 symbol: Style.symbolArrowUp;
                 anchors.horizontalCenter: parent.horizontalCenter;
 
-                MouseArea {
+                AutoRepeatableClicker {
                     id: clickerIncrSecondes;
+                    autoRepeat: true;
                     hoverEnabled: Style.useHovering;
                     anchors.fill: parent;
                     onClicked: { seconds = (seconds < 59 ? seconds +1 : 0); }
@@ -251,8 +256,9 @@ Item {
                 symbol: Style.symbolArrowDown;
                 anchors.horizontalCenter: parent.horizontalCenter;
 
-                MouseArea {
+                AutoRepeatableClicker {
                     id: clickerDecrSeconds;
+                    autoRepeat: true;
                     hoverEnabled: Style.useHovering;
                     anchors.fill: parent;
                     onClicked: { seconds = (seconds > 0 ? seconds -1 : 59); }

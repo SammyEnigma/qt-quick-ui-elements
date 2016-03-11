@@ -32,5 +32,6 @@
         <file>imports/QtQmlTricks/UiElements.2/TimePicker.qml</file>
         <file>imports/QtQmlTricks/UiElements.2/ZoomAndMoveArea.qml</file>
         <file>imports/QtQmlTricks/UiElements.2/ModalDialog.qml</file>
+        <file>imports/QtQmlTricks/UiElements.2/AutoRepeatableClicker.qml</file>
     </qresource>
 </RCC>

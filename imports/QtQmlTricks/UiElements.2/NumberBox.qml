@@ -27,47 +27,19 @@ FocusScope {
     }
     TextButton {
         id: btnDecrease;
+        width: (height + Style.roundness);
         icon: SymbolLoader {
             size: Style.fontSizeNormal;
             color: (enabled ? Style.colorForeground : Style.colorBorder);
             symbol: Style.symbolMinus;
         }
-        width: (height + Style.roundness);
         visible: showButtons;
         enabled: (base.enabled && value - step >= minValue);
+        autoRepeat: true;
         ExtraAnchors.leftDock: parent;
-        onPressed: {
-            timerAutoRepeatDecrease.start ();
-        }
-        onReleased: {
-            if (timerAutoRepeatDecrease.running) {
-                timerAutoRepeatDecrease.stop ();
-                value -= step;
-            }
-            else {
-                timerDecrease.stop ();
-            }
-        }
-
-        Timer {
-            id: timerAutoRepeatDecrease;
-            repeat: false;
-            running: false;
-            interval: 800;
-            onTriggered: {
-                timerDecrease.start ();
-            }
-        }
-        Timer {
-            id: timerDecrease;
-            repeat: true;
-            running: false;
-            interval: 30
-            triggeredOnStart: true;
-            onTriggered: {
-                if (value - step >= minValue) {
-                    value -= step;;
-                }
+        onClicked: {
+            if (value - step >= minValue) {
+                value -= step;;
             }
         }
     }
@@ -81,39 +53,11 @@ FocusScope {
         width: (height + Style.roundness);
         visible: showButtons;
         enabled: (base.enabled && value + step <= maxValue);
+        autoRepeat: true;
         ExtraAnchors.rightDock: parent;
-        onPressed: {
-            timerAutoRepeatIncrease.start ();
-        }
-        onReleased: {
-            if (timerAutoRepeatIncrease.running) {
-                timerAutoRepeatIncrease.stop ();
+        onClicked: {
+            if (value + step <= maxValue) {
                 value += step;
-            }
-            else {
-                timerIncrease.stop ();
-            }
-        }
-
-        Timer {
-            id: timerAutoRepeatIncrease;
-            repeat: false;
-            running: false;
-            interval: 800;
-            onTriggered: {
-                timerIncrease.start ();
-            }
-        }
-        Timer {
-            id: timerIncrease;
-            repeat: true;
-            running: false;
-            interval: 30
-            triggeredOnStart: true;
-            onTriggered: {
-                if (value + step <= maxValue) {
-                    value += step;
-                }
             }
         }
     }

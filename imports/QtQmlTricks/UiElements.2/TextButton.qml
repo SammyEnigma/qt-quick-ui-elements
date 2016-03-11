@@ -1,7 +1,7 @@
 import QtQuick 2.1;
 import QtQmlTricks.UiElements 2.0;
 
-MouseArea {
+AutoRepeatableClicker {
     id: clicker;
     width: implicitWidth;
     height: implicitHeight;
