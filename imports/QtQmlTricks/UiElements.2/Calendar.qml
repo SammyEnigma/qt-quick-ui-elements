@@ -213,7 +213,7 @@ Item {
                         id: day;
                         color: (enabled
                                 ? (isCurrent
-                                   ? Style.colorLink
+                                   ? Style.colorEditable
                                    : (modelData.getMonth () +1 === currentMonth
                                       ? Style.colorForeground
                                       : Style.colorBorder))
@@ -230,21 +230,16 @@ Item {
                             onClicked: { value = modelData; }
                         }
                         Rectangle {
-                            color: Style.colorNone;
+                            z: -1;
+                            color: (enabled ? Style.colorSelection : Style.colorSecondary);
                             width: size;
                             height: size;
                             radius: (size / 2);
                             visible: day.isCurrent;
                             antialiasing: radius;
-                            border {
-                                width: 1;
-                                color: (enabled ? Style.colorSelection : Style.colorBorder);
-                            }
                             anchors.centerIn: parent;
 
-                            readonly property int size : Math.max (parent.contentHeight,
-                                                                   parent.contentWidth)
-                                                         + Style.spacingNormal;
+                            readonly property int size : Math.max (parent.contentHeight, parent.contentWidth) + Style.spacingNormal;
                         }
                     }
                 }
