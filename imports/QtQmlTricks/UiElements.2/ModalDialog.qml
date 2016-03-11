@@ -11,6 +11,9 @@ FocusScope {
 
     property int buttons : (buttonOk | buttonCancel);
 
+    property int minWidth : 400;
+    property int maxWidth : 600;
+
     readonly property int buttonOk     : (1 << 0);
     readonly property int buttonYes    : (1 << 1);
     readonly property int buttonNo     : (1 << 2);
@@ -91,7 +94,7 @@ FocusScope {
         Line { visible: lblTitle.visible; }
         Stretcher {
             implicitHeight: lblMsg.contentHeight;
-            implicitWidth: Math.max (Math.min (lblMsg.contentWidth, 600), 400);
+            implicitWidth: Math.max (Math.min (lblMsg.contentWidth, maxWidth), minWidth);
 
             TextLabel {
                 id: lblMsg;
@@ -115,7 +118,7 @@ FocusScope {
         }
         Stretcher {
             visible: (container.children.length > 0);
-            implicitWidth: Math.max (Math.min (container.implicitWidth, 600), 400);
+            implicitWidth: Math.max (Math.min (container.implicitWidth, maxWidth), minWidth);
             implicitHeight: container.implicitHeight;
 
             StretchColumnContainer {
