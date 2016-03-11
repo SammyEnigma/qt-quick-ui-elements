@@ -2,7 +2,7 @@ import QtQuick 2.1;
 import QtQmlTricks.UiElements 2.0;
 
 ComboListDelegate {
-    id: self;
+    id: base;
     key: (model ? model [roleKey] : undefined);
     value: (model ? model [roleValue] : "");
     width: implicitWidth;
@@ -17,8 +17,8 @@ ComboListDelegate {
 
     TextLabel {
         id: lbl;
-        text: self.value;
-        font.bold: self.active;
+        text: base.value;
+        font.weight: (base.active ? Font.Bold : Font.Light);
         anchors.verticalCenter: parent.verticalCenter;
     }
 }
