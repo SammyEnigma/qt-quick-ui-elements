@@ -93,6 +93,7 @@ FocusScope {
         }
         Line { visible: lblTitle.visible; }
         Stretcher {
+            visible: lblMsg.visible;
             implicitHeight: lblMsg.contentHeight;
             implicitWidth: Math.max (Math.min (lblMsg.contentWidth, maxWidth), minWidth);
 
