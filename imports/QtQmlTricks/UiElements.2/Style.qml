@@ -33,6 +33,7 @@ QtObject {
     property color colorSelection  : (useDarkTheme ? "#0076A8" : "#238FCD"); // water blue | dark blue
     property color colorSecondary  : (useDarkTheme ? "#333333" : "#A9A9A9"); // darker gray | dark gray
     property color colorWindow     : (useDarkTheme ? "#212121" : "#D3D3D3"); // very dark gray | light gray
+    property color colorClickable  : (useDarkTheme ? "#2E2E2E" : "#C7C7C7"); // very dark gray | light gray
     property color colorEditable   : (useDarkTheme ? "#000000" : "#FFFFFF"); // black | white
     property color colorForeground : (useDarkTheme ? "#FFFFFF" : "#000000"); // white | black
     property color colorBorder     : (useDarkTheme ? "#4F4F4F" : "#808088"); // dark gray | mid gray
@@ -350,11 +351,11 @@ QtObject {
     }
 
     function gradientIdle (baseColor) {
-        return generateGradient (templateGradientRaised, baseColor || colorWindow);
+        return generateGradient (templateGradientRaised, baseColor || colorClickable);
     }
 
     function gradientPressed (baseColor) {
-        return generateGradient (templateGradientSunken, baseColor || colorWindow);
+        return generateGradient (templateGradientSunken, baseColor || colorClickable);
     }
 
     function gradientChecked (baseColor) {

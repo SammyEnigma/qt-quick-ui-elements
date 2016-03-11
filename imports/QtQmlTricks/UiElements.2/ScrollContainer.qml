@@ -178,7 +178,7 @@ FocusScope {
 
                 Rectangle {
                     id: handleHoriz;
-                    color: Style.colorWindow;
+                    color: Style.colorClickable;
                     radius: (indicatorOnly ? 2 : 5);
                     visible: (flickableItem && flickableItem.visibleArea.widthRatio < 1.0);
                     antialiasing: true;
@@ -253,7 +253,7 @@ FocusScope {
 
                 Rectangle {
                     id: handleVertic;
-                    color: Style.colorWindow;
+                    color: Style.colorClickable;
                     radius: (indicatorOnly ? 2 : 5);
                     visible: (flickableItem && flickableItem.visibleArea.heightRatio < 1.0);
                     antialiasing: true;

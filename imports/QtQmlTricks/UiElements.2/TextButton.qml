@@ -83,7 +83,7 @@ MouseArea {
     property int   padding       : Style.spacingNormal;
     property bool  flat          : false;
     property bool  checked       : false;
-    property color backColor     : Style.colorWindow;
+    property color backColor     : Style.colorClickable;
     property color textColor     : Style.colorForeground;
     property alias text          : lbl.text;
     property alias textFont      : lbl.font;

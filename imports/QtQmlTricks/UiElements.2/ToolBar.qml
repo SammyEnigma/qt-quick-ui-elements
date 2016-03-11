@@ -4,7 +4,7 @@ import QtQmlTricks.UiElements 2.0;
 Rectangle {
     id: toolbar;
     height: (layout.height + layout.anchors.margins * 2);
-    gradient: Style.gradientIdle ();
+    gradient: Style.gradientIdle (Style.colorWindow);
     ExtraAnchors.topDock: parent;
 
     default property alias content : layout.data;
