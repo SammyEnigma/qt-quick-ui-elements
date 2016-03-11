@@ -36,7 +36,40 @@ FocusScope {
         visible: showButtons;
         enabled: (base.enabled && value - step >= minValue);
         ExtraAnchors.leftDock: parent;
-        onClicked: { value -= step; }
+        onPressed: {
+            timerAutoRepeatDecrease.start ();
+        }
+        onReleased: {
+            if (timerAutoRepeatDecrease.running) {
+                timerAutoRepeatDecrease.stop ();
+                value -= step;
+            }
+            else {
+                timerDecrease.stop ();
+            }
+        }
+
+        Timer {
+            id: timerAutoRepeatDecrease;
+            repeat: false;
+            running: false;
+            interval: 800;
+            onTriggered: {
+                timerDecrease.start ();
+            }
+        }
+        Timer {
+            id: timerDecrease;
+            repeat: true;
+            running: false;
+            interval: 30
+            triggeredOnStart: true;
+            onTriggered: {
+                if (value - step >= minValue) {
+                    value -= step;;
+                }
+            }
+        }
     }
     TextButton {
         id: btnIncrease;
@@ -49,7 +82,40 @@ FocusScope {
         visible: showButtons;
         enabled: (base.enabled && value + step <= maxValue);
         ExtraAnchors.rightDock: parent;
-        onClicked: { value += step; }
+        onPressed: {
+            timerAutoRepeatIncrease.start ();
+        }
+        onReleased: {
+            if (timerAutoRepeatIncrease.running) {
+                timerAutoRepeatIncrease.stop ();
+                value += step;
+            }
+            else {
+                timerIncrease.stop ();
+            }
+        }
+
+        Timer {
+            id: timerAutoRepeatIncrease;
+            repeat: false;
+            running: false;
+            interval: 800;
+            onTriggered: {
+                timerIncrease.start ();
+            }
+        }
+        Timer {
+            id: timerIncrease;
+            repeat: true;
+            running: false;
+            interval: 30
+            triggeredOnStart: true;
+            onTriggered: {
+                if (value + step <= maxValue) {
+                    value += step;
+                }
+            }
+        }
     }
     TextBox {
         id: input;
