@@ -30,5 +30,7 @@
         <file>imports/QtQmlTricks/UiElements.2/AbstractSymbol.qml</file>
         <file>imports/QtQmlTricks/UiElements.2/Calendar.qml</file>
         <file>imports/QtQmlTricks/UiElements.2/TimePicker.qml</file>
-        <file>imports/QtQmlTricks/UiElements.2/ZoomAndMoveArea.qml</file>    </qresource>
+        <file>imports/QtQmlTricks/UiElements.2/ZoomAndMoveArea.qml</file>
+        <file>imports/QtQmlTricks/UiElements.2/ModalDialog.qml</file>
+    </qresource>
 </RCC>

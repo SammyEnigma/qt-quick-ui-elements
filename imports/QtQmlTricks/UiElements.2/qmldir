@@ -15,6 +15,7 @@ ComboListDelegateForModelDataAttributes 2.0 ComboListDelegateForModelDataAttribu
 FileSelector                            2.0 FileSelector.qml
 Group                                   2.0 Group.qml
 Line                                    2.0 Line.qml
+ModalDialog                             2.0 ModalDialog.qml
 MultiLineTextBox                        2.0 MultiLineTextBox.qml
 NumberBox                               2.0 NumberBox.qml
 ProgressJauge                           2.0 ProgressJauge.qml
