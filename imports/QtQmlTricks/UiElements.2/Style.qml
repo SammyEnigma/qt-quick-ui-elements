@@ -16,6 +16,8 @@ QtObject {
 
     property bool useDarkTheme : false;
 
+    property int themeFadeTime : 850;
+
     property int lineSize : (1 * Screen.devicePixelRatio);
 
     property int roundness : (3 * Screen.devicePixelRatio);
@@ -43,6 +45,19 @@ QtObject {
     property color colorError      : (useDarkTheme ? "#FF5B6B" : "#B30000"); // light red | dark red
     property color colorValid      : (useDarkTheme ? "#14C321" : "#1F7A1F"); // light green | dark green
     property color colorBubble     : (useDarkTheme ? "#4F4130" : "#FFF5C1"); // coffee brown | sand yellow
+
+    Behavior on colorHighlight  { ColorAnimation { duration: themeFadeTime; } }
+    Behavior on colorSelection  { ColorAnimation { duration: themeFadeTime; } }
+    Behavior on colorSecondary  { ColorAnimation { duration: themeFadeTime; } }
+    Behavior on colorWindow     { ColorAnimation { duration: themeFadeTime; } }
+    Behavior on colorClickable  { ColorAnimation { duration: themeFadeTime; } }
+    Behavior on colorEditable   { ColorAnimation { duration: themeFadeTime; } }
+    Behavior on colorForeground { ColorAnimation { duration: themeFadeTime; } }
+    Behavior on colorBorder     { ColorAnimation { duration: themeFadeTime; } }
+    Behavior on colorLink       { ColorAnimation { duration: themeFadeTime; } }
+    Behavior on colorError      { ColorAnimation { duration: themeFadeTime; } }
+    Behavior on colorValid      { ColorAnimation { duration: themeFadeTime; } }
+    Behavior on colorBubble     { ColorAnimation { duration: themeFadeTime; } }
 
     readonly property string fontName : selectFont ([
                                                         "Sail Sans Pro",
