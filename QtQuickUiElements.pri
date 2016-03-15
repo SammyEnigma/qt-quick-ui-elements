@@ -30,7 +30,8 @@ OTHER_FILES += \
     $$PWD/README.md
 
 RESOURCES += \
-    $$PWD/qtqmltricksuielements.qrc
+    $$PWD/qtqmltricksuielements.qrc \
+    $$PWD/qtqmltricksmimeicons.qrc
 
 HEADERS += \
     $$PWD/QQuickGridContainer.h \

@@ -23,6 +23,7 @@
 static void registerQtQmlTricksUiElements (QQmlEngine * engine = Q_NULLPTR) {
 #ifndef NO_ICONS_IN_QT_RES
     Q_INIT_RESOURCE (qtqmltricksicons);
+    Q_INIT_RESOURCE (qtqmltricksmimeicons);
 #endif
     Q_INIT_RESOURCE (qtqmltricksuielements);
 
