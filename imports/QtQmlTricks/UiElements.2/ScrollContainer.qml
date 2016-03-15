@@ -176,16 +176,9 @@ FocusScope {
                     flickableItem.contentX = ((flickableItem.contentWidth - flickableItem.width) * handleHoriz.x / grooveHoriz.drag.maximumX);
                 }
 
-                Rectangle {
+                Item {
                     id: handleHoriz;
-                    color: Style.colorClickable;
-                    radius: (indicatorOnly ? 2 : 5);
                     visible: (flickableItem && flickableItem.visibleArea.widthRatio < 1.0);
-                    antialiasing: true;
-                    border {
-                        width: (indicatorOnly ? 1 : 2);
-                        color: Style.colorSecondary;
-                    }
                     ExtraAnchors.verticalFill: parent;
 
                     Binding on x {
@@ -195,6 +188,26 @@ FocusScope {
                     Binding on width {
                         when: (flickableItem && !grooveHoriz.pressed);
                         value: Math.max (grooveHoriz.width * flickableItem.visibleArea.widthRatio, 40);
+                    }
+                    PixelPerfectContainer {
+                        contentItem: rectHoriz;
+                        anchors {
+                            fill: parent;
+                            margins: Style.lineSize;
+                        }
+
+                        Rectangle {
+                            id: rectHoriz;
+                            color: (grooveHoriz.pressed ? Style.colorSecondary : Style.colorClickable);
+                            width: Math.round (parent.width);
+                            height: Math.round (parent.height);
+                            radius: (indicatorOnly ? Style.lineSize : Style.roundness);
+                            antialiasing: radius;
+                            border {
+                                width: Style.lineSize;
+                                color: Style.colorSecondary;
+                            }
+                        }
                     }
                 }
             }
@@ -208,7 +221,7 @@ FocusScope {
 
             Rectangle {
                 id: backRight;
-                color: Style.colorBorder;
+                color: Style.colorSecondary;
                 opacity: (flickableItem && flickableItem.contentHeight > container.height ? 0.5 : 0.15);
                 anchors.fill: parent;
             }
@@ -251,16 +264,9 @@ FocusScope {
                     flickableItem.contentY = ((flickableItem.contentHeight - flickableItem.height) * handleVertic.y / grooveVertic.drag.maximumY);
                 }
 
-                Rectangle {
+                Item {
                     id: handleVertic;
-                    color: Style.colorClickable;
-                    radius: (indicatorOnly ? 2 : 5);
                     visible: (flickableItem && flickableItem.visibleArea.heightRatio < 1.0);
-                    antialiasing: true;
-                    border {
-                        width: (indicatorOnly ? 1 : 2);
-                        color: Style.colorSecondary;
-                    }
                     ExtraAnchors.horizontalFill: parent;
 
                     Binding on y {
@@ -270,6 +276,26 @@ FocusScope {
                     Binding on height {
                         when: (flickableItem && !grooveVertic.pressed);
                         value: Math.max (grooveVertic.height * flickableItem.visibleArea.heightRatio, 40);
+                    }
+                    PixelPerfectContainer {
+                        contentItem: rectVertic;
+                        anchors {
+                            fill: parent;
+                            margins: Style.lineSize;
+                        }
+
+                        Rectangle {
+                            id: rectVertic;
+                            color: (grooveVertic.pressed ? Style.colorSecondary : Style.colorClickable);
+                            width: Math.round (parent.width);
+                            height: Math.round (parent.height);
+                            radius: (indicatorOnly ? Style.lineSize : Style.roundness);
+                            antialiasing: radius;
+                            border {
+                                width: Style.lineSize;
+                                color: Style.colorSecondary;
+                            }
+                        }
                     }
                 }
             }
