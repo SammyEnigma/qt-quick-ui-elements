@@ -107,22 +107,28 @@ Item {
             }
         }
     }
-    Rectangle {
-        id: rect;
-        radius: Style.roundness;
-        enabled: base.enabled;
-        antialiasing: true;
-        gradient: (enabled
-                   ? (clicker.pressed ||
-                      clicker.dropdownItem
-                      ? Style.gradientPressed ()
-                      : Style.gradientIdle (Qt.lighter (Style.colorClickable, clicker.containsMouse ? 1.15 : 1.0)))
-                   : Style.gradientDisabled ());
-        border {
-            width: Style.lineSize;
-            color: Style.colorBorder;
-        }
+    PixelPerfectContainer {
+        contentItem: rect;
         anchors.fill: parent;
+
+        Rectangle {
+            id: rect;
+            width: Math.round (parent.width);
+            height: Math.round (parent.height);
+            radius: Style.roundness;
+            enabled: base.enabled;
+            antialiasing: radius;
+            gradient: (enabled
+                       ? (clicker.pressed ||
+                          clicker.dropdownItem
+                          ? Style.gradientPressed ()
+                          : Style.gradientIdle (Qt.lighter (Style.colorClickable, clicker.containsMouse ? 1.15 : 1.0)))
+                       : Style.gradientDisabled ());
+            border {
+                width: Style.lineSize;
+                color: Style.colorBorder;
+            }
+        }
     }
     Loader {
         id: loaderCurrent;

@@ -33,24 +33,30 @@ FocusScope {
         input.text = "";
     }
 
-    Rectangle {
-        id: rect;
-        radius: Style.roundness;
-        enabled: base.enabled;
-        visible: !readOnly;
-        antialiasing: radius;
-        gradient: (enabled ? Style.gradientEditable (backColor) : Style.gradientDisabled ());
-        border {
-            width: (input.activeFocus ? Style.lineSize * 2 : Style.lineSize);
-            color: (input.activeFocus ? Style.colorSelection : Style.colorBorder);
-        }
+    PixelPerfectContainer {
+        contentItem: rect;
         anchors.fill: parent;
+
+        Rectangle {
+            id: rect;
+            width: Math.round (parent.width);
+            height: Math.round (parent.height);
+            radius: Style.roundness;
+            enabled: base.enabled;
+            visible: !readOnly;
+            antialiasing: radius;
+            gradient: (enabled ? Style.gradientEditable (backColor) : Style.gradientDisabled ());
+            border {
+                width: (input.activeFocus ? Style.lineSize * 2 : Style.lineSize);
+                color: (input.activeFocus ? Style.colorSelection : Style.colorBorder);
+            }
+        }
     }
     Item {
         clip: (input.contentWidth > input.width);
         enabled: base.enabled;
         anchors {
-            fill: rect;
+            fill: parent;
             margins: rect.border.width;
         }
 

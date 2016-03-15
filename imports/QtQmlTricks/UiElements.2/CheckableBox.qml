@@ -25,17 +25,24 @@ FocusScope {
         anchors.centerIn: parent;
         onClicked: { base.toggle (); }
 
-        Rectangle {
-            id: rect;
-            radius: Style.roundness;
-            enabled: base.enabled;
-            antialiasing: radius;
-            gradient: (enabled ? Style.gradientEditable () : Style.gradientDisabled ());
-            border {
-                width: (base.activeFocus ? Style.lineSize * 2 : Style.lineSize);
-                color: (base.activeFocus ? Style.colorSelection : Style.colorBorder);
-            }
+
+        PixelPerfectContainer {
+            contentItem: rect;
             anchors.fill: parent;
+
+            Rectangle {
+                id: rect;
+                width: Math.round (parent.width);
+                height: Math.round (parent.height);
+                radius: Style.roundness;
+                enabled: base.enabled;
+                antialiasing: radius;
+                gradient: (enabled ? Style.gradientEditable () : Style.gradientDisabled ());
+                border {
+                    width: (base.activeFocus ? Style.lineSize * 2 : Style.lineSize);
+                    color: (base.activeFocus ? Style.colorSelection : Style.colorBorder);
+                }
+            }
         }
         SymbolLoader {
             id: shape;

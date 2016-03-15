@@ -12,16 +12,22 @@ MouseArea {
     property alias title   : lblTitle.text;
     property alias content : lblContent.text;
 
-    Rectangle {
-        id: rect;
-        color: Style.colorBubble;
-        radius: Style.roundness;
-        antialiasing: radius;
-        border {
-            width: Style.lineSize;
-            color: Qt.darker (color);
-        }
+    PixelPerfectContainer {
+        contentItem: rect;
         anchors.fill: parent;
+
+        Rectangle {
+            id: rect;
+            width: Math.round (parent.width);
+            height: Math.round (parent.height);
+            color: Style.colorBubble;
+            radius: Style.roundness;
+            antialiasing: radius;
+            border {
+                width: Style.lineSize;
+                color: Qt.darker (color);
+            }
+        }
     }
     StretchColumnContainer {
         id: layout;

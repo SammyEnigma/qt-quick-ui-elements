@@ -17,6 +17,7 @@
 #include "QQuickStretchColumnContainer.h"
 #include "QQuickWrapLeftRightContainer.h"
 #include "QQuickRoundedRectanglePaintedItem.h"
+#include "QQuickPixelPerfectContainer.h"
 #include "QQmlIntrospector.h"
 
 static void registerQtQmlTricksUiElements (QQmlEngine * engine = Q_NULLPTR) {
@@ -50,6 +51,8 @@ static void registerQtQmlTricksUiElements (QQmlEngine * engine = Q_NULLPTR) {
     qmlRegisterType<QQuickStretchColumnContainer>        (uri, maj, min, "StretchColumnContainer");
     qmlRegisterType<QQuickWrapLeftRightContainer>        (uri, maj, min, "WrapLeftRightContainer");
     qmlRegisterType<QQuickWrapLeftRightContainerBreaker> (uri, maj, min, "WrapBreaker");
+
+    qmlRegisterType<QQuickPixelPerfectContainer>         (uri, maj, min, "PixelPerfectContainer");
 
     qmlRegisterUncreatableType<QQuickExtraAnchors>       (uri, maj, min, "ExtraAnchors", "!!!");
 
