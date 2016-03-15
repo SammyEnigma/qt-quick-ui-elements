@@ -132,6 +132,7 @@ Item {
     }
     Loader {
         id: loaderCurrent;
+        clip: true;
         enabled: base.enabled;
         sourceComponent: base.delegate;
         anchors {
@@ -140,8 +141,6 @@ Item {
             margins: padding;
             verticalCenter: parent.verticalCenter;
         }
-
-        property color color ;
 
         Binding {
             target: loaderCurrent.item;
@@ -235,6 +234,7 @@ Item {
                             }
                             Loader {
                                 id: loader;
+                                clip: true;
                                 sourceComponent: base.delegate;
                                 anchors {
                                     margins: padding;
