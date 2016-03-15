@@ -36,7 +36,6 @@ void QQuickPixelPerfectContainer::updatePolish (void) {
         for (QVector<QQuickItem *>::const_iterator it = m_ancestors.constBegin (); it != m_ancestors.constEnd (); it++) {
             absPos += (*it)->position ();
         }
-        m_contentItem->setPosition (QPointF (qRound (absPos.x ()) - absPos.x (),
-                                             qRound (absPos.y ()) - absPos.y ()));
+        m_contentItem->setPosition (absPos.toPoint () - absPos);
     }
 }
