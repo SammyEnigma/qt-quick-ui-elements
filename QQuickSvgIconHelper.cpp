@@ -10,6 +10,7 @@
 #include <QStringBuilder>
 #include <QCoreApplication>
 #include <QCryptographicHash>
+#include <QRegularExpression>
 
 QString      QQuickSvgIconHelper::s_basePath;
 QString      QQuickSvgIconHelper::s_cachePath;
@@ -30,10 +31,6 @@ QQuickSvgIconHelper::QQuickSvgIconHelper (QObject * parent)
     if (s_cachePath.isEmpty ()) {
          QQuickSvgIconHelper::s_cachePath = (QDir::homePath () % "/.CachedSvgIcon/" % qApp->applicationName ());
     }
-}
-
-QQuickSvgIconHelper::~QQuickSvgIconHelper (void) {
-
 }
 
 void QQuickSvgIconHelper::classBegin (void) {
@@ -70,15 +67,15 @@ qreal QQuickSvgIconHelper::getHorizontalRatio (void) const {
     return m_horizontalRatio;
 }
 
-QColor QQuickSvgIconHelper::getColor (void) const {
+const QColor & QQuickSvgIconHelper::getColor (void) const {
     return m_color;
 }
 
-QString QQuickSvgIconHelper::getIcon (void) const {
+const QString & QQuickSvgIconHelper::getIcon (void) const {
     return m_icon;
 }
 
-void QQuickSvgIconHelper::setSize (int size) {
+void QQuickSvgIconHelper::setSize (const int size) {
     if (m_size != size) {
         m_size = size;
         refresh ();
@@ -86,7 +83,7 @@ void QQuickSvgIconHelper::setSize (int size) {
     }
 }
 
-void QQuickSvgIconHelper::setVerticalRatio (qreal ratio) {
+void QQuickSvgIconHelper::setVerticalRatio (const qreal ratio) {
     if (m_verticalRatio != ratio) {
         m_verticalRatio = ratio;
         refresh ();
@@ -94,7 +91,7 @@ void QQuickSvgIconHelper::setVerticalRatio (qreal ratio) {
     }
 }
 
-void QQuickSvgIconHelper::setHorizontalRatio (qreal ratio) {
+void QQuickSvgIconHelper::setHorizontalRatio (const qreal ratio) {
     if (m_horizontalRatio != ratio) {
         m_horizontalRatio = ratio;
         refresh ();
@@ -102,7 +99,7 @@ void QQuickSvgIconHelper::setHorizontalRatio (qreal ratio) {
     }
 }
 
-void QQuickSvgIconHelper::setColor (QColor color) {
+void QQuickSvgIconHelper::setColor (const QColor & color) {
     if (m_color != color) {
         m_color = color;
         refresh ();
@@ -110,7 +107,7 @@ void QQuickSvgIconHelper::setColor (QColor color) {
     }
 }
 
-void QQuickSvgIconHelper::setIcon (QString icon) {
+void QQuickSvgIconHelper::setIcon (const QString & icon) {
     if (m_icon != icon) {
         m_icon = icon;
         refresh ();
@@ -123,13 +120,17 @@ void QQuickSvgIconHelper::refresh (void) {
         QUrl url;
         if (!m_icon.isEmpty () && m_size > 0 && m_horizontalRatio > 0.0 && m_verticalRatio > 0.0) {
             QImage image (m_size * m_horizontalRatio, m_size * m_verticalRatio, QImage::Format_ARGB32);
-            QString uri (m_icon
+            const QString uri (m_icon
                          % "?color="  % (m_color.isValid () ? m_color.name () : "none")
                          % "&width="  % QString::number (image.width  ())
                          % "&height=" % QString::number (image.height ()));
-            QString hash (QCryptographicHash::hash (uri.toLocal8Bit (), QCryptographicHash::Md5).toHex ());
-            QString sourcePath (s_basePath  % "/" % m_icon % ".svg");
-            QString cachedPath (s_cachePath % "/" % hash   % ".png");
+            const QString hash (QCryptographicHash::hash (uri.toLocal8Bit (), QCryptographicHash::Md5).toHex ());
+            const QString sourcePath (m_icon.startsWith ("file://")
+                                ? QUrl (m_icon).toLocalFile ()
+                                : (m_icon.startsWith ("qrc:/")
+                                   ? QString (m_icon).replace (QRegularExpression ("qrc:/+"), ":/")
+                                   : QString (s_basePath  % "/" % m_icon % ".svg")));
+            const QString cachedPath (s_cachePath % "/" % hash   % ".png");
             if (!QFile::exists (cachedPath)) {
                 QPainter painter (&image);
                 image.fill (Qt::transparent);

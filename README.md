@@ -92,13 +92,22 @@ These are the helpers and utilities that don't fit in previous categories :
 
 * `FileSelector` : a nice file selector in plain QtQuick, with support for filtering, and icons according to file-type.
 
-* `ThemeIconProvider` : a new image provider, to get icons from the theme (just use `image://icon-theme/<freedesktop icon name>`). Additionally, a small part of the Faenza icon theme is provided in resource file, basically for file types icons, and action icons (open, save, close, etc...), useful on platforms without standard FreeDesktop-compliant theme.
+* `ThemeIconProvider` : a new image provider, to get icons from the standard FreeDesktop-compliant theme (just use `image://icon-theme/<freedesktop icon name>`).
 
-* `MimeIconsHelper` : a simple non-visual helper that can  return the icon name to use for a given MIME-type.
+* `MimeIconsHelper` : a simple non-visual helper that can return the icon to use for a given MIME-type (either using the SVG icons provided with the lib, or the standard global theme).
 
 * `Balloon` : a nice component that can contain a title, a text block and an image, and can be used to provide help or hints in the UI (e.g: in the side bars, or as temporary OSD...).
 
 * `ModalDialog` : a configurable dialog, with title/message, and standard buttons (OK, Yes/No, Cancel, etc...), which can have custom components added to it (like text input, or file selector or anything else), packaged in a nice event-based API that is easy to use. As a bonus, there is a "shake" effect that can be triggered when wanted (for example if the input is not correct).
+
+
+## Icons
+
+These are minimalistic/modern-looking icons provided with the library, for easy use in your app, divided in several categories (separate folders). They are used with URL `qrc:///QtQmlTricks/icons/<category>/<name>.svg` :
+
+* Category `actions` : primarly used in toolbars, buttons, dialogs, etc. Contains icons `apply`, `arrow-bottom`, `arrow-down`, `arrow-first`, `arrow-last`, `arrow-left`, `arrow-right`, `arrow-top`, `arrow-up`, `attach`, `cancel`, `chevron-down`, `chevron-left`, `chevron-right`, `chevron-up`, `clear`, `config`, `copy`, `cut`, `delete`, `edit`, `export`, `filter`, `find`, `fullscreen`, `help`, `home`, `import`, `info`, `lock`, `mark`, `minus`, `new-file`, `ok`, `open`, `paste`, `plus`, `redo`, `refresh`, `restore`, `save`, `shutdown`, `trash`, `undo`, `view-grid`, `view-list`, `warning`, `zoom-fit`, `zoom-in`, `zoom-original`, `zoom-out`.
+
+* Category `filetypes` : used for files/folders, for example in `FileSelector`. Contains icons `archive`, `binary`, `code`, `database`, `disk-image`, `document`, `drawing`, `executable`, `file`, `folder-closed`, `folder-documents`, `folder-downloads`, `folder-home`, `folder-images`, `folder-music`, `folder-opened`, `folder-videos`, `image`, `pdf`, `script`, `slideshow`, `sound`, `spreadsheet`, `text`, `video`, `webpage`, `xml`.
 
 
 > NOTE : If you want to donate, use this link : [![Flattr this](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=thebootroo&url=http://gitlab.unique-conception.org/qt-qml-tricks/qt-quick-ui-elements)

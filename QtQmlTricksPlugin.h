@@ -4,7 +4,6 @@
 #include <QQmlEngine>
 #include <QDebug>
 #include <qqml.h>
-#include <QIcon>
 
 #include "QQuickPolygon.h"
 #include "QQuickExtraAnchors.h"
@@ -21,21 +20,13 @@
 #include "QQmlIntrospector.h"
 
 static void registerQtQmlTricksUiElements (QQmlEngine * engine = Q_NULLPTR) {
-#ifndef NO_ICONS_IN_QT_RES
-    Q_INIT_RESOURCE (qtqmltricksicons);
-    Q_INIT_RESOURCE (qtqmltricksmimeicons);
-#endif
-    Q_INIT_RESOURCE (qtqmltricksuielements);
+    Q_INIT_RESOURCE (qtqmltricks_uielements);
+    Q_INIT_RESOURCE (qtqmltricks_svgicons_actions);
+    Q_INIT_RESOURCE (qtqmltricks_svgicons_filetypes);
 
     const char * uri = "QtQmlTricks.UiElements"; // @uri QtQmlTricks.UiElements
     const int    maj = 2;
     const int    min = 0;
-
-    // icon theme
-#ifndef NO_ICONS_IN_QT_RES
-    QIcon::setThemeSearchPaths (QStringList () << ":/QtQmlTricks/UiElements/icons");
-    QIcon::setThemeName ("FaenzaIconsLite");
-#endif
 
     // shapes
     qmlRegisterType<QQuickPolygon>                       (uri, maj, min, "Polygon");
@@ -60,8 +51,8 @@ static void registerQtQmlTricksUiElements (QQmlEngine * engine = Q_NULLPTR) {
     qmlRegisterSingletonType <QQmlIntrospector>          (uri, maj, min, "Introspector", &QQmlIntrospector::qmlSingletonProvider);
 
     if (engine != Q_NULLPTR) {
-        engine->addImageProvider ("icon-theme", new QQuickThemeIconProvider);
         engine->addImportPath ("qrc:///imports");
+        engine->addImageProvider ("icon-theme", new QQuickThemeIconProvider);
     }
     else {
         qWarning () << "You didn't pass a QML engine to the register function,"

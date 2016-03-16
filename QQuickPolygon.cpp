@@ -24,6 +24,8 @@ QQuickPolygon::QQuickPolygon (QQuickItem * parent)
     setFlag (QQuickItem::ItemHasContents);
 }
 
+QQuickPolygon::~QQuickPolygon (void) { }
+
 qreal QQuickPolygon::getBorder (void) const {
     return m_border;
 }
@@ -48,7 +50,7 @@ QVariantList QQuickPolygon::getPoints (void) const {
     return ret;
 }
 
-void QQuickPolygon::setBorder (qreal border) {
+void QQuickPolygon::setBorder (const qreal border) {
     if (m_border != border) {
         m_border = border;
         emit borderChanged ();
@@ -56,7 +58,7 @@ void QQuickPolygon::setBorder (qreal border) {
     }
 }
 
-void QQuickPolygon::setClosed (bool closed) {
+void QQuickPolygon::setClosed (const bool closed) {
     if (m_closed != closed) {
         m_closed = closed;
         emit closedChanged ();
@@ -115,31 +117,42 @@ static inline qreal getAngleFromSegment (const QPointF & startPoint, const QPoin
     return qAtan2 (endPoint.y () - startPoint.y (), endPoint.x () - startPoint.x ());
 }
 
+void QQuickPolygon::cleanup (void) {
+    if (m_backMaterial != Q_NULLPTR) {
+        delete m_backMaterial;
+        m_backMaterial = Q_NULLPTR;
+    }
+    if (m_foreMaterial != Q_NULLPTR) {
+        delete m_foreMaterial;
+        m_foreMaterial = Q_NULLPTR;
+    }
+    if (m_backGeometry != Q_NULLPTR) {
+        delete m_backGeometry;
+        m_backGeometry = Q_NULLPTR;
+    }
+    if (m_foreGeometry != Q_NULLPTR) {
+        delete m_foreGeometry;
+        m_foreGeometry = Q_NULLPTR;
+    }
+    if (m_backNode != Q_NULLPTR) {
+        delete m_backNode;
+        m_backNode = Q_NULLPTR;
+    }
+    if (m_foreNode != Q_NULLPTR) {
+        delete m_foreNode;
+        m_foreNode = Q_NULLPTR;
+    }
+    if (m_node != Q_NULLPTR) {
+        delete m_node;
+        m_node = Q_NULLPTR;
+    }
+}
+
 QSGNode * QQuickPolygon::updatePaintNode (QSGNode * oldNode, UpdatePaintNodeData * updatePaintNodeData) {
     Q_UNUSED (oldNode)
     Q_UNUSED (updatePaintNodeData)
     // remove old nodes
-    if (m_backMaterial != Q_NULLPTR) {
-        delete m_backMaterial;
-    }
-    if (m_foreMaterial != Q_NULLPTR) {
-        delete m_foreMaterial;
-    }
-    if (m_backGeometry != Q_NULLPTR) {
-        delete m_backGeometry;
-    }
-    if (m_foreGeometry != Q_NULLPTR) {
-        delete m_foreGeometry;
-    }
-    if (m_backNode != Q_NULLPTR) {
-        delete m_backNode;
-    }
-    if (m_foreNode != Q_NULLPTR) {
-        delete m_foreNode;
-    }
-    if (m_node != Q_NULLPTR) {
-        delete m_node;
-    }
+    cleanup ();
     m_node = new QSGNode;
     // polygon background tesselation
     if (!m_triangles.isEmpty () && m_color.alpha () > 0) {

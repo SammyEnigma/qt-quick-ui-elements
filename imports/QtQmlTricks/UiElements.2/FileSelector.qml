@@ -11,9 +11,7 @@ Item {
     property alias rootFolder  : modelFS.rootFolder;
     property alias nameFilters : modelFS.nameFilters;
 
-    MimeIconsHelper {
-        id: mimeHelper;
-    }
+    MimeIconsHelper { id: mimeHelper; }
     FolderListModel {
         id: modelFS;
         showDirs: true;
@@ -34,7 +32,11 @@ Item {
             TextButton {
                 text: "Parent";
                 enabled: (folder.toString () !== "file:///");
-                icon: Image { source: "image://icon-theme/go-up"; }
+                icon: SvgIconLoader {
+                    icon: "qrc:/QtQmlTricks/icons/actions/chevron-up.svg";
+                    size: Style.realPixels (24);
+                    color: Style.colorForeground;
+                }
                 anchors.verticalCenter: parent.verticalCenter;
                 onClicked: {
                     list.currentIndex = -1;
@@ -49,8 +51,8 @@ Item {
 
                 TextLabel {
                     id: path;
-                    font.pixelSize: Style.fontSizeSmall;
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere;
+                    font.pixelSize: Style.fontSizeSmall;
                     anchors.verticalCenter: parent.verticalCenter;
                     ExtraAnchors.horizontalFill: parent;
 
@@ -92,27 +94,27 @@ Item {
                         opacity: 0.65;
                         ExtraAnchors.bottomDock: parent;
                     }
-                    Image {
+                    SvgIconLoader {
                         id: img;
-                        width: size;
-                        height: size;
-                        source: "image://icon-theme/%1".arg (mimeHelper.getIconNameForUrl (model.fileURL));
-                        fillMode: Image.Stretch;
+                        size: Style.realPixels (24);
+                        icon: mimeHelper.getSvgIconPathForUrl (model.fileURL);
                         anchors {
                             left: parent.left;
                             margins: Style.spacingNormal;
                             verticalCenter: parent.verticalCenter;
                         }
-
-                        readonly property int size : (Style.fontSizeNormal * 2);
                     }
                     TextLabel {
                         id: label;
                         text: model.fileName + (model.fileIsDir ? "/" : "");
-                        font.bold: (model.index === list.currentIndex);
                         elide: Text.ElideRight;
                         wrapMode: Text.WrapAtWordBoundaryOrAnywhere;
                         maximumLineCount: 3;
+                        font.weight: (model.index === list.currentIndex
+                                      ? Font.Bold
+                                      : (Style.useSlimFonts
+                                         ? Font.Light
+                                         : Font.Normal));
                         anchors {
                             left: img.right;
                             right: parent.right;
@@ -127,7 +129,6 @@ Item {
             text: (list.currentIndex > -1 && list.currentIndex < modelFS.count
                    ? modelFS.get (list.currentIndex, "fileName")
                    : "");
-            font.pixelSize: Style.fontSizeNormal;
             elide: Text.ElideMiddle;
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere;
             verticalAlignment: Text.AlignVCenter;

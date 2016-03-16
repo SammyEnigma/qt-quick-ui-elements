@@ -81,8 +81,9 @@ Project {
         Group {
             name: "Qt resources bundle";
             files: [
-                "qtqmltricksicons.qrc",
-                "qtqmltricksuielements.qrc",
+                "qtqmltricks_uielements.qrc",
+                "qtqmltricks_svgicons_actions.qrc",
+                "qtqmltricks_svgicons_filetypes.qrc",
             ]
         }
         Group {

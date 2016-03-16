@@ -21,27 +21,27 @@ class QQuickSvgIconHelper : public QObject, public QQmlParserStatus, public QQml
 
 public:
     explicit QQuickSvgIconHelper (QObject * parent = Q_NULLPTR);
-    ~QQuickSvgIconHelper (void);
+
+    void classBegin        (void);
+    void componentComplete (void);
 
     void setTarget (const QQmlProperty & target);
-    void classBegin (void);
-    void componentComplete (void);
 
     static void setBasePath  (const QString & basePath);
     static void setCachePath (const QString & cachePath);
 
-    int     getSize             (void) const;
-    qreal   getVerticalRatio    (void) const;
-    qreal   getHorizontalRatio  (void) const;
-    QColor  getColor            (void) const;
-    QString getIcon             (void) const;
+    int             getSize             (void) const;
+    qreal           getVerticalRatio    (void) const;
+    qreal           getHorizontalRatio  (void) const;
+    const QColor  & getColor            (void) const;
+    const QString & getIcon             (void) const;
 
 public slots:
-    void setSize            (int     size);
-    void setVerticalRatio   (qreal   ratio);
-    void setHorizontalRatio (qreal   ratio);
-    void setColor           (QColor  color);
-    void setIcon            (QString icon);
+    void setSize            (const int size);
+    void setVerticalRatio   (const qreal ratio);
+    void setHorizontalRatio (const qreal ratio);
+    void setColor           (const QColor & color);
+    void setIcon            (const QString & icon);
 
 signals:
     void sizeChanged            (void);

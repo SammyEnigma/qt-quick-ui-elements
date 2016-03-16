@@ -18,14 +18,14 @@ QtObject {
 
     property int themeFadeTime : 850;
 
-    property int lineSize  : (1 * Screen.devicePixelRatio);
-    property int roundness : (3 * Screen.devicePixelRatio);
+    property int lineSize  : realPixels (1);
+    property int roundness : realPixels (3);
 
-    property int spacingNormal : ((isMobile ? 15 : 8) * Screen.devicePixelRatio);
+    property int spacingNormal : realPixels (isMobile ? 15 : 8);
     property int spacingSmall  : Math.round (spacingNormal / 2);
     property int spacingBig    : Math.round (spacingNormal * 2);
 
-    property int fontSizeNormal : ((isMobile ? 24 : 14) * Screen.devicePixelRatio);
+    property int fontSizeNormal : realPixels (isMobile ? 24 : 14);
     property int fontSizeSmall  : Math.round (fontSizeNormal * 0.85);
     property int fontSizeBig    : Math.round (fontSizeNormal * 1.15);
     property int fontSizeTitle  : Math.round (fontSizeNormal * 1.25);
@@ -335,6 +335,10 @@ QtObject {
             GradientStop { color: autogradient.baseColorTop;    position: 0.0; }
             GradientStop { color: autogradient.baseColorBottom; position: 1.0; }
         }
+    }
+
+    function realPixels (size) {
+        return (size * Screen.devicePixelRatio);
     }
 
     function gray (val) {

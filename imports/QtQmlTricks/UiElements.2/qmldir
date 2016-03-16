@@ -25,6 +25,7 @@ ScrollContainer                         2.0 ScrollContainer.qml
 SliderBar                               2.0 SliderBar.qml
 StatusBar                               2.0 StatusBar.qml
 Stretcher                               2.0 Stretcher.qml
+SvgIconLoader                           2.0 SvgIconLoader.qml
 SymbolLoader                            2.0 SymbolLoader.qml
 TabBar                                  2.0 TabBar.qml
 TextBox                                 2.0 TextBox.qml
