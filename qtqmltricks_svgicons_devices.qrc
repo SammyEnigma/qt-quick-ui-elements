@@ -12,5 +12,9 @@
         <file>icons/devices/disc.svg</file>
         <file>icons/devices/keyboard.svg</file>
         <file>icons/devices/printer.svg</file>
+        <file>icons/devices/speaker.svg</file>
+        <file>icons/devices/microphone.svg</file>
+        <file>icons/devices/headphones.svg</file>
+        <file>icons/devices/battery.svg</file>
     </qresource>
 </RCC>

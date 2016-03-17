@@ -109,7 +109,7 @@ These are minimalistic/modern-looking icons provided with the library, for easy 
 
 * Category `filetypes` : used for files/folders, for example in `FileSelector`. Contains icons `archive`, `binary`, `code`, `database`, `disk-image`, `document`, `drawing`, `executable`, `file`, `folder-closed`, `folder-documents`, `folder-downloads`, `folder-home`, `folder-images`, `folder-music`, `folder-opened`, `folder-videos`, `image`, `pdf`, `script`, `slideshow`, `sound`, `spreadsheet`, `text`, `video`, `webpage`, `xml`.
 
-* Category `devices` : there is in fact a few devices, but there are also some protocol logos. Contains icons `bluetooth`, `desktop`, `disc`, `ethernet`, `keyboard`, `laptop`, `printer`, `server`, `smartphone`, `tablet`, `usb`, `wifi`.
+* Category `devices` : there is in fact a few devices, but there are also some protocol logos. Contains icons `battery`, `bluetooth`, `desktop`, `disc`, `ethernet`, `headphones`, `keyboard`, `laptop`, `microphone`, `printer`, `server`, `smartphone`, `speaker`, `tablet`, `usb`, `wifi`.
 
 * Category `services` : representation of common forms of communication media, along with the logo of the most famous social services. Contains icons `call`, `chat`, `mail`, `rss`.
 
