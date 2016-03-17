@@ -9,9 +9,9 @@ Item {
     implicitWidth: (helper.size * helper.horizontalRatio);
     implicitHeight: (helper.size * helper.verticalRatio);
 
+    property int   size            : Style.realPixels (24);
+    property color color           : Style.colorNone;
     property alias icon            : helper.icon;
-    property alias size            : helper.size;
-    property alias color           : helper.color;
     property alias verticalRatio   : helper.verticalRatio;
     property alias horizontalRatio : helper.horizontalRatio;
 
@@ -21,10 +21,15 @@ Item {
         width: helper.size;
         height: helper.size;
         smooth: false;
+        opacity: (enabled ? 1.0 : 0.65);
         fillMode: Image.Pad;
         antialiasing: false;
         asynchronous: true;
 
-        SvgIconHelper on source { id: helper; }
+        SvgIconHelper on source {
+            id: helper;
+            size: base.size;
+            color: (base.enabled ? base.color : Style.colorBorder);
+        }
     }
 }
