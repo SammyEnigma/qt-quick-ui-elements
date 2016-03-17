@@ -52,5 +52,6 @@
         <file>icons/actions/zoom-original.svg</file>
         <file>icons/actions/zoom-out.svg</file>
         <file>icons/actions/link.svg</file>
+        <file>icons/actions/stop.svg</file>
     </qresource>
 </RCC>

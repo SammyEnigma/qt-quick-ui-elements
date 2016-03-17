@@ -15,7 +15,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r"
-   sodipodi:docname="info.svg">
+   sodipodi:docname="stop.svg">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -25,9 +25,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="38.714096"
-     inkscape:cx="24.875714"
-     inkscape:cy="11.41105"
+     inkscape:zoom="34.916666"
+     inkscape:cx="13.583666"
+     inkscape:cy="10.874621"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -62,9 +62,11 @@
      id="layer1"
      transform="translate(0,-1028.3622)">
     <path
-       style="opacity:1;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       d="M 12 3 A 9 9 0 0 0 3 12 A 9 9 0 0 0 12 21 A 9 9 0 0 0 21 12 A 9 9 0 0 0 12 3 z M 11.996094 6.9179688 C 12.313476 6.9179688 12.583008 7.0293063 12.802734 7.2539062 C 13.022461 7.4736396 13.130859 7.7402677 13.130859 8.0527344 C 13.130859 8.3652677 13.019531 8.6318292 12.794922 8.8515625 C 12.575195 9.0712958 12.308594 9.1796875 11.996094 9.1796875 C 11.683594 9.1796875 11.416992 9.0712958 11.197266 8.8515625 C 10.977539 8.6318292 10.869141 8.3652677 10.869141 8.0527344 C 10.869141 7.7402677 10.977539 7.4736396 11.197266 7.2539062 C 11.416992 7.0293063 11.683594 6.9179688 11.996094 6.9179688 z M 10 10 L 13 10 L 13 15 C 13 16 13 16 13.849609 16 L 13.849609 17 L 10.150391 17 L 10.150391 16 C 11 16 11 16.0005 11 15.0625 L 11 12 C 11 11 11 11 10 11 L 10 10 z "
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 8,3 -5,5 0,8 5,5 8,0 5,-5 0,-8 -5,-5 z m 1,4 3,3 3,-3 2,2 -3,3 3,3 -2,2 -3,-3 -3,3 -2,-2 1,-1 2,-2 -3,-3 z"
        transform="translate(0,1028.3622)"
-       id="path3341" />
+       id="path3335"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccccccccccccccccccccc" />
   </g>
 </svg>
