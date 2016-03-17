@@ -111,5 +111,6 @@ These are minimalistic/modern-looking icons provided with the library, for easy 
 
 * Category `devices` : there is in fact a few devices, but there are also some protocol logos. Contains icons `bluetooth`, `desktop`, `disc`, `ethernet`, `keyboard`, `laptop`, `printer`, `server`, `smartphone`, `tablet`, `usb`, `wifi`.
 
+* Category `services` : representation of common forms of communication media, along with the logo of the most famous social services. Contains icons `call`, `chat`, `mail`, `rss`.
 
 > NOTE : If you want to donate, use this link : [![Flattr this](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=thebootroo&url=http://gitlab.unique-conception.org/qt-qml-tricks/qt-quick-ui-elements)

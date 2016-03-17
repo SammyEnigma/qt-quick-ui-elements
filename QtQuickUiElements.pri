@@ -24,7 +24,8 @@ RESOURCES += \
     $$PWD/qtqmltricks_svgicons_filetypes.qrc \
     $$PWD/qtqmltricks_svgicons_actions.qrc \
     $$PWD/qtqmltricks_uielements.qrc \
-    $$PWD/qtqmltricks_svgicons_devices.qrc
+    $$PWD/qtqmltricks_svgicons_devices.qrc \
+    $$PWD/qtqmltricks_svgicons_services.qrc
 
 HEADERS += \
     $$PWD/QQuickGridContainer.h \
