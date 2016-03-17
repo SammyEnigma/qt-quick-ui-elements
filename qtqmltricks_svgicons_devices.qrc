@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/QtQmlTricks">
+        <file>icons/devices/wifi.svg</file>
+        <file>icons/devices/ethernet.svg</file>
+        <file>icons/devices/server.svg</file>
+        <file>icons/devices/desktop.svg</file>
+        <file>icons/devices/laptop.svg</file>
+        <file>icons/devices/smartphone.svg</file>
+        <file>icons/devices/tablet.svg</file>
+        <file>icons/devices/bluetooth.svg</file>
+        <file>icons/devices/usb.svg</file>
+        <file>icons/devices/disc.svg</file>
+        <file>icons/devices/keyboard.svg</file>
+        <file>icons/devices/printer.svg</file>
+    </qresource>
+</RCC>

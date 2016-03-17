@@ -23,7 +23,8 @@ OTHER_FILES += \
 RESOURCES += \
     $$PWD/qtqmltricks_svgicons_filetypes.qrc \
     $$PWD/qtqmltricks_svgicons_actions.qrc \
-    $$PWD/qtqmltricks_uielements.qrc
+    $$PWD/qtqmltricks_uielements.qrc \
+    $$PWD/qtqmltricks_svgicons_devices.qrc
 
 HEADERS += \
     $$PWD/QQuickGridContainer.h \
