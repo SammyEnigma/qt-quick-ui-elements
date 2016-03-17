@@ -24,7 +24,7 @@ static void registerQtQmlTricksUiElements (QQmlEngine * engine = Q_NULLPTR) {
     Q_INIT_RESOURCE (qtqmltricks_svgicons_actions);
     Q_INIT_RESOURCE (qtqmltricks_svgicons_devices);
     Q_INIT_RESOURCE (qtqmltricks_svgicons_filetypes);
-    Q_INIT_RESOURCE (qtqmltricks_svgicons_service);
+    Q_INIT_RESOURCE (qtqmltricks_svgicons_services);
 
     const char * uri = "QtQmlTricks.UiElements"; // @uri QtQmlTricks.UiElements
     const int    maj = 2;
