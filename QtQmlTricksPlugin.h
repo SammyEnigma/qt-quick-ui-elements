@@ -52,6 +52,8 @@ static void registerQtQmlTricksUiElements (QQmlEngine * engine = Q_NULLPTR) {
 
     qmlRegisterSingletonType <QQmlIntrospector>          (uri, maj, min, "Introspector", &QQmlIntrospector::qmlSingletonProvider);
 
+    QQuickSvgIconHelper::setBasePath (":/QtQmlTricks/icons");
+
     if (engine != Q_NULLPTR) {
         engine->addImportPath ("qrc:///imports");
         engine->addImageProvider ("icon-theme", new QQuickThemeIconProvider);
