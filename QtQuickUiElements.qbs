@@ -83,7 +83,9 @@ Project {
             files: [
                 "qtqmltricks_uielements.qrc",
                 "qtqmltricks_svgicons_actions.qrc",
+                "qtqmltricks_svgicons_devices.qrc",
                 "qtqmltricks_svgicons_filetypes.qrc",
+                "qtqmltricks_svgicons_services.qrc",
             ]
         }
         Group {
