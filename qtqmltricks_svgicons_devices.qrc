@@ -16,5 +16,11 @@
         <file>icons/devices/microphone.svg</file>
         <file>icons/devices/headphones.svg</file>
         <file>icons/devices/battery.svg</file>
+        <file>icons/devices/usb-pendrive.svg</file>
+        <file>icons/devices/gps.svg</file>
+        <file>icons/devices/camera.svg</file>
+        <file>icons/devices/webcam.svg</file>
+        <file>icons/devices/mouse.svg</file>
+        <file>icons/devices/gamepad.svg</file>
     </qresource>
 </RCC>
