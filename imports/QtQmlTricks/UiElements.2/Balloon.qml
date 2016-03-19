@@ -8,7 +8,7 @@ MouseArea {
     implicitWidth: 100;
     implicitHeight: (layout.height + layout.anchors.margins * 2);
 
-    property alias image   : img.source;
+    property alias image   : img.sourceComponent;
     property alias title   : lblTitle.text;
     property alias content : lblContent.text;
 
@@ -52,15 +52,18 @@ MouseArea {
             horizontalAlignment: Text.AlignJustify;
             font.pixelSize: Style.fontSizeSmall;
         }
-        Item {
-            implicitHeight: Math.min (img.sourceSize.height, img.sourceSize.height * width / img.sourceSize.width);
+        Stretcher {
+            visible: (img.item !== null);
+            implicitHeight: img.implicitHeight;
 
-            Image {
+            Loader {
                 id: img;
-                visible: (status === Image.Ready);
-                fillMode: Image.PreserveAspectFit;
-                horizontalAlignment: Image.AlignHCenter;
-                anchors.fill: parent;
+                active: (sourceComponent !== null);
+                enabled: base.enabled;
+                anchors {
+                    top: parent.top;
+                    horizontalCenter: parent.horizontalCenter;
+                }
             }
         }
     }
