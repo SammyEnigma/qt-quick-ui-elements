@@ -109,8 +109,11 @@ These are minimalistic/modern-looking icons provided with the library, for easy 
 
 * Category `filetypes` : used for files/folders, for example in `FileSelector`. Contains icons `archive`, `binary`, `code`, `database`, `disk-image`, `document`, `drawing`, `executable`, `file`, `folder-closed`, `folder-documents`, `folder-downloads`, `folder-home`, `folder-images`, `folder-music`, `folder-opened`, `folder-videos`, `image`, `pdf`, `script`, `slideshow`, `sound`, `spreadsheet`, `text`, `video`, `webpage`, `xml`.
 
-* Category `devices` : there is in fact a few devices, but there are also some protocol logos. Contains icons `battery`, `bluetooth`, `desktop`, `disc`, `ethernet`, `headphones`, `keyboard`, `laptop`, `microphone`, `printer`, `server`, `smartphone`, `speaker`, `tablet`, `usb`, `wifi`.
+* Category `devices` : there is in fact a few devices, but there are also some protocol logos. Contains icons `battery`, `bluetooth`, `camera`, `desktop`, `disc`, `ethernet`, `gamepad`, `gps`, `headphones`, `keyboard`, `laptop`, `microphone`, `mouse`, `printer`, `server`, `smartphone`, `speaker`, `tablet`, `usb`, `usb-pendrive`, `webcam`, `wifi`.
 
 * Category `services` : representation of common forms of communication media, along with the logo of the most famous social services. Contains icons `call`, `chat`, `mail`, `rss`.
+
+* Category `others` : every icon that doesn't fit any category. It contains icons `moon`, `pin`, `sun`, `target`.
+
 
 > NOTE : If you want to donate, use this link : [![Flattr this](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=thebootroo&url=http://gitlab.unique-conception.org/qt-qml-tricks/qt-quick-ui-elements)
