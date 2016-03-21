@@ -2,8 +2,10 @@
 #define QQMLINTROSPECTOR_H
 
 #include <QObject>
-#include <QQmlEngine>
 #include <QJSEngine>
+#include <QQmlEngine>
+#include <QQuickItem>
+#include <QQuickWindow>
 
 class QQmlIntrospector : public QObject {
     Q_OBJECT
@@ -15,6 +17,7 @@ public:
 
 public slots:
     bool inherits (QObject * object, QObject * reference);
+    QQuickWindow * window (QQuickItem * item);
 };
 
 #endif // QQMLINTROSPECTOR_H

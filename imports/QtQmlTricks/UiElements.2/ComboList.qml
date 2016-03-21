@@ -88,16 +88,10 @@ Item {
 
         property Item dropdownItem : null;
 
-        readonly property Item rootItem : {
-            var tmp = base;
-            while ("parent" in tmp && tmp ["parent"] !== null && "visible" in tmp ["parent"]) {
-                tmp = tmp ["parent"];
-            }
-            return tmp;
-        }
-
         function createDropdown () {
-            dropdownItem = compoDropdown.createObject (rootItem, { "refItem" : base });
+            dropdownItem = compoDropdown.createObject (Introspector.window (base), {
+                                                           "refItem" : base
+                                                       });
         }
 
         function destroyDropdown () {

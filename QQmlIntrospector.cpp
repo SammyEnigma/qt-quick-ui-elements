@@ -34,3 +34,7 @@ bool QQmlIntrospector::inherits (QObject * object, QObject * reference) {
     }
     return ret;
 }
+
+QQuickWindow * QQmlIntrospector::window (QQuickItem * item) {
+    return (item != Q_NULLPTR ? item->window () : Q_NULLPTR);
+}

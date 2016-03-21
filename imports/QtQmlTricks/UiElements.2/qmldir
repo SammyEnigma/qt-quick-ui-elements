@@ -13,6 +13,7 @@ ComboListDelegate                       2.0 ComboListDelegate.qml
 ComboListDelegateForSimpleVar           2.0 ComboListDelegateForSimpleVar.qml
 ComboListDelegateForModelWithRoles      2.0 ComboListDelegateForModelWithRoles.qml
 ComboListDelegateForModelDataAttributes 2.0 ComboListDelegateForModelDataAttributes.qml
+DetachablePanel                         2.0 DetachablePanel.qml
 FileSelector                            2.0 FileSelector.qml
 Group                                   2.0 Group.qml
 Line                                    2.0 Line.qml
