@@ -24,13 +24,17 @@ QQuickSvgIconHelper::QQuickSvgIconHelper (QObject * parent)
     , m_horizontalRatio (1.0)
     , m_color           (Qt::transparent)
     , m_icon            (QString ())
+    , m_inhibitTimer    (this)
 {
+    m_inhibitTimer.setInterval (50);
+    m_inhibitTimer.setSingleShot (true);
     if (s_basePath.isEmpty ()) {
         QQuickSvgIconHelper::s_basePath = qApp->applicationDirPath ();
     }
     if (s_cachePath.isEmpty ()) {
          QQuickSvgIconHelper::s_cachePath = (QDir::homePath () % "/.CachedSvgIcon/" % qApp->applicationName ());
     }
+    connect (&m_inhibitTimer, &QTimer::timeout, this, &QQuickSvgIconHelper::refresh, Qt::UniqueConnection);
 }
 
 void QQuickSvgIconHelper::classBegin (void) {
@@ -39,12 +43,12 @@ void QQuickSvgIconHelper::classBegin (void) {
 
 void QQuickSvgIconHelper::componentComplete (void) {
     m_ready = true;
-    refresh ();
+    restartTimer ();
 }
 
 void QQuickSvgIconHelper::setTarget (const QQmlProperty & target) {
     m_property = target;
-    refresh ();
+    restartTimer ();
 }
 
 void QQuickSvgIconHelper::setBasePath (const QString & basePath) {
@@ -78,7 +82,7 @@ const QString & QQuickSvgIconHelper::getIcon (void) const {
 void QQuickSvgIconHelper::setSize (const int size) {
     if (m_size != size) {
         m_size = size;
-        refresh ();
+        restartTimer ();
         emit sizeChanged ();
     }
 }
@@ -86,7 +90,7 @@ void QQuickSvgIconHelper::setSize (const int size) {
 void QQuickSvgIconHelper::setVerticalRatio (const qreal ratio) {
     if (m_verticalRatio != ratio) {
         m_verticalRatio = ratio;
-        refresh ();
+        restartTimer ();
         emit verticalRatioChanged ();
     }
 }
@@ -94,7 +98,7 @@ void QQuickSvgIconHelper::setVerticalRatio (const qreal ratio) {
 void QQuickSvgIconHelper::setHorizontalRatio (const qreal ratio) {
     if (m_horizontalRatio != ratio) {
         m_horizontalRatio = ratio;
-        refresh ();
+        restartTimer ();
         emit horizontalRatioChanged ();
     }
 }
@@ -102,7 +106,7 @@ void QQuickSvgIconHelper::setHorizontalRatio (const qreal ratio) {
 void QQuickSvgIconHelper::setColor (const QColor & color) {
     if (m_color != color) {
         m_color = color;
-        refresh ();
+        restartTimer ();
         emit colorChanged ();
     }
 }
@@ -110,7 +114,7 @@ void QQuickSvgIconHelper::setColor (const QColor & color) {
 void QQuickSvgIconHelper::setIcon (const QString & icon) {
     if (m_icon != icon) {
         m_icon = icon;
-        refresh ();
+        restartTimer ();
         emit iconChanged ();
     }
 }
@@ -167,4 +171,9 @@ void QQuickSvgIconHelper::refresh (void) {
             m_property.write (url);
         }
     }
+}
+
+void QQuickSvgIconHelper::restartTimer (void) {
+    m_inhibitTimer.stop ();
+    m_inhibitTimer.start ();
 }

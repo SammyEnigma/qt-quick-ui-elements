@@ -3,6 +3,7 @@
 
 #include <QQuickItem>
 #include <QVector>
+#include <QTimer>
 
 class QQuickPixelPerfectContainer : public QQuickItem {
     Q_OBJECT
@@ -25,7 +26,11 @@ signals:
 protected:
     void updatePolish (void);
 
+protected slots:
+    void restartTimer (void);
+
 private:
+    QTimer m_inhibitTimer;
     QQuickItem * m_contentItem;
     QVector<QQuickItem *> m_ancestors;
 };

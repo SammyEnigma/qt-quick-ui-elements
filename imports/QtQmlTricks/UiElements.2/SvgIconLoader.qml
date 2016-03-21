@@ -1,11 +1,12 @@
 import QtQuick 2.1;
 import QtQmlTricks.UiElements 2.0;
 
-Item {
+PixelPerfectContainer {
     id: base;
     width: implicitWidth;
     height: implicitHeight;
     visible: (icon !== "");
+    contentItem: img;
     implicitWidth: (helper.size * helper.horizontalRatio);
     implicitHeight: (helper.size * helper.verticalRatio);
 

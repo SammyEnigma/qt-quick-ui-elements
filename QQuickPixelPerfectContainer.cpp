@@ -2,9 +2,14 @@
 #include "QQuickPixelPerfectContainer.h"
 
 QQuickPixelPerfectContainer::QQuickPixelPerfectContainer (QQuickItem * parent)
-    : QQuickItem    (parent)
-    , m_contentItem (Q_NULLPTR)
-{ }
+    : QQuickItem     (parent)
+    , m_inhibitTimer (this)
+    , m_contentItem  (Q_NULLPTR)
+{
+    m_inhibitTimer.setInterval (50);
+    m_inhibitTimer.setSingleShot (true);
+    connect (&m_inhibitTimer, &QTimer::timeout, this, &QQuickPixelPerfectContainer::polish, Qt::UniqueConnection);
+}
 
 QQuickItem * QQuickPixelPerfectContainer::getContentItem (void) const {
     return m_contentItem;
@@ -23,8 +28,8 @@ void QQuickPixelPerfectContainer::componentComplete (void) {
     QQuickItem * tmp = this;
     while (tmp != Q_NULLPTR) {
         m_ancestors.append (tmp);
-        connect (tmp, &QQuickItem::xChanged, this, &QQuickPixelPerfectContainer::polish, Qt::UniqueConnection);
-        connect (tmp, &QQuickItem::yChanged, this, &QQuickPixelPerfectContainer::polish, Qt::UniqueConnection);
+        connect (tmp, &QQuickItem::xChanged, this, &QQuickPixelPerfectContainer::restartTimer, Qt::UniqueConnection);
+        connect (tmp, &QQuickItem::yChanged, this, &QQuickPixelPerfectContainer::restartTimer, Qt::UniqueConnection);
         tmp = tmp->parentItem ();
     }
     polish ();
@@ -38,4 +43,9 @@ void QQuickPixelPerfectContainer::updatePolish (void) {
         }
         m_contentItem->setPosition (absPos.toPoint () - absPos);
     }
+}
+
+void QQuickPixelPerfectContainer::restartTimer (void) {
+    m_inhibitTimer.stop ();
+    m_inhibitTimer.start ();
 }

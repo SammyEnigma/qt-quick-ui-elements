@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QString>
 #include <QColor>
+#include <QTimer>
 #include <QSvgRenderer>
 #include <QQmlProperty>
 #include <QQmlParserStatus>
@@ -51,7 +52,8 @@ signals:
     void iconChanged            (void);
 
 protected:
-    void refresh (void);
+    void refresh      (void);
+    void restartTimer (void);
 
 private:
     int     m_size;
@@ -60,6 +62,7 @@ private:
     qreal   m_horizontalRatio;
     QColor  m_color;
     QString m_icon;
+    QTimer  m_inhibitTimer;
 
     QQmlProperty m_property;
 
