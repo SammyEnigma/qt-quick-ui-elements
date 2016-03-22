@@ -9,6 +9,8 @@ Item {
     implicitHeight: size;
 
     property int size       : Style.realPixels (250);
+    property int maxSize    : Style.realPixels (500);
+    property int minSize    : Style.realPixels (100);
     property int handleSize : Style.spacingBig;
     property int handleSide : Item.Right;
 
@@ -111,20 +113,22 @@ Item {
         }
         onPositionChanged: {
             var delta = Qt.point (mouse.x - lastPos.x, mouse.y - lastPos.y);
+            var tmp = size;
             switch (handleSide) {
             case Item.Top:
-                size -= delta.y;
+                tmp -= delta.y;
                 break;
             case Item.Left:
-                size -= delta.x;
+                tmp -= delta.x;
                 break;
             case Item.Right:
-                size += delta.x;
+                tmp += delta.x;
                 break;
             case Item.Bottom:
-                size += delta.y;
+                tmp += delta.y;
                 break;
             }
+            size = Math.max (minSize, Math.min (maxSize, tmp));
             lastPos = Qt.point (mouse.x, mouse.y);
         }
 
