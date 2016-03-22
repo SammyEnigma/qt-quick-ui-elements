@@ -109,30 +109,34 @@ Item {
             }
         ]
         onPressed: {
-            lastPos = Qt.point (mouse.x, mouse.y);
+            var tmp = mapToItem (base.parent, mouse.x, mouse.y);
+            originalPos  = Qt.point (tmp.x, tmp.y);
+            originalSize = size;
         }
         onPositionChanged: {
-            var delta = Qt.point (mouse.x - lastPos.x, mouse.y - lastPos.y);
-            var tmp = size;
+            var absCurrPos = mapToItem (base.parent, mouse.x, mouse.y);
+            var deltaX = (absCurrPos.x - originalPos.x);
+            var deltaY = (absCurrPos.y - originalPos.y);
+            var tmp = originalSize;
             switch (handleSide) {
             case Item.Top:
-                tmp -= delta.y;
+                tmp -= deltaY;
                 break;
             case Item.Left:
-                tmp -= delta.x;
+                tmp -= deltaX;
                 break;
             case Item.Right:
-                tmp += delta.x;
+                tmp += deltaX;
                 break;
             case Item.Bottom:
-                tmp += delta.y;
+                tmp += deltaY;
                 break;
             }
             size = Math.max (minSize, Math.min (maxSize, tmp));
-            lastPos = Qt.point (mouse.x, mouse.y);
         }
 
-        property point lastPos;
+        property int   originalSize : 0;
+        property point originalPos  : Qt.point (0,0);
 
         Rectangle {
             id: rect;
