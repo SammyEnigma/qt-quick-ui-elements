@@ -22,6 +22,7 @@ MultiLineTextBox                        2.0 MultiLineTextBox.qml
 NumberBox                               2.0 NumberBox.qml
 ProgressJauge                           2.0 ProgressJauge.qml
 RegularPolygon                          2.0 RegularPolygon.qml
+ResizableContainer                      2.0 ResizableContainer.qml
 ScrollContainer                         2.0 ScrollContainer.qml
 SliderBar                               2.0 SliderBar.qml
 StatusBar                               2.0 StatusBar.qml

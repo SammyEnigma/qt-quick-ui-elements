@@ -6,15 +6,17 @@ Group {
     id: base;
     width: implicitWidth;
     height: implicitHeight;
+    visible: !detached;
     implicitWidth: size;
     implicitHeight: size;
-    visible: (priv.instance === null);
 
     property int size : Style.realPixels (250);
 
-    property var borderSide : undefined;
+    property int borderSide : Item.Right;
 
     default property alias content : panel.data;
+
+    readonly property bool detached : (priv.instance !== null);
 
     QtObject {
         id: priv;
@@ -102,7 +104,7 @@ Group {
         id: line;
         states: [
             State {
-                when: (borderSide === base.top);
+                when: (borderSide === Item.Top);
 
                 AnchorChanges {
                     target: line;
@@ -114,7 +116,7 @@ Group {
                 }
             },
             State {
-                when: (borderSide === base.left);
+                when: (borderSide === Item.Left);
 
                 AnchorChanges {
                     target: line;
@@ -126,7 +128,7 @@ Group {
                 }
             },
             State {
-                when: (borderSide === base.right);
+                when: (borderSide === Item.Right);
 
                 AnchorChanges {
                     target: line;
@@ -138,7 +140,7 @@ Group {
                 }
             },
             State {
-                when: (borderSide === base.bottom);
+                when: (borderSide === Item.Bottom);
 
                 AnchorChanges {
                     target: line;
