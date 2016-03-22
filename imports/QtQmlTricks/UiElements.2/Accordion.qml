@@ -44,10 +44,11 @@ Item {
         Repeater {
             model: tabs;
             delegate: Column {
+                id: col;
                 states: [
                     State {
                         name: "text_and_icon";
-                        when: (modelData.icon !== "");
+                        when: (col.group.icon !== null);
 
                         AnchorChanges {
                             target: lbl;
@@ -66,7 +67,7 @@ Item {
                     },
                     State {
                         name: "text_only";
-                        when: (modelData.icon === "");
+                        when: (col.group.icon === null);
 
                         AnchorChanges {
                             target: lbl;
@@ -79,50 +80,47 @@ Item {
                 ]
                 ExtraAnchors.horizontalFill: parent;
 
+                readonly property Group group : modelData;
+
                 MouseArea {
                     height: tabSize;
                     ExtraAnchors.horizontalFill: parent;
-                    onClicked: { currentTab = (currentTab !== modelData ? modelData : null); }
+                    onClicked: { currentTab = (currentTab !== col.group ? col.group : null); }
 
                     Rectangle {
-                        gradient: (modelData === currentTab
+                        gradient: (col.group === currentTab
                                    ? Style.gradientShaded (Style.colorHighlight, Style.colorSecondary)
                                    : (parent.pressed
                                       ? Style.gradientPressed ()
                                       : Style.gradientIdle ()));
                         anchors.fill: parent;
                     }
-                    Image {
+                    Loader {
                         id: ico;
-                        source: modelData.icon;
-                        width: size;
-                        height: size;
-                        sourceSize: Qt.size (size, size);
-                        fillMode: Image.Stretch;
+                        enabled: col.enabled;
+                        sourceComponent: col.group.icon;
                         anchors.margins: Style.spacingNormal;
-
-                        readonly property int size : (Style.fontSizeNormal * 2);
                     }
                     TextLabel {
                         id: lbl;
-                        text: modelData.title;
+                        text: col.group.title;
                         anchors.margins: Style.spacingNormal;
                     }
                 }
                 Binding {
-                    target: modelData ["anchors"];
+                    target: col.group ["anchors"];
                     property: "fill";
                     value: container;
                 }
                 Binding {
-                    target: modelData;
+                    target: col.group;
                     property: "visible";
-                    value: (modelData === currentTab);
+                    value: (col.group === currentTab);
                 }
                 Stretcher {
                     id: placeholder;
                     height: paneSize;
-                    visible: (modelData === currentTab);
+                    visible: (col.group === currentTab);
                     ExtraAnchors.horizontalFill: parent;
                 }
                 Line { ExtraAnchors.horizontalFill: parent; }

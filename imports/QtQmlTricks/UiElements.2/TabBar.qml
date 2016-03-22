@@ -58,7 +58,7 @@ Item {
                 states: [
                     State {
                         name: "text_and_icon";
-                        when: (modelData.icon !== "");
+                        when: (clicker.group.icon !== null);
 
                         AnchorChanges {
                             target: lbl;
@@ -77,7 +77,7 @@ Item {
                     },
                     State {
                         name: "text_only";
-                        when: (modelData.icon === "");
+                        when: (clicker.group.icon === null);
 
                         AnchorChanges {
                             target: lbl;
@@ -90,9 +90,11 @@ Item {
                 ]
                 onClicked: { currentTab = modelData; }
 
+                readonly property Group group : modelData;
+
                 Rectangle {
                     radius: Style.roundness;
-                    visible: (currentTab === modelData || clicker.pressed);
+                    visible: (currentTab === clicker.group || clicker.pressed);
                     gradient: (clicker.pressed ? Style.gradientPressed () : Style.gradientShaded ());
                     antialiasing: radius;
                     border {
@@ -100,11 +102,11 @@ Item {
                         color: Style.colorBorder;
                     }
                     states: State {
-                        when: (modelData !== null);
+                        when: (clicker.group !== null);
 
                         PropertyChanges {
-                            target: modelData;
-                            visible: (currentTab === modelData);
+                            target: clicker.group;
+                            visible: (currentTab === clicker.group);
                             anchors.fill: container;
                         }
                     }
@@ -113,20 +115,15 @@ Item {
                         bottomMargin: -radius;
                     }
                 }
-                Image {
+                Loader {
                     id: ico;
-                    source: modelData.icon;
-                    width: size;
-                    height: size;
-                    sourceSize: Qt.size (size, size);
-                    fillMode: Image.Stretch;
+                    enabled: clicker.enabled;
+                    sourceComponent: clicker.group.icon;
                     anchors.margins: Style.spacingNormal;
-
-                    readonly property int size : (Style.fontSizeNormal * 2);
                 }
                 TextLabel {
                     id: lbl;
-                    text: modelData.title;
+                    text: clicker.group.title;
                     anchors.margins: Style.spacingNormal;
                 }
             }

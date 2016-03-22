@@ -4,6 +4,6 @@ import QtQmlTricks.UiElements 2.0;
 Item {
     id: group;
 
-    property string icon  : "";
-    property string title : "";
+    property string    title : "";
+    property Component icon  : null;
 }
