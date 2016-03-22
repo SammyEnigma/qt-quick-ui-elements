@@ -17,7 +17,12 @@ Group {
 
         function createInstance () {
             if (instance === null) {
-                instance = compoWindow.createObject (Introspector.window (base));
+                var rootItem = Introspector.window (base);
+                var abspos = rootItem.contentItem.mapFromItem (base, 0 , 0);
+                instance = compoWindow.createObject (Introspector.window (base), {
+                                                         "x" : (abspos.x + rootItem.x),
+                                                         "y" : (abspos.y + rootItem.y),
+                                                     });
                 panel.parent = instance.contentItem;
             }
         }
