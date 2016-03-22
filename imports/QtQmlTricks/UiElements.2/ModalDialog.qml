@@ -6,8 +6,9 @@ FocusScope {
     anchors.fill: parent;
     Component.onCompleted: { forceActiveFocus (); }
 
-    property string title   : "";
-    property var    message : "";
+    property string title : "";
+
+    property var message : undefined;
 
     property int buttons : (buttonOk | buttonCancel);
 
