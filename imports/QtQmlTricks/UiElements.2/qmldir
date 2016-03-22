@@ -13,16 +13,15 @@ ComboListDelegate                       2.0 ComboListDelegate.qml
 ComboListDelegateForSimpleVar           2.0 ComboListDelegateForSimpleVar.qml
 ComboListDelegateForModelWithRoles      2.0 ComboListDelegateForModelWithRoles.qml
 ComboListDelegateForModelDataAttributes 2.0 ComboListDelegateForModelDataAttributes.qml
-DetachablePanel                         2.0 DetachablePanel.qml
 FileSelector                            2.0 FileSelector.qml
 Group                                   2.0 Group.qml
 Line                                    2.0 Line.qml
 ModalDialog                             2.0 ModalDialog.qml
 MultiLineTextBox                        2.0 MultiLineTextBox.qml
 NumberBox                               2.0 NumberBox.qml
+PanelContainer                          2.0 PanelContainer.qml
 ProgressJauge                           2.0 ProgressJauge.qml
 RegularPolygon                          2.0 RegularPolygon.qml
-ResizableContainer                      2.0 ResizableContainer.qml
 ScrollContainer                         2.0 ScrollContainer.qml
 SliderBar                               2.0 SliderBar.qml
 StatusBar                               2.0 StatusBar.qml

@@ -34,7 +34,6 @@
         <file>imports/QtQmlTricks/UiElements.2/ModalDialog.qml</file>
         <file>imports/QtQmlTricks/UiElements.2/AutoRepeatableClicker.qml</file>
         <file>imports/QtQmlTricks/UiElements.2/SvgIconLoader.qml</file>
-        <file>imports/QtQmlTricks/UiElements.2/DetachablePanel.qml</file>
-        <file>imports/QtQmlTricks/UiElements.2/ResizableContainer.qml</file>
+        <file>imports/QtQmlTricks/UiElements.2/PanelContainer.qml</file>
     </qresource>
 </RCC>
