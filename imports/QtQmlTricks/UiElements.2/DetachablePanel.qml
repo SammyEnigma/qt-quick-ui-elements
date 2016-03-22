@@ -6,7 +6,13 @@ Group {
     id: base;
     width: implicitWidth;
     height: implicitHeight;
+    implicitWidth: size;
+    implicitHeight: size;
     visible: (priv.instance === null);
+
+    property int size : Style.realPixels (250);
+
+    property var borderSide : undefined;
 
     default property alias content : panel.data;
 
@@ -26,6 +32,7 @@ Group {
                 panel.parent = instance.contentItem;
             }
         }
+
         function destroyInstance () {
             if (instance !== null) {
                 panel.parent = container;
@@ -90,5 +97,58 @@ Group {
 
             // CONTENT HERE
         }
+    }
+    Line {
+        id: line;
+        states: [
+            State {
+                when: (borderSide === base.top);
+
+                AnchorChanges {
+                    target: line;
+                    anchors {
+                        top: base.top;
+                        left: base.left;
+                        right: base.right;
+                    }
+                }
+            },
+            State {
+                when: (borderSide === base.left);
+
+                AnchorChanges {
+                    target: line;
+                    anchors {
+                        top: base.top;
+                        left: base.left;
+                        bottom: base.bottom;
+                    }
+                }
+            },
+            State {
+                when: (borderSide === base.right);
+
+                AnchorChanges {
+                    target: line;
+                    anchors {
+                        top: base.top;
+                        right: base.right;
+                        bottom: base.bottom;
+                    }
+                }
+            },
+            State {
+                when: (borderSide === base.bottom);
+
+                AnchorChanges {
+                    target: line;
+                    anchors {
+                        left: base.left;
+                        right: base.right;
+                        bottom: base.bottom;
+                    }
+                }
+            }
+        ]
     }
 }
