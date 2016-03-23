@@ -273,7 +273,7 @@ Group {
     }
     MouseArea {
         id: handle;
-        visible: expanded;
+        visible: (expanded && resizable);
         onPressed: {
             var tmp = mapToItem (base.parent, mouse.x, mouse.y);
             originalPos  = Qt.point (tmp.x, tmp.y);
@@ -425,9 +425,9 @@ Group {
         visible: expanded;
         anchors {
             top: (header.visible ? header.bottom : parent.top);
-            left: (borderSide === Item.Left ? handle.right : parent.left);
-            right: (borderSide === Item.Right ? handle.left : parent.right);
-            bottom: (borderSide === Item.Bottom ? handle.top : parent.bottom)
+            left: (borderSide === Item.Left && handle.visible ? handle.right : parent.left);
+            right: (borderSide === Item.Right && handle.visible ? handle.left : parent.right);
+            bottom: (borderSide === Item.Bottom && handle.visible ? handle.top : parent.bottom)
         }
 
         Item {
