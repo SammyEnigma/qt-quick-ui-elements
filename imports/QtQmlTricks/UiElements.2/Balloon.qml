@@ -40,10 +40,8 @@ MouseArea {
             visible: (text !== "");
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere;
             horizontalAlignment: Text.AlignJustify;
-            font {
-                weight: Font.Bold;
-                pixelSize: Style.fontSizeSmall;
-            }
+            emphasis: true;
+            font.pixelSize: Style.fontSizeSmall;
         }
         TextLabel {
             id: lblContent;

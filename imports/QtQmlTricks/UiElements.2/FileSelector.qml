@@ -110,11 +110,7 @@ Item {
                         elide: Text.ElideRight;
                         wrapMode: Text.WrapAtWordBoundaryOrAnywhere;
                         maximumLineCount: 3;
-                        font.weight: (model.index === list.currentIndex
-                                      ? Font.Bold
-                                      : (Style.useSlimFonts
-                                         ? Font.Light
-                                         : Font.Normal));
+                        emphasis: (model.index === list.currentIndex);
                         anchors {
                             left: img.right;
                             right: parent.right;
