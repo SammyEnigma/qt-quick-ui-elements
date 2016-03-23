@@ -9,6 +9,7 @@
 #include <QQmlProperty>
 #include <QQmlParserStatus>
 #include <QQmlPropertyValueSource>
+#include <QCryptographicHash>
 
 class QQuickSvgIconHelper : public QObject, public QQmlParserStatus, public QQmlPropertyValueSource {
     Q_OBJECT
@@ -56,19 +57,41 @@ protected:
     void restartTimer (void);
 
 private:
-    int     m_size;
-    bool    m_ready;
-    qreal   m_verticalRatio;
-    qreal   m_horizontalRatio;
-    QColor  m_color;
-    QString m_icon;
-    QTimer  m_inhibitTimer;
-
+    int          m_size;
+    bool         m_ready;
+    qreal        m_verticalRatio;
+    qreal        m_horizontalRatio;
+    QColor       m_color;
+    QString      m_icon;
+    QTimer       m_inhibitTimer;
     QQmlProperty m_property;
 
-    static QString      s_basePath;
-    static QString      s_cachePath;
-    static QSvgRenderer s_renderer;
+    class MetaDataCache {
+    public:
+        explicit MetaDataCache (void);
+
+        void changeBasePath  (const QString & path);
+        void changeCachePath (const QString & path);
+
+        QString baseFile  (const QString & name = "");
+        QString cacheFile (const QString & name = "");
+
+        QString hashFile (const QString    & filePath);
+        QString hashData (const QByteArray & data);
+
+        QString readChecksumFile (const QString & filePath);
+        void writeChecksumFile (const QString & filePath, const QString & checksum);
+
+        bool renderSvgToPng (const QString & svgPath, const QString & pngPath, const QSize & size, const QColor & colorize);
+
+    private:
+        QString            basePath;
+        QString            cachePath;
+        QSvgRenderer       renderer;
+        QCryptographicHash hasher;
+    };
+
+    static MetaDataCache & cache (void);
 };
 
 #endif // QQMLSVGICONHELPER_H
