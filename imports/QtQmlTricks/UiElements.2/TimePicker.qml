@@ -107,7 +107,7 @@ Item {
         }
         TextLabel {
             text: ":";
-            font.bold: true;
+            emphasis: true;
             anchors.verticalCenter: parent.verticalCenter;
         }
         StretchColumnContainer {
@@ -187,7 +187,7 @@ Item {
         }
         TextLabel {
             text: ":";
-            font.bold: true;
+            emphasis: true;
             anchors.verticalCenter: parent.verticalCenter;
         }
         StretchColumnContainer {
