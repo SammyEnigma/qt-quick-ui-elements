@@ -54,7 +54,6 @@ Group {
             PropertyChanges {
                 target: minibar;
                 height: priv.minifiedSize;
-                cursorShape: Qt.PointingHandCursor;
             }
         },
         State {
@@ -101,7 +100,6 @@ Group {
             PropertyChanges {
                 target: minibar;
                 width: priv.minifiedSize;
-                cursorShape: Qt.PointingHandCursor;
             }
         },
         State {
@@ -148,7 +146,6 @@ Group {
             PropertyChanges {
                 target: minibar;
                 width: priv.minifiedSize;
-                cursorShape: Qt.PointingHandCursor;
             }
         },
         State {
@@ -195,7 +192,6 @@ Group {
             PropertyChanges {
                 target: minibar;
                 height: priv.minifiedSize;
-                cursorShape: Qt.PointingHandCursor;
             }
         }
     ]
@@ -223,9 +219,9 @@ Group {
             var rootItem = Introspector.window (base);
             var abspos = rootItem.contentItem.mapFromItem (base, 0 , 0);
             priv.subWindow = compoWindow.createObject (Introspector.window (base), {
-                                                     "x" : (abspos.x + rootItem.x),
-                                                     "y" : (abspos.y + rootItem.y),
-                                                 });
+                                                           "x" : (abspos.x + rootItem.x),
+                                                           "y" : (abspos.y + rootItem.y),
+                                                       });
             panel.parent = priv.subWindow.contentItem;
         }
     }
@@ -312,10 +308,9 @@ Group {
             anchors.centerIn: parent;
         }
     }
-    MouseArea {
+    Item {
         id: minibar;
         visible: collapsed;
-        onClicked: { expand (); }
 
         StretchRowContainer {
             id: info;
@@ -347,6 +342,33 @@ Group {
                 anchors.verticalCenter: parent.verticalCenter;
             }
             Stretcher { }
+        }
+
+        TextButton {
+            flat: true;
+            icon: SvgIconLoader {
+                icon: {
+                    switch (borderSide) {
+                    case Item.Top:    return "actions/arrow-top";
+                    case Item.Left:   return "actions/arrow-first";
+                    case Item.Right:  return "actions/arrow-last";
+                    case Item.Bottom: return "actions/arrow-bottom";
+                    default:          return "";
+                    }
+                }
+                size: Style.fontSizeBig;
+                color: Style.colorForeground;
+            }
+            padding: (Style.lineSize * 2);
+            anchors {
+                top: (borderSide === Item.Left || borderSide === Item.Right ? parent.top : undefined);
+                right: (borderSide === Item.Top || borderSide === Item.Bottom ? parent.right : undefined);
+                verticalCenter: (borderSide === Item.Top || borderSide === Item.Bottom ? parent.verticalCenter : undefined);
+                horizontalCenter: (borderSide === Item.Left || borderSide === Item.Right ? parent.horizontalCenter : undefined);
+                topMargin: (minibar.width - width) / 2;
+                rightMargin: (minibar.height - height) / 2;
+            }
+            onClicked: { expand (); }
         }
     }
     Item {
