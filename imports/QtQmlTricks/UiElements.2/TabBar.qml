@@ -64,6 +64,7 @@ Item {
                             target: lbl;
                             anchors {
                                 left: ico.right;
+                                right: parent.right;
                                 verticalCenter: parent.verticalCenter;
                             }
                         }
@@ -74,6 +75,10 @@ Item {
                                 verticalCenter: parent.verticalCenter;
                             }
                         }
+                        PropertyChanges {
+                            target: lbl;
+                            horizontalAlignment: Text.AlignLeft;
+                        }
                     },
                     State {
                         name: "text_only";
@@ -82,9 +87,14 @@ Item {
                         AnchorChanges {
                             target: lbl;
                             anchors {
+                                left: parent.left;
+                                right: parent.right;
                                 verticalCenter: parent.verticalCenter;
-                                horizontalCenter: parent.horizontalCenter;
                             }
+                        }
+                        PropertyChanges {
+                            target: lbl;
+                            horizontalAlignment: Text.AlignHCenter;
                         }
                     }
                 ]
@@ -94,8 +104,11 @@ Item {
 
                 Rectangle {
                     radius: Style.roundness;
-                    visible: (currentTab === clicker.group || clicker.pressed);
-                    gradient: (clicker.pressed ? Style.gradientPressed () : Style.gradientShaded ());
+                    gradient: (clicker.pressed
+                               ? Style.gradientPressed ()
+                               : (currentTab === clicker.group
+                                  ? Style.gradientShaded ()
+                                  : Style.gradientShaded (rect.color, rect.color)));
                     antialiasing: radius;
                     border {
                         width: Style.lineSize;
@@ -124,7 +137,12 @@ Item {
                 TextLabel {
                     id: lbl;
                     text: clicker.group.title;
+                    clip: (contentWidth > width);
                     anchors.margins: Style.spacingNormal;
+                }
+                Line {
+                    visible: (currentTab !== clicker.group);
+                    ExtraAnchors.bottomDock: parent;
                 }
             }
         }
