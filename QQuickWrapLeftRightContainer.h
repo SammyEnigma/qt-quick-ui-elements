@@ -13,22 +13,22 @@ public:
 
 class QQuickWrapLeftRightContainer : public QQuickItem {
     Q_OBJECT
-    Q_PROPERTY (qreal spacing  READ getSpacing  WRITE setSpacing  NOTIFY spacingChanged)
-    Q_PROPERTY (bool  dontWrap READ getDontWrap WRITE setDontWrap NOTIFY dontWrapChanged)
+    Q_PROPERTY (int  spacing  READ getSpacing  WRITE setSpacing  NOTIFY spacingChanged)
+    Q_PROPERTY (bool dontWrap READ getDontWrap WRITE setDontWrap NOTIFY dontWrapChanged)
 
 public:
     explicit QQuickWrapLeftRightContainer (QQuickItem * parent = Q_NULLPTR);
 
-    qreal getSpacing  (void) const;
-    bool  getDontWrap (void) const;
+    int  getSpacing  (void) const;
+    bool getDontWrap (void) const;
 
 public slots:
-    void setSpacing  (qreal spacing);
-    void setDontWrap (bool  dontWrap);
+    void setSpacing  (int  spacing);
+    void setDontWrap (bool dontWrap);
 
 signals:
-    void spacingChanged  (qreal spacing);
-    void dontWrapChanged (bool  dontWrap);
+    void spacingChanged  (int  spacing);
+    void dontWrapChanged (bool dontWrap);
 
 protected:
     void classBegin        (void);
@@ -37,7 +37,7 @@ protected:
     void itemChange        (ItemChange change, const ItemChangeData & value);
 
 private:
-    qreal m_spacing;
+    int  m_spacing;
     bool m_dontWrap;
 };
 

@@ -44,7 +44,7 @@ QColor QQuickPolygon::getStroke (void) const {
 
 QVariantList QQuickPolygon::getPoints (void) const {
     QVariantList ret;
-    foreach (QPointF point, m_points) {
+    foreach (const QPointF & point, m_points) {
         ret.append (point);
     }
     return ret;

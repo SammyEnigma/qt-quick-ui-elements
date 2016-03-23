@@ -6,18 +6,18 @@
 
 class QQuickStretchRowContainer : public QQuickItem {
     Q_OBJECT
-    Q_PROPERTY (qreal spacing READ getSpacing WRITE setSpacing NOTIFY spacingChanged)
+    Q_PROPERTY (int spacing READ getSpacing WRITE setSpacing NOTIFY spacingChanged)
 
 public:
     explicit QQuickStretchRowContainer (QQuickItem * parent = Q_NULLPTR);
 
-    qreal getSpacing (void) const;
+    int getSpacing (void) const;
 
 public slots:
-    void setSpacing (qreal spacing);
+    void setSpacing (int spacing);
 
 signals:
-    void spacingChanged (qreal spacing);
+    void spacingChanged (int spacing);
 
 protected:
     void classBegin        (void);
@@ -26,7 +26,7 @@ protected:
     void itemChange        (ItemChange change, const ItemChangeData & value);
 
 private:
-    qreal m_spacing;
+    int m_spacing;
 };
 
 #endif // QQUICKSTRETCHROWCONTAINER_H

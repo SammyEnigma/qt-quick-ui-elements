@@ -12,7 +12,7 @@ QQuickWrapLeftRightContainer::QQuickWrapLeftRightContainer (QQuickItem * parent)
   , m_dontWrap (false)
 { }
 
-qreal QQuickWrapLeftRightContainer::getSpacing (void) const {
+int QQuickWrapLeftRightContainer::getSpacing (void) const {
     return m_spacing;
 }
 
@@ -20,7 +20,7 @@ bool QQuickWrapLeftRightContainer::getDontWrap (void) const {
     return m_dontWrap;
 }
 
-void QQuickWrapLeftRightContainer::setSpacing (qreal spacing) {
+void QQuickWrapLeftRightContainer::setSpacing (int spacing) {
     if (m_spacing != spacing) {
         m_spacing = spacing;
         emit spacingChanged (spacing);
@@ -100,14 +100,14 @@ void QQuickWrapLeftRightContainer::updatePolish (void) {
                 if (wrapperFound) {
                     rightItems.prepend (child);
                     biggestHeightRightItem = keepBiggestImplicitHeight (child, biggestHeightRightItem);
-                    if (child->baselineOffset ()) {
+                    if (child->baselineOffset () != 0.0) {
                         biggestHeightRightTextItem = keepBiggestImplicitHeight (child, biggestHeightRightTextItem);
                     }
                 }
                 else {
                     leftItems.append (child);
                     biggestHeightLeftItem = keepBiggestImplicitHeight (child, biggestHeightLeftItem);
-                    if (child->baselineOffset ()) {
+                    if (child->baselineOffset () != 0.0) {
                         biggestHeightLeftTextItem = keepBiggestImplicitHeight (child, biggestHeightLeftTextItem);
                     }
                 }
@@ -131,7 +131,7 @@ void QQuickWrapLeftRightContainer::updatePolish (void) {
         child->setX (curX);
         curX += child->width ();
         curX += m_spacing;
-        if (child->baselineOffset () && child != biggestHeightLeftTextItem) {
+        if (child->baselineOffset () != 0.0 && biggestHeightLeftTextItem != Q_NULLPTR && child != biggestHeightLeftTextItem) {
             centerItemInHeightWithBaseline (child,
                                             (mustWrap ? leftHeight : layoutHeight),
                                             biggestHeightLeftTextItem->implicitHeight (),
@@ -151,7 +151,7 @@ void QQuickWrapLeftRightContainer::updatePolish (void) {
         curX -= child->width ();
         child->setX (curX);
         curX -= m_spacing;
-        if (child->baselineOffset ()) {
+        if (child->baselineOffset () != 0.0 && biggestHeightRightTextItem != Q_NULLPTR && child != biggestHeightRightTextItem) {
             centerItemInHeightWithBaseline (child,
                                             (mustWrap ? rightHeight : layoutHeight),
                                             biggestHeightRightTextItem->implicitHeight (),

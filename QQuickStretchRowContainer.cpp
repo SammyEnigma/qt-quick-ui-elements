@@ -9,11 +9,11 @@ QQuickStretchRowContainer::QQuickStretchRowContainer (QQuickItem * parent) : QQu
   , m_spacing (0)
 { }
 
-qreal QQuickStretchRowContainer::getSpacing (void) const {
+int QQuickStretchRowContainer::getSpacing (void) const {
     return m_spacing;
 }
 
-void QQuickStretchRowContainer::setSpacing (qreal spacing) {
+void QQuickStretchRowContainer::setSpacing (int spacing) {
     if (m_spacing != spacing) {
         m_spacing = spacing;
         emit spacingChanged (spacing);
