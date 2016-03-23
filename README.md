@@ -47,6 +47,8 @@ These elements are used as parents for controls :
 
 * `StatusBar` : a simple horizontal set of controls that will be positioned inside a bar at bottom of a page.
 
+* `PanelContainer` : a container that must be docked to a side of its parent, and that can be detached (in separated sub-window), resized (with a draggable handle), or collasped/expanded. All these features can be separately toggled. It also has support for title and icon.
+
 * `ZoomAndMoveArea` : an easy-to-use view that can be dragged in X/Y axis and zoomed under cursor using mouse-wheel (just like the Google Maps central view). It also strouts nice indicators of positions and zoom level while moving or zooming (they disappear after a while). The wheel sensitivity is adjustable, and zoom min/max boundaries too.
 
 
@@ -88,7 +90,11 @@ These are the helpers and utilities that don't fit in previous categories :
 
 * `ExtraAnchors` : an attached object which adds a lot of new convenience anchors (these anchors are only oneliners for things that can be acheived with classic anchors in multiple lines). Basically, it allows to anchors left/right, or top/bottom, or top/left/right, or top/left, etc, in a given object (parent or sibling).
 
+* `AutoRepeatableClicker` : a simple wrapper around `MouseArea` which adds the auto-repeat feature.
+
 * `SvgIconHelper` : a class that takes a SVG file as input, plus size/ratio information, and makes a PNG file in persistant cache as output and affect it to its parent item (usually an `Image`). If additional color information other than transparent is provided, the opaque pixels of the output will be colorized with the given tint.
+
+* `SvgIconLoader` : a simple `Image` with a `SvgIconHelper`.
 
 * `FileSelector` : a nice file selector in plain QtQuick, with support for filtering, and icons according to file-type.
 
