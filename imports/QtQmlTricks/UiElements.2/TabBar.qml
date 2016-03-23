@@ -103,12 +103,13 @@ Item {
                 readonly property Group group : modelData;
 
                 Rectangle {
+                    color: Style.colorNone;
                     radius: Style.roundness;
                     gradient: (clicker.pressed
                                ? Style.gradientPressed ()
                                : (currentTab === clicker.group
                                   ? Style.gradientShaded ()
-                                  : Style.gradientShaded (rect.color, rect.color)));
+                                  : null));
                     antialiasing: radius;
                     border {
                         width: Style.lineSize;
