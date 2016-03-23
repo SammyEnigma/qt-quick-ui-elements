@@ -419,6 +419,7 @@ Group {
                 onClicked: { collapse (); }
             }
         }
+        Line { ExtraAnchors.bottomDock: parent; }
     }
     Item {
         id: container;
