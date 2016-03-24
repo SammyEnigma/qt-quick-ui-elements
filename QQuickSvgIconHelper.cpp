@@ -3,6 +3,7 @@
 
 #include <QUrl>
 #include <QDir>
+#include <QHash>
 #include <QFile>
 #include <QImage>
 #include <QDebug>
@@ -12,6 +13,111 @@
 #include <QCoreApplication>
 #include <QRegularExpression>
 #include <QStandardPaths>
+#include <QCryptographicHash>
+#include <QSvgRenderer>
+
+class SvgMetaDataCache {
+public:
+    explicit SvgMetaDataCache (void) : hasher (QCryptographicHash::Md5) {
+        changeBasePath  (qApp->applicationDirPath ());
+        changeCachePath (QStandardPaths::writableLocation (QStandardPaths::CacheLocation) % "/SvgIconsCache");
+    }
+
+    void changeBasePath (const QString & path) {
+        basePath = path;
+    }
+    void changeCachePath (const QString & path) {
+        cachePath = path;
+        QDir ().mkpath (cachePath);
+    }
+
+    QString baseFile (const QString & name = "") {
+        return (basePath % "/" % name);
+    }
+    QString cacheFile (const QString & name = "") {
+        return (cachePath % "/" % name);
+    }
+
+    QString hashFile (const QString    & filePath) {
+        QString ret;
+        QFile file (filePath);
+        if (file.open (QFile::ReadOnly)) {
+            hasher.reset ();
+            hasher.addData (&file);
+            ret = hasher.result ().toHex ();
+            hasher.reset ();
+            file.close ();
+        }
+        return ret;
+    }
+    QString hashData (const QByteArray & data) {
+        QString ret;
+        if (!data.isEmpty ()) {
+            hasher.reset ();
+            hasher.addData (data);
+            ret = hasher.result ().toHex ();
+            hasher.reset ();
+        }
+        return ret;
+    }
+
+    bool hasHashInIndex (const QString & hash) {
+        return index.contains (hash);
+    }
+    void addHashInIndex (const QString & hash, const QString & checksum) {
+        index.insert (hash, checksum);
+    }
+
+    QString readChecksumFile (const QString & filePath) {
+        QString ret;
+        QFile file (filePath);
+        if (file.open (QFile::ReadOnly)) {
+            ret = QString::fromLatin1 (file.readAll ());
+            file.close ();
+        }
+        return ret;
+    }
+    void writeChecksumFile (const QString & filePath, const QString & checksum) {
+        QFile file (filePath);
+        if (file.open (QFile::WriteOnly)) {
+            file.write (checksum.toLatin1 ());
+            file.flush ();
+            file.close ();
+        }
+    }
+
+    bool renderSvgToPng (const QString & svgPath, const QString & pngPath, const QSize & size, const QColor & colorize) {
+        bool ret = false;
+        QImage image (size.width (), size.height (), QImage::Format_ARGB32);
+        QPainter painter (&image);
+        image.fill (Qt::transparent);
+        painter.setRenderHint (QPainter::Antialiasing,            true);
+        painter.setRenderHint (QPainter::SmoothPixmapTransform,   true);
+        painter.setRenderHint (QPainter::HighQualityAntialiasing, true);
+        renderer.load (svgPath);
+        if (renderer.isValid ()) {
+            renderer.render (&painter);
+            if (colorize.isValid () && colorize.alpha () > 0) {
+                QColor tmp (colorize);
+                for (int x (0); x < image.width (); x++) {
+                    for (int y (0); y < image.height (); y++) {
+                        tmp.setAlpha (qAlpha (image.pixel (x, y)));
+                        image.setPixel (x, y, tmp.rgba ());
+                    }
+                }
+            }
+            ret = image.save (pngPath, "PNG", 0);
+        }
+        return ret;
+    }
+
+private:
+    QString                 basePath;
+    QString                 cachePath;
+    QSvgRenderer            renderer;
+    QCryptographicHash      hasher;
+    QHash<QString, QString> index;
+};
 
 QQuickSvgIconHelper::QQuickSvgIconHelper (QObject * parent)
     : QObject           (parent)
@@ -28,8 +134,8 @@ QQuickSvgIconHelper::QQuickSvgIconHelper (QObject * parent)
     connect (&m_inhibitTimer, &QTimer::timeout, this, &QQuickSvgIconHelper::refresh, Qt::UniqueConnection);
 }
 
-QQuickSvgIconHelper::MetaDataCache & QQuickSvgIconHelper::cache (void) {
-    static MetaDataCache ret;
+SvgMetaDataCache & QQuickSvgIconHelper::cache(void) {
+    static SvgMetaDataCache ret;
     return ret;
 }
 
@@ -169,105 +275,4 @@ void QQuickSvgIconHelper::refresh (void) {
 void QQuickSvgIconHelper::restartTimer (void) {
     m_inhibitTimer.stop ();
     m_inhibitTimer.start ();
-}
-
-QQuickSvgIconHelper::MetaDataCache::MetaDataCache (void) : hasher (QCryptographicHash::Md5) {
-    changeBasePath  (qApp->applicationDirPath ());
-    changeCachePath (QStandardPaths::writableLocation (QStandardPaths::CacheLocation) % "/SvgIconsCache");
-}
-
-void QQuickSvgIconHelper::MetaDataCache::changeBasePath (const QString & path) {
-    basePath = path;
-}
-
-void QQuickSvgIconHelper::MetaDataCache::changeCachePath (const QString & path) {
-    cachePath = path;
-    QDir ().mkpath (cachePath);
-}
-
-QString QQuickSvgIconHelper::MetaDataCache::baseFile (const QString & name) {
-    return (basePath % "/" % name);
-}
-
-QString QQuickSvgIconHelper::MetaDataCache::cacheFile (const QString & name) {
-    return (cachePath % "/" % name);
-}
-
-bool QQuickSvgIconHelper::MetaDataCache::renderSvgToPng (const QString & svgPath,
-                                                         const QString & pngPath,
-                                                         const QSize   & size,
-                                                         const QColor  & colorize) {
-    bool ret = false;
-    QImage image (size.width (), size.height (), QImage::Format_ARGB32);
-    QPainter painter (&image);
-    image.fill (Qt::transparent);
-    painter.setRenderHint (QPainter::Antialiasing,            true);
-    painter.setRenderHint (QPainter::SmoothPixmapTransform,   true);
-    painter.setRenderHint (QPainter::HighQualityAntialiasing, true);
-    renderer.load (svgPath);
-    if (renderer.isValid ()) {
-        renderer.render (&painter);
-        if (colorize.isValid () && colorize.alpha () > 0) {
-            QColor tmp (colorize);
-            for (int x (0); x < image.width (); x++) {
-                for (int y (0); y < image.height (); y++) {
-                    tmp.setAlpha (qAlpha (image.pixel (x, y)));
-                    image.setPixel (x, y, tmp.rgba ());
-                }
-            }
-        }
-        ret = image.save (pngPath, "PNG", 0);
-    }
-    return ret;
-}
-
-QString QQuickSvgIconHelper::MetaDataCache::readChecksumFile (const QString & filePath) {
-    QString ret;
-    QFile file (filePath);
-    if (file.open (QFile::ReadOnly)) {
-        ret = QString::fromLatin1 (file.readAll ());
-        file.close ();
-    }
-    return ret;
-}
-
-void QQuickSvgIconHelper::MetaDataCache::writeChecksumFile (const QString & filePath, const QString & checksum) {
-    QFile file (filePath);
-    if (file.open (QFile::WriteOnly)) {
-        file.write (checksum.toLatin1 ());
-        file.flush ();
-        file.close ();
-    }
-}
-
-QString QQuickSvgIconHelper::MetaDataCache::hashFile (const QString & filePath) {
-    QString ret;
-    QFile file (filePath);
-    if (file.open (QFile::ReadOnly)) {
-        hasher.reset ();
-        hasher.addData (&file);
-        ret = hasher.result ().toHex ();
-        hasher.reset ();
-        file.close ();
-    }
-    return ret;
-}
-
-QString QQuickSvgIconHelper::MetaDataCache::hashData (const QByteArray & data) {
-    QString ret;
-    if (!data.isEmpty ()) {
-        hasher.reset ();
-        hasher.addData (data);
-        ret = hasher.result ().toHex ();
-        hasher.reset ();
-    }
-    return ret;
-}
-
-bool QQuickSvgIconHelper::MetaDataCache::hasHashInIndex (const QString & hash) {
-    return index.contains (hash);
-}
-
-void QQuickSvgIconHelper::MetaDataCache::addHashInIndex (const QString & hash, const QString & checksum) {
-    index.insert (hash, checksum);
 }
