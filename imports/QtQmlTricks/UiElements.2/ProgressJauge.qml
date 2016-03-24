@@ -3,6 +3,9 @@ import QtQmlTricks.UiElements 2.0;
 
 Item {
     id: base;
+    width: implicitWidth;
+    height: implicitHeight;
+    implicitWidth: 200;
     implicitHeight: Style.spacingBig;
 
     property real value     : 0;

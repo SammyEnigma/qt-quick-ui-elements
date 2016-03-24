@@ -5,7 +5,7 @@ MouseArea {
     id: base;
     width: implicitWidth;
     height: implicitHeight;
-    implicitWidth: 100;
+    implicitWidth: (layout.implicitWidth + layout.anchors.margins * 2);
     implicitHeight: (layout.height + layout.anchors.margins * 2);
 
     property alias image   : img.sourceComponent;
@@ -56,8 +56,8 @@ MouseArea {
 
             Loader {
                 id: img;
-                active: (sourceComponent !== null);
                 enabled: base.enabled;
+                visible: (sourceComponent !== null);
                 anchors {
                     top: parent.top;
                     horizontalCenter: parent.horizontalCenter;

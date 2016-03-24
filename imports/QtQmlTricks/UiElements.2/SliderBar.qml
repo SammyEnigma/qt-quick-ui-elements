@@ -3,11 +3,16 @@ import QtQmlTricks.UiElements 2.0;
 
 Item {
     id: base;
+    width: implicitWidth;
+    height: implicitHeight;
+    implicitWidth: 200;
     implicitHeight: handle.height;
 
     property real value    : 0;
     property real minValue : 0;
     property real maxValue : 100;
+
+    property int  decimals : 0;
 
     Rectangle {
         id: groove;
@@ -29,8 +34,8 @@ Item {
         Item {
             enabled: base.enabled;
             anchors {
-               fill: parent;
-               margins: Style.lineSize;
+                fill: parent;
+                margins: Style.lineSize;
             }
 
             Rectangle {
@@ -83,7 +88,37 @@ Item {
             enabled: base.enabled;
             hoverEnabled: Style.useHovering;
             anchors.fill: parent;
-            onPositionChanged: { value = (minValue + (maxValue - minValue) * (handle.x / (base.width - handle.width))); }
+            onPressed: {
+                if (tooltip === null) {
+                    tooltip = compoTooltip.createObject (Introspector.window (base));
+                }
+            }
+            onReleased: {
+                if (tooltip !== null) {
+                    tooltip.destroy ();
+                    tooltip = null;
+                }
+            }
+            onPositionChanged: {
+                value = (minValue + (maxValue - minValue) * (handle.x / (base.width - handle.width)));
+            }
+
+            property Balloon tooltip : null;
+
+            Component {
+                id: compoTooltip;
+
+                Balloon {
+                    x: (handleTopCenterAbsPos.x - width / 2);
+                    y: (handleTopCenterAbsPos.y - height - Style.spacingNormal);
+                    z: 9999999;
+                    content: base.value.toFixed (decimals);
+
+                    readonly property var handleTopCenterAbsPos : base.mapToItem (parent,
+                                                                                  (handle.x + handle.width  / 2),
+                                                                                  (handle.y));
+                }
+            }
         }
     }
 }
