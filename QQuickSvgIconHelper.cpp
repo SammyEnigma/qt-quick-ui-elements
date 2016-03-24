@@ -133,18 +133,21 @@ void QQuickSvgIconHelper::refresh (void) {
                                                                % "x" % QString::number (imgSize.height ())
                                                                % (m_color.alpha () > 0 ? m_color.name () : "")
                                                                % ".png");
-                const QString checkumPath = cache ().cacheFile (hash % ".md5");
-                const QString reference = cache ().readChecksumFile (checkumPath);
-                const QString checksum  = cache ().hashFile (sourcePath);
-                if (reference != checksum) {
-                    QDirIterator it (cache ().cacheFile (),
-                                     QStringList (hash % "*.png"),
-                                     QDir::Filters (QDir::Files | QDir::NoDotAndDotDot),
-                                     QDirIterator::IteratorFlags (QDirIterator::NoIteratorFlags));
-                    while (it.hasNext ()) {
-                        QFile::remove (it.next ());
+                if (!cache ().hasHashInIndex (hash)) {
+                    const QString checkumPath = cache ().cacheFile (hash % ".md5");
+                    const QString reference = cache ().readChecksumFile (checkumPath);
+                    const QString checksum  = cache ().hashFile (sourcePath);
+                    if (reference != checksum) {
+                        QDirIterator it (cache ().cacheFile (),
+                                         QStringList (hash % "*.png"),
+                                         QDir::Filters (QDir::Files | QDir::NoDotAndDotDot),
+                                         QDirIterator::IteratorFlags (QDirIterator::NoIteratorFlags));
+                        while (it.hasNext ()) {
+                            QFile::remove (it.next ());
+                        }
+                        cache ().writeChecksumFile (checkumPath, checksum);
                     }
-                    cache ().writeChecksumFile (checkumPath, checksum);
+                    cache ().addHashInIndex (hash, checksum);
                 }
                 if (!QFile::exists (cachedPath)) {
                     cache ().renderSvgToPng (sourcePath, cachedPath, imgSize, m_color);
@@ -170,7 +173,7 @@ void QQuickSvgIconHelper::restartTimer (void) {
 
 QQuickSvgIconHelper::MetaDataCache::MetaDataCache (void) : hasher (QCryptographicHash::Md5) {
     changeBasePath  (qApp->applicationDirPath ());
-    changeCachePath (QStandardPaths::writableLocation (QStandardPaths::CacheLocation));
+    changeCachePath (QStandardPaths::writableLocation (QStandardPaths::CacheLocation) % "/SvgIconsCache");
 }
 
 void QQuickSvgIconHelper::MetaDataCache::changeBasePath (const QString & path) {
@@ -259,4 +262,12 @@ QString QQuickSvgIconHelper::MetaDataCache::hashData (const QByteArray & data) {
         hasher.reset ();
     }
     return ret;
+}
+
+bool QQuickSvgIconHelper::MetaDataCache::hasHashInIndex (const QString & hash) {
+    return index.contains (hash);
+}
+
+void QQuickSvgIconHelper::MetaDataCache::addHashInIndex (const QString & hash, const QString & checksum) {
+    index.insert (hash, checksum);
 }

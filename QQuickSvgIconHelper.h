@@ -5,6 +5,7 @@
 #include <QString>
 #include <QColor>
 #include <QTimer>
+#include <QHash>
 #include <QSvgRenderer>
 #include <QQmlProperty>
 #include <QQmlParserStatus>
@@ -79,16 +80,21 @@ private:
         QString hashFile (const QString    & filePath);
         QString hashData (const QByteArray & data);
 
+        bool hasHashInIndex (const QString & filePath);
+        void addHashInIndex (const QString & hash, const QString & checksum);
+
         QString readChecksumFile (const QString & filePath);
         void writeChecksumFile (const QString & filePath, const QString & checksum);
 
         bool renderSvgToPng (const QString & svgPath, const QString & pngPath, const QSize & size, const QColor & colorize);
 
+
     private:
-        QString            basePath;
-        QString            cachePath;
-        QSvgRenderer       renderer;
-        QCryptographicHash hasher;
+        QString                 basePath;
+        QString                 cachePath;
+        QSvgRenderer            renderer;
+        QCryptographicHash      hasher;
+        QHash<QString, QString> index;
     };
 
     static MetaDataCache & cache (void);
