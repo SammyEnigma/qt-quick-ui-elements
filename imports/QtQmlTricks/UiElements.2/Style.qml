@@ -341,6 +341,11 @@ QtObject {
         return (size * Screen.devicePixelRatio);
     }
 
+    function iconSize (size) {
+        var tmp = (size || 1.0);
+        return realPixels (tmp * 24);
+    }
+
     function gray (val) {
         var tmp = (val / 255);
         return Qt.rgba (tmp, tmp, tmp, 1.0);

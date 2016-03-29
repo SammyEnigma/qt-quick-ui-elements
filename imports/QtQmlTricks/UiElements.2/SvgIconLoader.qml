@@ -10,7 +10,7 @@ PixelPerfectContainer {
     implicitWidth: (helper.size * helper.horizontalRatio);
     implicitHeight: (helper.size * helper.verticalRatio);
 
-    property int   size            : Style.realPixels (24);
+    property int   size            : Style.iconSize (1);
     property color color           : Style.colorNone;
     property alias icon            : helper.icon;
     property alias verticalRatio   : helper.verticalRatio;
