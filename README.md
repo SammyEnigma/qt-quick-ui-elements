@@ -119,7 +119,7 @@ These are minimalistic/modern-looking icons provided with the library, for easy 
 
 * Category `services` : representation of common forms of communication media, along with the logo of the most famous social services. Contains icons `call`, `chat`, `mail`, `rss`.
 
-* Category `others` : every icon that doesn't fit any category. It contains icons `moon`, `pin`, `sun`, `target`.
+* Category `others` : every icon that doesn't fit any category. It contains icons `calendar`, `clock`, `cloud`, `moon`, `pin`, `sun`, `target`, `user`.
 
 
 > NOTE : If you want to donate, use this link : [![Flattr this](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=thebootroo&url=http://gitlab.unique-conception.org/qt-qml-tricks/qt-quick-ui-elements)
