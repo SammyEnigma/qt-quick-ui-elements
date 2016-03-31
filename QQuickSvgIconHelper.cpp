@@ -48,10 +48,12 @@ public:
     }
 
     virtual ~SvgMetaDataCache (void) {
+#ifdef Q_OS_LINUX
         for (QHash<QString, int>::const_iterator it = descriptorsIndex.constBegin (); it != descriptorsIndex.constEnd (); it++) {
             inotify_rm_watch (inotifyFd, it.value ());
         }
         ::close (inotifyFd);
+#endif
     }
 
     void changeBasePath (const QString & path) {
@@ -162,8 +164,8 @@ public:
             if (!svgHelpersIndex.contains (path, svgHelper)) {
                 svgHelpersIndex.insert (path, svgHelper);
             }
-        }
 #endif
+        }
     }
 
     void removeFileWatcher (const QString & path, QQuickSvgIconHelper * svgHelper) {
@@ -177,11 +179,11 @@ public:
                     descriptorsIndex.remove (path);
                 }
             }
-        }
 #endif
+        }
     }
 
-protected slots:
+protected:
     void onInotifyEvent (void) {
 #ifdef Q_OS_LINUX
         static const int SIZEOF_EVT = sizeof (inotify_event);
