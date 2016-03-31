@@ -18,7 +18,7 @@ PixelPerfectContainer {
 
     Image {
         id: img;
-        cache: true;
+        cache: !helper.live;
         width: helper.size;
         height: helper.size;
         smooth: false;

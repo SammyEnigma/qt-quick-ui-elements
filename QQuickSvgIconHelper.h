@@ -16,6 +16,7 @@ class QQuickSvgIconHelper : public QObject, public QQmlParserStatus, public QQml
     Q_INTERFACES (QQmlParserStatus)
     Q_INTERFACES (QQmlPropertyValueSource)
     Q_PROPERTY (int     size            READ getSize            WRITE setSize            NOTIFY sizeChanged)
+    Q_PROPERTY (bool    live            READ getLive                                     NOTIFY liveChanged)
     Q_PROPERTY (qreal   verticalRatio   READ getVerticalRatio   WRITE setVerticalRatio   NOTIFY verticalRatioChanged)
     Q_PROPERTY (qreal   horizontalRatio READ getHorizontalRatio WRITE setHorizontalRatio NOTIFY horizontalRatioChanged)
     Q_PROPERTY (QColor  color           READ getColor           WRITE setColor           NOTIFY colorChanged)
@@ -23,6 +24,7 @@ class QQuickSvgIconHelper : public QObject, public QQmlParserStatus, public QQml
 
 public:
     explicit QQuickSvgIconHelper (QObject * parent = Q_NULLPTR);
+    ~QQuickSvgIconHelper (void);
 
     static void setBasePath  (const QString & basePath);
     static void setCachePath (const QString & cachePath);
@@ -32,6 +34,7 @@ public:
     void setTarget         (const QQmlProperty & target);
 
     int             getSize             (void) const;
+    bool            getLive             (void) const;
     qreal           getVerticalRatio    (void) const;
     qreal           getHorizontalRatio  (void) const;
     const QColor  & getColor            (void) const;
@@ -48,6 +51,7 @@ public slots:
 
 signals:
     void sizeChanged            (void);
+    void liveChanged            (void);
     void verticalRatioChanged   (void);
     void horizontalRatioChanged (void);
     void colorChanged           (void);
@@ -55,16 +59,23 @@ signals:
 
 protected:
     void doProcessIcon (void);
+    void doForceRegen  (void);
 
 private:
     int          m_size;
+    bool         m_live;
     bool         m_ready;
     qreal        m_verticalRatio;
     qreal        m_horizontalRatio;
     QColor       m_color;
     QString      m_icon;
+    QString      m_hash;
+    QString      m_sourcePath;
+    QString      m_cachedPath;
     QTimer       m_inhibitTimer;
     QQmlProperty m_property;
+
+    friend class SvgMetaDataCache;
 
     static SvgMetaDataCache & cache (void);
 };
