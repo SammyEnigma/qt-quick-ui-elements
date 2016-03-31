@@ -1,2 +1,16 @@
-build:
-  script: "qbs build"
+{
+  "before_script": [],
+  "stages": [
+    "build"
+  ],
+  "build_on_linux_gcc": {
+    "stage": "build",
+    "script": [
+      "qbs build"
+    ],
+    "tags": [
+      "linux",
+      "gcc"
+    ]
+  }
+}
