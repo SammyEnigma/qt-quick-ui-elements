@@ -6,6 +6,7 @@
 #include <qqml.h>
 
 #include "QQuickPolygon.h"
+#include "QQuickEllipse.h"
 #include "QQuickExtraAnchors.h"
 #include "QQuickSvgIconHelper.h"
 #include "QQmlMimeIconsHelper.h"
@@ -32,6 +33,7 @@ static void registerQtQmlTricksUiElements (QQmlEngine * engine = Q_NULLPTR) {
     const int    min = 0;
 
     // shapes
+    qmlRegisterType<QQuickEllipse>                       (uri, maj, min, "Ellipse");
     qmlRegisterType<QQuickPolygon>                       (uri, maj, min, "Polygon");
     qmlRegisterType<QQuickRoundedRectanglePaintedItem>   (uri, maj, min, "RoundedRectangle");
 

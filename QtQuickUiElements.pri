@@ -42,7 +42,8 @@ HEADERS += \
     $$PWD/QQuickRoundedRectanglePaintedItem.h \
     $$PWD/QQuickFormContainer.h \
     $$PWD/QQmlIntrospector.h \
-    $$PWD/QQuickPixelPerfectContainer.h
+    $$PWD/QQuickPixelPerfectContainer.h \
+    $$PWD/QQuickEllipse.h
 
 SOURCES += \
     $$PWD/QQuickGridContainer.cpp \
@@ -57,4 +58,5 @@ SOURCES += \
     $$PWD/QQuickRoundedRectanglePaintedItem.cpp \
     $$PWD/QQuickFormContainer.cpp \
     $$PWD/QQmlIntrospector.cpp \
-    $$PWD/QQuickPixelPerfectContainer.cpp
+    $$PWD/QQuickPixelPerfectContainer.cpp \
+    $$PWD/QQuickEllipse.cpp
