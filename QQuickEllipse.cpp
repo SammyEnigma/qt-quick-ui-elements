@@ -4,6 +4,10 @@
 #include <QtMath>
 #include <QDebug>
 
+QPointF operator* (const QPointF & p1, const QPointF & p2) {
+    return QPointF (p1.x () * p2.x (), p1.y () *  p2.y ());
+}
+
 QQuickEllipse::QQuickEllipse (QQuickItem * parent)
     : QQuickItem   (parent)
     , m_holeWidth  (0)
@@ -106,33 +110,44 @@ void QQuickEllipse::setColor (const QColor & color) {
     update ();
 }
 
+QPointF QQuickEllipse::trigoPoint (const int angleDeg) {
+    static bool computed = false;
+    static QPointF cache [359];
+    if (!computed) {
+        for (int tmpDeg = 0; tmpDeg < 360; tmpDeg++) {
+            const qreal tmpRad = (qreal (tmpDeg) * M_PI / 180.0f);
+            cache [tmpDeg].setX (qCos (tmpRad));
+            cache [tmpDeg].setY (qSin (tmpRad));
+        }
+        computed = true;
+    }
+    return cache [angleDeg % 360];
+}
+
 QSGNode * QQuickEllipse::updatePaintNode (QSGNode * oldNode, UpdatePaintNodeData * updateData) {
     Q_UNUSED (updateData)
     if (oldNode != Q_NULLPTR) {
         delete oldNode;
     }
     QSGNode * node = new QSGNode;
-    QVector<int> anglesList;
+    const QPointF outerRadius (width ()    / 2.0f, height ()    / 2.0f);
+    const QPointF innerRadius (m_holeWidth / 2.0f, m_holeHeight / 2.0f);
+    const QPointF & center = outerRadius;
+    QVector<QPointF> anglesList;
     anglesList.reserve (360);
     if (m_startAngle != m_stopAngle) {
         int currDeg = m_startAngle;
         while (currDeg != m_stopAngle) {
-            anglesList.append (currDeg);
+            anglesList.append (trigoPoint (currDeg));
             currDeg = (m_clockwise ? currDeg +1 : 360 + currDeg -1) % 360;
         }
     }
     else {
         for (int currDeg = 0; currDeg < 360; currDeg++) {
-            anglesList.append (currDeg);
+            anglesList.append (trigoPoint (currDeg));
         }
-        anglesList.append (0);
+        anglesList.append (trigoPoint (0));
     }
-    const qreal centerX      = (width () / 2.0f);
-    const qreal centerY      = (height () / 2.0f);
-    const qreal outerRadiusX = (centerX);
-    const qreal outerRadiusY = (centerY);
-    const qreal innerRadiusX = (m_holeWidth / 2.0f);
-    const qreal innerRadiusY = (m_holeHeight / 2.0f);
     QSGGeometry * area = Q_NULLPTR;
     if (m_holeWidth > 0 && m_holeHeight > 0) { // ring : triangle strip
         const int pointsCount = (anglesList.count () * 2);
@@ -140,14 +155,15 @@ QSGNode * QQuickEllipse::updatePaintNode (QSGNode * oldNode, UpdatePaintNodeData
         area->setDrawingMode (GL_TRIANGLE_STRIP);
         QSGGeometry::Point2D * vertex = area->vertexDataAsPoint2D ();
         int pointIdx = 0;
-        for (QVector<int>::const_iterator it = anglesList.constBegin (); it != anglesList.constEnd (); it++) {
-            const int currDeg = (* it);
-            const qreal currRad = (qreal (currDeg) * M_PI / 180.0f);
-            vertex [pointIdx].x = float (centerX + innerRadiusX * qCos (currRad));
-            vertex [pointIdx].y = float (centerY + innerRadiusY * qSin (currRad));
+        for (QVector<QPointF>::const_iterator it = anglesList.constBegin (); it != anglesList.constEnd (); it++) {
+            const QPointF currTrigo (* it);
+            const QPointF innerPoint (center + innerRadius * currTrigo);
+            vertex [pointIdx].x = float (innerPoint.x ());
+            vertex [pointIdx].y = float (innerPoint.y ());
             pointIdx++;
-            vertex [pointIdx].x = float (centerX + outerRadiusX * qCos (currRad));
-            vertex [pointIdx].y = float (centerY + outerRadiusY * qSin (currRad));
+            const QPointF outerPoint (center + outerRadius * currTrigo);
+            vertex [pointIdx].x = float (outerPoint.x ());
+            vertex [pointIdx].y = float (outerPoint.y ());
             pointIdx++;
         }
     }
@@ -157,14 +173,14 @@ QSGNode * QQuickEllipse::updatePaintNode (QSGNode * oldNode, UpdatePaintNodeData
         area->setDrawingMode (GL_TRIANGLE_FAN);
         QSGGeometry::Point2D * vertex = area->vertexDataAsPoint2D ();
         int pointIdx = 0;
-        vertex [pointIdx].x = float (centerX);
-        vertex [pointIdx].y = float (centerY);
+        vertex [pointIdx].x = float (center.x ());
+        vertex [pointIdx].y = float (center.y ());
         pointIdx++;
-        for (QVector<int>::const_iterator it = anglesList.constBegin (); it != anglesList.constEnd (); it++, pointIdx++) {
-            const int currDeg = (* it);
-            const qreal currRad = (qreal (currDeg) * M_PI / 180.0f);
-            vertex [pointIdx].x = float (centerX + outerRadiusX * qCos (currRad));
-            vertex [pointIdx].y = float (centerY + outerRadiusY * qSin (currRad));
+        for (QVector<QPointF>::const_iterator it = anglesList.constBegin (); it != anglesList.constEnd (); it++, pointIdx++) {
+            const QPointF currTrigo (* it);
+            const QPointF currPoint (center + outerRadius * currTrigo);
+            vertex [pointIdx].x = float (currPoint.x ());
+            vertex [pointIdx].y = float (currPoint.y ());
         }
     }
     if (area != Q_NULLPTR) {
@@ -173,6 +189,9 @@ QSGNode * QQuickEllipse::updatePaintNode (QSGNode * oldNode, UpdatePaintNodeData
         QSGGeometryNode * subNode = new QSGGeometryNode;
         subNode->setGeometry (area);
         subNode->setMaterial (mat);
+        subNode->setFlag (QSGNode::OwnsGeometry);
+        subNode->setFlag (QSGNode::OwnsMaterial);
+        subNode->setFlag (QSGNode::OwnedByParent);
         node->appendChildNode (subNode);
     }
     return node;

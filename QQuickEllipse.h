@@ -48,6 +48,9 @@ signals:
     void clockwiseChanged  (void);
     void colorChanged      (void);
 
+protected:
+    static QPointF trigoPoint (const int angleDeg);
+
 private:
     int m_holeWidth;
     int m_holeHeight;
