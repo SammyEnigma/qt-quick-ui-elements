@@ -20,14 +20,6 @@ QQuickEllipse::QQuickEllipse (QQuickItem * parent)
     setFlag (QQuickItem::ItemHasContents);
 }
 
-const QColor & QQuickEllipse::getColor (void) const {
-    return m_color;
-}
-
-bool QQuickEllipse::getClockwise (void) const {
-    return m_clockwise;
-}
-
 int QQuickEllipse::getHoleWidth (void) const {
     return m_holeWidth;
 }
@@ -42,6 +34,14 @@ int QQuickEllipse::getStartAngle (void) const {
 
 int QQuickEllipse::getStopAngle (void) const {
     return m_stopAngle;
+}
+
+bool QQuickEllipse::getClockwise (void) const {
+    return m_clockwise;
+}
+
+const QColor & QQuickEllipse::getColor (void) const {
+    return m_color;
 }
 
 void QQuickEllipse::setHoleWidth (const int holeWidth) {
@@ -121,7 +121,6 @@ QSGNode * QQuickEllipse::updatePaintNode (QSGNode * oldNode, UpdatePaintNodeData
     if (oldNode != Q_NULLPTR) {
         delete oldNode;
     }
-    QSGNode * node (new QSGNode);
     const QPointF outerRadius (width ()    / 2.0f, height ()    / 2.0f);
     const QPointF innerRadius (m_holeWidth / 2.0f, m_holeHeight / 2.0f);
     const QPointF & center (outerRadius);
@@ -140,15 +139,20 @@ QSGNode * QQuickEllipse::updatePaintNode (QSGNode * oldNode, UpdatePaintNodeData
         }
         anglesList.append (trigoPoint (0));
     }
-    QSGGeometry * area (Q_NULLPTR);
+    QSGGeometryNode * node (new QSGGeometryNode);
+    node->setFlag (QSGNode::OwnsGeometry);
+    node->setFlag (QSGNode::OwnsMaterial);
+    QSGFlatColorMaterial * mat (new QSGFlatColorMaterial);
+    mat->setColor (m_color);
+    node->setMaterial (mat);
     if (m_holeWidth > 0 && m_holeHeight > 0) { // ring : triangle strip
         const int pointsCount (anglesList.count () * 2);
-        area = new QSGGeometry (QSGGeometry::defaultAttributes_Point2D (), pointsCount);
+        QSGGeometry * area (new QSGGeometry (QSGGeometry::defaultAttributes_Point2D (), pointsCount));
         area->setDrawingMode (GL_TRIANGLE_STRIP);
         QSGGeometry::Point2D * vertex (area->vertexDataAsPoint2D ());
         int pointIdx (0);
         for (QVector<QPointF>::const_iterator it = anglesList.constBegin (); it != anglesList.constEnd (); it++) {
-            const QPointF currTrigo (* it);
+            const QPointF & currTrigo (* it);
             const QPointF innerPoint (center + innerRadius * currTrigo);
             vertex [pointIdx].x = float (innerPoint.x ());
             vertex [pointIdx].y = float (innerPoint.y ());
@@ -158,10 +162,11 @@ QSGNode * QQuickEllipse::updatePaintNode (QSGNode * oldNode, UpdatePaintNodeData
             vertex [pointIdx].y = float (outerPoint.y ());
             pointIdx++;
         }
+        node->setGeometry (area);
     }
     else { // ellipse : triangle fan
         const int pointsCount (anglesList.count () + 1);
-        area = new QSGGeometry (QSGGeometry::defaultAttributes_Point2D (), pointsCount);
+        QSGGeometry * area (new QSGGeometry (QSGGeometry::defaultAttributes_Point2D (), pointsCount));
         area->setDrawingMode (GL_TRIANGLE_FAN);
         QSGGeometry::Point2D * vertex (area->vertexDataAsPoint2D ());
         int pointIdx (0);
@@ -169,23 +174,13 @@ QSGNode * QQuickEllipse::updatePaintNode (QSGNode * oldNode, UpdatePaintNodeData
         vertex [pointIdx].y = float (center.y ());
         pointIdx++;
         for (QVector<QPointF>::const_iterator it = anglesList.constBegin (); it != anglesList.constEnd (); it++) {
-            const QPointF currTrigo (* it);
+            const QPointF & currTrigo (* it);
             const QPointF currPoint (center + outerRadius * currTrigo);
             vertex [pointIdx].x = float (currPoint.x ());
             vertex [pointIdx].y = float (currPoint.y ());
             pointIdx++;
         }
-    }
-    if (area != Q_NULLPTR) {
-        QSGFlatColorMaterial * mat (new QSGFlatColorMaterial);
-        mat->setColor (m_color);
-        QSGGeometryNode * subNode (new QSGGeometryNode);
-        subNode->setGeometry (area);
-        subNode->setMaterial (mat);
-        subNode->setFlag (QSGNode::OwnsGeometry);
-        subNode->setFlag (QSGNode::OwnsMaterial);
-        subNode->setFlag (QSGNode::OwnedByParent);
-        node->appendChildNode (subNode);
+        node->setGeometry (area);
     }
     return node;
 }

@@ -3,9 +3,8 @@
 
 #include <QQuickItem>
 #include <QColor>
-#include <QList>
+#include <QVector>
 #include <QPointF>
-#include <QPolygonF>
 #include <QSGNode>
 #include <QSGGeometry>
 #include <QSGGeometryNode>
