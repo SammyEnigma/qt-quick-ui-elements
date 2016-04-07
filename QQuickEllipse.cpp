@@ -127,29 +127,47 @@ QSGNode * QQuickEllipse::updatePaintNode (QSGNode * oldNode, UpdatePaintNodeData
         }
         anglesList.append (0);
     }
-    const qreal radiusX = (width ()  / 2.0f);
-    const qreal radiusY = (height () / 2.0f);
+    const qreal centerX      = (width () / 2.0f);
+    const qreal centerY      = (height () / 2.0f);
+    const qreal outerRadiusX = (centerX);
+    const qreal outerRadiusY = (centerY);
+    const qreal innerRadiusX = (m_holeWidth / 2.0f);
+    const qreal innerRadiusY = (m_holeHeight / 2.0f);
+    QSGGeometry * area = Q_NULLPTR;
     if (m_holeWidth > 0 && m_holeHeight > 0) { // ring : triangle strip
-        qWarning () << "TRIANGLE STRIP";
-
-        // TODO
+        const int pointsCount = (anglesList.count () * 2);
+        area = new QSGGeometry (QSGGeometry::defaultAttributes_Point2D (), pointsCount);
+        area->setDrawingMode (GL_TRIANGLE_STRIP);
+        QSGGeometry::Point2D * vertex = area->vertexDataAsPoint2D ();
+        int pointIdx = 0;
+        for (QVector<int>::const_iterator it = anglesList.constBegin (); it != anglesList.constEnd (); it++) {
+            const int currDeg = (* it);
+            const qreal currRad = (qreal (currDeg) * M_PI / 180.0f);
+            vertex [pointIdx].x = float (centerX + innerRadiusX * qCos (currRad));
+            vertex [pointIdx].y = float (centerY + innerRadiusY * qSin (currRad));
+            pointIdx++;
+            vertex [pointIdx].x = float (centerX + outerRadiusX * qCos (currRad));
+            vertex [pointIdx].y = float (centerY + outerRadiusY * qSin (currRad));
+            pointIdx++;
+        }
     }
     else { // ellipse : triangle fan
-        qWarning () << "TRIANGLE FAN";
         const int pointsCount = (anglesList.count () + 1);
-        QSGGeometry * area = new QSGGeometry (QSGGeometry::defaultAttributes_Point2D (), pointsCount);
+        area = new QSGGeometry (QSGGeometry::defaultAttributes_Point2D (), pointsCount);
         area->setDrawingMode (GL_TRIANGLE_FAN);
         QSGGeometry::Point2D * vertex = area->vertexDataAsPoint2D ();
         int pointIdx = 0;
-        vertex [pointIdx].x = float (radiusX);
-        vertex [pointIdx].y = float (radiusY);
+        vertex [pointIdx].x = float (centerX);
+        vertex [pointIdx].y = float (centerY);
         pointIdx++;
         for (QVector<int>::const_iterator it = anglesList.constBegin (); it != anglesList.constEnd (); it++, pointIdx++) {
             const int currDeg = (* it);
             const qreal currRad = (qreal (currDeg) * M_PI / 180.0f);
-            vertex [pointIdx].x = float (radiusX + radiusX * qCos (currRad));
-            vertex [pointIdx].y = float (radiusY + radiusY * qSin (currRad));
+            vertex [pointIdx].x = float (centerX + outerRadiusX * qCos (currRad));
+            vertex [pointIdx].y = float (centerY + outerRadiusY * qSin (currRad));
         }
+    }
+    if (area != Q_NULLPTR) {
         QSGFlatColorMaterial * mat = new QSGFlatColorMaterial;
         mat->setColor (m_color);
         QSGGeometryNode * subNode = new QSGGeometryNode;
