@@ -24,8 +24,7 @@ const QColor & QQuickEllipse::getColor (void) const {
     return m_color;
 }
 
-bool QQuickEllipse::getClockwise() const
-{
+bool QQuickEllipse::getClockwise (void) const {
     return m_clockwise;
 }
 
@@ -45,77 +44,70 @@ int QQuickEllipse::getStopAngle (void) const {
     return m_stopAngle;
 }
 
-
 void QQuickEllipse::setHoleWidth (const int holeWidth) {
-    if (m_holeWidth == holeWidth)
-        return;
-
-    m_holeWidth = holeWidth;
-    emit holeWidthChanged ();
-    update ();
+    if (m_holeWidth != holeWidth) {
+        m_holeWidth = holeWidth;
+        emit holeWidthChanged ();
+        update ();
+    }
 }
 
 void QQuickEllipse::setHoleHeight (const int holeHeight) {
-    if (m_holeHeight == holeHeight)
-        return;
-
-    m_holeHeight = holeHeight;
-    emit holeHeightChanged ();
-    update ();
+    if (m_holeHeight != holeHeight) {
+        m_holeHeight = holeHeight;
+        emit holeHeightChanged ();
+        update ();
+    }
 }
 
 void QQuickEllipse::setStartAngle (const int startAngle) {
-    if (startAngle > 359 || startAngle < 0) {
-        qWarning () << "Ellipse.startAngle must be comprised between 0 and 359 !";
-        return;
+    if (startAngle <= 359 && startAngle >= 0) {
+        if (m_startAngle != startAngle) {
+            m_startAngle = startAngle;
+            emit startAngleChanged ();
+            update ();
+        }
     }
-
-    if (m_startAngle == startAngle)
-        return;
-
-    m_startAngle = startAngle;
-    emit startAngleChanged ();
-    update ();
+    else {
+        qWarning () << "Ellipse.startAngle must be comprised between 0 and 359 !";
+    }
 }
 
 void QQuickEllipse::setStopAngle (const int stopAngle) {
-    if (stopAngle > 359 || stopAngle < 0) {
-        qWarning () << "Ellipse.stopAngle must be comprised between 0 and 359 !";
-        return;
+    if (stopAngle <= 359 && stopAngle >= 0) {
+        if (m_stopAngle != stopAngle) {
+            m_stopAngle = stopAngle;
+            emit stopAngleChanged ();
+            update ();
+        }
     }
-
-    if (m_stopAngle == stopAngle)
-        return;
-
-    m_stopAngle = stopAngle;
-    emit stopAngleChanged ();
-    update ();
+    else {
+        qWarning () << "Ellipse.stopAngle must be comprised between 0 and 359 !";
+    }
 }
 
 void QQuickEllipse::setClockwise (const bool clockwise) {
-    if (m_clockwise == clockwise)
-        return;
-
-    m_clockwise = clockwise;
-    emit clockwiseChanged ();
-    update ();
+    if (m_clockwise != clockwise) {
+        m_clockwise = clockwise;
+        emit clockwiseChanged ();
+        update ();
+    }
 }
 
 void QQuickEllipse::setColor (const QColor & color) {
-    if (m_color == color)
-        return;
-
-    m_color = color;
-    emit colorChanged ();
-    update ();
+    if (m_color != color) {
+        m_color = color;
+        emit colorChanged ();
+        update ();
+    }
 }
 
 QPointF QQuickEllipse::trigoPoint (const int angleDeg) {
-    static bool computed = false;
+    static bool computed (false);
     static QPointF cache [359];
     if (!computed) {
-        for (int tmpDeg = 0; tmpDeg < 360; tmpDeg++) {
-            const qreal tmpRad = (qreal (tmpDeg) * M_PI / 180.0f);
+        for (int tmpDeg (0); tmpDeg < 360; tmpDeg++) {
+            const qreal tmpRad (qreal (tmpDeg) * M_PI / 180.0f);
             cache [tmpDeg].setX (qCos (tmpRad));
             cache [tmpDeg].setY (qSin (tmpRad));
         }
@@ -129,10 +121,10 @@ QSGNode * QQuickEllipse::updatePaintNode (QSGNode * oldNode, UpdatePaintNodeData
     if (oldNode != Q_NULLPTR) {
         delete oldNode;
     }
-    QSGNode * node = new QSGNode;
+    QSGNode * node (new QSGNode);
     const QPointF outerRadius (width ()    / 2.0f, height ()    / 2.0f);
     const QPointF innerRadius (m_holeWidth / 2.0f, m_holeHeight / 2.0f);
-    const QPointF & center = outerRadius;
+    const QPointF & center (outerRadius);
     QVector<QPointF> anglesList;
     anglesList.reserve (360);
     if (m_startAngle != m_stopAngle) {
@@ -143,18 +135,18 @@ QSGNode * QQuickEllipse::updatePaintNode (QSGNode * oldNode, UpdatePaintNodeData
         }
     }
     else {
-        for (int currDeg = 0; currDeg < 360; currDeg++) {
+        for (int currDeg (0); currDeg < 360; currDeg++) {
             anglesList.append (trigoPoint (currDeg));
         }
         anglesList.append (trigoPoint (0));
     }
-    QSGGeometry * area = Q_NULLPTR;
+    QSGGeometry * area (Q_NULLPTR);
     if (m_holeWidth > 0 && m_holeHeight > 0) { // ring : triangle strip
-        const int pointsCount = (anglesList.count () * 2);
+        const int pointsCount (anglesList.count () * 2);
         area = new QSGGeometry (QSGGeometry::defaultAttributes_Point2D (), pointsCount);
         area->setDrawingMode (GL_TRIANGLE_STRIP);
-        QSGGeometry::Point2D * vertex = area->vertexDataAsPoint2D ();
-        int pointIdx = 0;
+        QSGGeometry::Point2D * vertex (area->vertexDataAsPoint2D ());
+        int pointIdx (0);
         for (QVector<QPointF>::const_iterator it = anglesList.constBegin (); it != anglesList.constEnd (); it++) {
             const QPointF currTrigo (* it);
             const QPointF innerPoint (center + innerRadius * currTrigo);
@@ -168,25 +160,26 @@ QSGNode * QQuickEllipse::updatePaintNode (QSGNode * oldNode, UpdatePaintNodeData
         }
     }
     else { // ellipse : triangle fan
-        const int pointsCount = (anglesList.count () + 1);
+        const int pointsCount (anglesList.count () + 1);
         area = new QSGGeometry (QSGGeometry::defaultAttributes_Point2D (), pointsCount);
         area->setDrawingMode (GL_TRIANGLE_FAN);
-        QSGGeometry::Point2D * vertex = area->vertexDataAsPoint2D ();
-        int pointIdx = 0;
+        QSGGeometry::Point2D * vertex (area->vertexDataAsPoint2D ());
+        int pointIdx (0);
         vertex [pointIdx].x = float (center.x ());
         vertex [pointIdx].y = float (center.y ());
         pointIdx++;
-        for (QVector<QPointF>::const_iterator it = anglesList.constBegin (); it != anglesList.constEnd (); it++, pointIdx++) {
+        for (QVector<QPointF>::const_iterator it = anglesList.constBegin (); it != anglesList.constEnd (); it++) {
             const QPointF currTrigo (* it);
             const QPointF currPoint (center + outerRadius * currTrigo);
             vertex [pointIdx].x = float (currPoint.x ());
             vertex [pointIdx].y = float (currPoint.y ());
+            pointIdx++;
         }
     }
     if (area != Q_NULLPTR) {
-        QSGFlatColorMaterial * mat = new QSGFlatColorMaterial;
+        QSGFlatColorMaterial * mat (new QSGFlatColorMaterial);
         mat->setColor (m_color);
-        QSGGeometryNode * subNode = new QSGGeometryNode;
+        QSGGeometryNode * subNode (new QSGGeometryNode);
         subNode->setGeometry (area);
         subNode->setMaterial (mat);
         subNode->setFlag (QSGNode::OwnsGeometry);
