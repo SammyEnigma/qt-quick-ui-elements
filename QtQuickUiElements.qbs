@@ -46,6 +46,7 @@ Project {
             files: [
                 "QQmlIntrospector.cpp",
                 "QQmlMimeIconsHelper.cpp",
+                "QQuickEllipse.cpp",
                 "QQuickExtraAnchors.cpp",
                 "QQuickFormContainer.cpp",
                 "QQuickGridContainer.cpp",
@@ -64,6 +65,7 @@ Project {
             files: [
                 "QQmlIntrospector.h",
                 "QQmlMimeIconsHelper.h",
+                "QQuickEllipse.h",
                 "QQuickExtraAnchors.h",
                 "QQuickFormContainer.h",
                 "QQuickGridContainer.h",
