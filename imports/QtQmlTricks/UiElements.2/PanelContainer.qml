@@ -7,8 +7,8 @@ Group {
     width: implicitWidth;
     height: implicitHeight;
     visible: !detached;
-    implicitWidth: (expanded ? size : priv.minifiedSize);
-    implicitHeight: (expanded ? size : priv.minifiedSize);
+    implicitWidth: (expanded ? size : minifiedSize);
+    implicitHeight: (expanded ? size : minifiedSize);
     states: [
         State {
             when: (borderSide === Item.Top);
@@ -53,7 +53,7 @@ Group {
             }
             PropertyChanges {
                 target: minibar;
-                height: priv.minifiedSize;
+                height: minifiedSize;
             }
         },
         State {
@@ -99,7 +99,7 @@ Group {
             }
             PropertyChanges {
                 target: minibar;
-                width: priv.minifiedSize;
+                width: minifiedSize;
             }
         },
         State {
@@ -145,7 +145,7 @@ Group {
             }
             PropertyChanges {
                 target: minibar;
-                width: priv.minifiedSize;
+                width: minifiedSize;
             }
         },
         State {
@@ -191,7 +191,7 @@ Group {
             }
             PropertyChanges {
                 target: minibar;
-                height: priv.minifiedSize;
+                height: minifiedSize;
             }
         }
     ]
@@ -213,6 +213,9 @@ Group {
     readonly property bool detached  : (priv.subWindow !== null);
     readonly property bool expanded  : !priv.minified;
     readonly property bool collapsed : priv.minified;
+
+    readonly property int headerSize   : (header.height);
+    readonly property int minifiedSize : (info.implicitHeight + info.anchors.margins * 2);
 
     function detach () {
         if (priv.subWindow === null) {
@@ -247,8 +250,6 @@ Group {
         property bool minified : false;
 
         property Window subWindow : null;
-
-        readonly property int minifiedSize : (info.implicitHeight + info.anchors.margins * 2);
     }
     Component {
         id: compoWindow;
