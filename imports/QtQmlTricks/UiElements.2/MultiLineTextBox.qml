@@ -51,6 +51,7 @@ FocusScope {
             focus: true;
             color: (enabled ? Style.colorForeground: Style.colorBorder);
             enabled: base.enabled;
+            wrapMode: TextEdit.WrapAtWordBoundaryOrAnywhere;
             selectByMouse: true;
             selectionColor: Style.colorSelection;
             selectedTextColor: Style.colorEditable;
