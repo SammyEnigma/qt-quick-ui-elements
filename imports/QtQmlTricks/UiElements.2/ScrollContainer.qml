@@ -183,7 +183,7 @@ FocusScope {
 
                     Binding on x {
                         when: (flickableItem && !grooveHoriz.pressed);
-                        value: (grooveHoriz.width * flickableItem.visibleArea.xPosition);
+                        value: (grooveHoriz.drag.maximumx * flickableItem.visibleArea.xPosition);
                     }
                     Binding on width {
                         when: (flickableItem && !grooveHoriz.pressed);
@@ -271,7 +271,7 @@ FocusScope {
 
                     Binding on y {
                         when: (flickableItem && !grooveVertic.pressed);
-                        value: (grooveVertic.height * flickableItem.visibleArea.yPosition);
+                        value: (grooveVertic.drag.maximumY * flickableItem.visibleArea.yPosition);
                     }
                     Binding on height {
                         when: (flickableItem && !grooveVertic.pressed);
