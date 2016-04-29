@@ -26,7 +26,7 @@ Item {
 
         Rectangle {
             id: rect;
-            width: (parent.width * (value - minValue) / (maxValue - minValue));
+            width: Math.min (parent.width * (value - minValue) / (maxValue - minValue), parent.width);
             radius: (Style.roundness - Style.lineSize * 2);
             enabled: base.enabled;
             antialiasing: radius;

@@ -14,6 +14,18 @@ Item {
 
     property int  decimals : 0;
 
+    property int handleSize : (Style.spacingBig * 2);
+
+    signal edited ();
+
+    MouseArea {
+        anchors.fill: parent;
+        onClicked: {
+            var tmp = (minValue + (maxValue - minValue) * (mouse.x / width));
+            value = parseFloat (tmp.toFixed (decimals));
+            edited ();
+        }
+    }
     Rectangle {
         id: groove;
         color: (enabled ? Style.colorEditable : Style.colorWindow);
@@ -40,7 +52,7 @@ Item {
 
             Rectangle {
                 id: rect;
-                width: (parent.width * (value - minValue) / (maxValue - minValue));
+                width: Math.min (parent.width * (value - minValue) / (maxValue - minValue), parent.width);
                 radius: (Style.roundness - Style.lineSize * 2);
                 enabled: base.enabled;
                 antialiasing: radius;
@@ -57,10 +69,9 @@ Item {
     }
     Rectangle {
         id: handle;
-        x: ((base.width - handle.width) * (value - minValue) / (maxValue - minValue));
-        width: size;
-        height: size;
-        radius: (size / 2);
+        width: handleSize;
+        height: handleSize;
+        radius: (handleSize / 2);
         enabled: base.enabled;
         antialiasing: radius;
         gradient: (enabled
@@ -74,7 +85,16 @@ Item {
         }
         anchors.verticalCenter: parent.verticalCenter;
 
-        readonly property int size : (Style.spacingBig * 2);
+        Binding on x {
+            when: !clicker.pressed;
+            value: Math.min (
+                       Math.max (
+                           (base.width - handle.width) *
+                           (base.value - base.minValue) /
+                           (base.maxValue - base.minValue),
+                           clicker.drag.minimumX),
+                       clicker.drag.maximumX);
+        }
 
         MouseArea {
             id: clicker;
@@ -100,7 +120,11 @@ Item {
                 }
             }
             onPositionChanged: {
-                value = (minValue + (maxValue - minValue) * (handle.x / (base.width - handle.width)));
+                if (pressed) {
+                    var tmp = (minValue + (maxValue - minValue) * (handle.x / (base.width - handle.width)));
+                    value = parseFloat (tmp.toFixed (decimals));
+                    edited ();
+                }
             }
 
             property Balloon tooltip : null;

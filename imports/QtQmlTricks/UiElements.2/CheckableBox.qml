@@ -7,13 +7,16 @@ FocusScope {
     implicitHeight: clicker.height;
     Keys.onSpacePressed: { toggle (); }
 
-    property bool  value : false;
-    property int   size  : (Style.spacingNormal * 2.5);
+    property bool value : false;
+    property int  size  : (Style.spacingNormal * 2.5);
+
+    signal edited ();
 
     function toggle () {
         if (enabled) {
             forceActiveFocus ();
             value = !value;
+            edited ();
         }
     }
 
@@ -24,7 +27,6 @@ FocusScope {
         enabled: base.enabled;
         anchors.centerIn: parent;
         onClicked: { base.toggle (); }
-
 
         PixelPerfectContainer {
             contentItem: rect;
