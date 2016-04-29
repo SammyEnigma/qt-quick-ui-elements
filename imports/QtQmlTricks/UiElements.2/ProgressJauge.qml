@@ -32,7 +32,7 @@ Item {
             antialiasing: radius;
             gradient: (base.enabled
                        ? Style.gradientChecked ()
-                       : Style.gradientDisabled ());
+                       : Style.gradientDisabled (Style.colorBorder));
             anchors {
                 top: parent.top;
                 left: parent.left;
