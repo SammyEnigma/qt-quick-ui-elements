@@ -332,6 +332,7 @@ Group {
             Loader {
                 enabled: base.enabled;
                 visible: (sourceComponent !== null);
+                rotation: -parent.rotation;
                 sourceComponent: base.icon;
                 anchors.verticalCenter: parent.verticalCenter;
             }
