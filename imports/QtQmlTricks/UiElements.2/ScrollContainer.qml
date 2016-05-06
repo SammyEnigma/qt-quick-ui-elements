@@ -18,6 +18,31 @@ FocusScope {
 
     default property alias content : base.flickableItem;
 
+    readonly property real minContentX : 0;
+    readonly property real minContentY : 0;
+    readonly property real maxContentX : (flickableItem && flickableItem.contentWidth  > flickableItem.width
+                                          ? flickableItem.contentWidth  - flickableItem.width
+                                          : 0);
+    readonly property real maxContentY : (flickableItem && flickableItem.contentHeight > flickableItem.height
+                                          ? flickableItem.contentHeight - flickableItem.height
+                                          : 0);
+
+    function clamp (val, min, max) {
+        return (val > max ? max : (val < min ? min : val));
+    }
+
+    function ensureVisible (item) {
+        if (item && flickableItem) {
+            var relPos = item.mapToItem (flickableItem, (item.x + item.width / 2), (item.y + item.height / 2));
+            var deltaX = (relPos.x - (flickableItem.width  / 2));
+            var deltaY = (relPos.y - (flickableItem.height / 2));
+            var idealContentX = (flickableItem.contentX + deltaX);
+            var idealContentY = (flickableItem.contentY + deltaY);
+            flickableItem.contentX = clamp (idealContentX, minContentX, maxContentX);
+            flickableItem.contentY = clamp (idealContentY, minContentY, maxContentY);
+        }
+    }
+
     Rectangle {
         id: rect;
         color: Style.colorEditable;
@@ -100,6 +125,11 @@ FocusScope {
         Binding {
             target: flickableItem;
             property: "interactive";
+            value: true;
+        }
+        Binding {
+            target: flickableItem;
+            property: "pixelAligned";
             value: true;
         }
         Item {
