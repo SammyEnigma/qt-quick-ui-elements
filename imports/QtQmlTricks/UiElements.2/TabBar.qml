@@ -6,14 +6,14 @@ Item {
 
     property alias background : rect.color;
 
+    property int tabsSize : (Style.spacingBig * 2);
+
     property int extraPaddingBeforeTabs : 0;
     property int extraPaddingAfterTabs  : 0;
 
     property Group currentTab : null;
 
     default property alias content : container.children;
-
-    readonly property int tabsSize : (Style.spacingBig * 2);
 
     readonly property var tabs : {
         var ret = [];
