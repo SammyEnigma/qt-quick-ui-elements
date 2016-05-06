@@ -27,10 +27,6 @@ FocusScope {
                                           ? flickableItem.contentHeight - flickableItem.height
                                           : 0);
 
-    function clamp (val, min, max) {
-        return (val > max ? max : (val < min ? min : val));
-    }
-
     function ensureVisible (item) {
         if (item && flickableItem) {
             var relPos = item.mapToItem (flickableItem, (item.x + item.width / 2), (item.y + item.height / 2));
@@ -38,6 +34,9 @@ FocusScope {
             var deltaY = (relPos.y - (flickableItem.height / 2));
             var idealContentX = (flickableItem.contentX + deltaX);
             var idealContentY = (flickableItem.contentY + deltaY);
+            function clamp (val, min, max) {
+                return (val > max ? max : (val < min ? min : val));
+            }
             flickableItem.contentX = clamp (idealContentX, minContentX, maxContentX);
             flickableItem.contentY = clamp (idealContentY, minContentY, maxContentY);
         }
