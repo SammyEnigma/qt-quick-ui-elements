@@ -384,6 +384,17 @@ QtObject {
         return (ret || fallback);
     }
 
+    function clamp (val, bound1, bound2) {
+        var min = Math.min (bound1, bound2);
+        var max = Math.max (bound1, bound2);
+        return (val > max ? max : (val < min ? min : val));
+    }
+
+    function convert (srcVal, srcMin, srcMax, dstMin, dstMax) {
+        var srcRatio = ((srcVal - srcMin) / (srcMax - srcMin));
+        return clamp ((dstMin + ((dstMax - dstMin) * srcRatio)), dstMin, dstMax);
+    }
+
     property Item _garbage_ : Item { }
 
     function generateGradient (template, baseColor) {
