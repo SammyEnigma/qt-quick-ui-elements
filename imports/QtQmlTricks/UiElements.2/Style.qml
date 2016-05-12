@@ -38,9 +38,9 @@ QtObject {
     property color colorSecondary   : (useDarkTheme ? "#333333" : "#A9A9A9"); // darker gray | dark gray
     property color colorWindow      : (useDarkTheme ? "#212121" : "#D3D3D3"); // very dark gray | light gray
     property color colorClickable   : (useDarkTheme ? "#2E2E2E" : "#C7C7C7"); // very dark gray | light gray
-    property color colorEditable    : (useDarkTheme ? "#000000" : "#FFFFFF"); // black | white
-    property color colorForeground  : (useDarkTheme ? "#FFFFFF" : "#000000"); // white | black
-    property color colorInverted    : (useDarkTheme ? "#000000" : "#FFFFFF"); // black | white
+    property color colorEditable    : (useDarkTheme ? "#111111" : "#FFFFFF"); // almost black | white
+    property color colorForeground  : (useDarkTheme ? "#EEEEEE" : "#000000"); // almost white | black
+    property color colorInverted    : (useDarkTheme ? "#111111" : "#FFFFFF"); // almost black | white
     property color colorBorder      : (useDarkTheme ? "#4F4F4F" : "#808088"); // dark gray | mid gray
     property color colorLink        : (useDarkTheme ? "#5BBDFF" : "#113487"); // light blue | dark blue
     property color colorError       : (useDarkTheme ? "#FF5B6B" : "#B30000"); // light red | dark red
@@ -90,6 +90,9 @@ QtObject {
                                                     "Courier New",
                                                 ],
                                                 "monospace");
+
+    readonly property string charMiddleDot : "\u00B7";
+    readonly property string charThreeDots : "\u2026";
 
     property Component symbolCross : Component {
         AbstractSymbol {
