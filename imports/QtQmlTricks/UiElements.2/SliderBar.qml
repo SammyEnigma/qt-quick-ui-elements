@@ -1,16 +1,13 @@
 import QtQuick 2.1;
 import QtQmlTricks.UiElements 2.0;
 
-Item {
+ProgressJauge {
     id: base;
     width: implicitWidth;
     height: implicitHeight;
+    barSize: Style.spacingNormal;
     implicitWidth: 200;
     implicitHeight: handle.height;
-
-    property real value    : 0;
-    property real minValue : 0;
-    property real maxValue : 100;
 
     property int  decimals : 0;
 
@@ -21,50 +18,13 @@ Item {
     MouseArea {
         anchors.fill: parent;
         onClicked: {
-            var tmp = (minValue + (maxValue - minValue) * (mouse.x / width));
+            var tmp = Style.convert (mouse.x,
+                                     0,
+                                     width,
+                                     minValue,
+                                     maxValue);
             value = parseFloat (tmp.toFixed (decimals));
             edited ();
-        }
-    }
-    Rectangle {
-        id: groove;
-        color: (enabled ? Style.colorEditable : Style.colorWindow);
-        height: Style.spacingNormal;
-        radius: Style.roundness;
-        enabled: base.enabled;
-        antialiasing: radius;
-        border {
-            width: Style.lineSize;
-            color: Style.colorBorder;
-        }
-        anchors {
-            left: parent.left;
-            right: parent.right;
-            verticalCenter: parent.verticalCenter;
-        }
-
-        Item {
-            enabled: base.enabled;
-            anchors {
-                fill: parent;
-                margins: Style.lineSize;
-            }
-
-            Rectangle {
-                id: rect;
-                width: Math.min (parent.width * (value - minValue) / (maxValue - minValue), parent.width);
-                radius: (Style.roundness - Style.lineSize * 2);
-                enabled: base.enabled;
-                antialiasing: radius;
-                gradient: (enabled
-                           ? Style.gradientChecked ()
-                           : Style.gradientDisabled ());
-                anchors {
-                    top: parent.top;
-                    left: parent.left;
-                    bottom: parent.bottom;
-                }
-            }
         }
     }
     Rectangle {
@@ -87,15 +47,12 @@ Item {
 
         Binding on x {
             when: !clicker.pressed;
-            value: Math.min (
-                       Math.max (
-                           (base.width - handle.width) *
-                           (base.value - base.minValue) /
-                           (base.maxValue - base.minValue),
-                           clicker.drag.minimumX),
-                       clicker.drag.maximumX);
+            value: Style.convert (base.value,
+                                  base.minValue,
+                                  base.maxValue,
+                                  clicker.drag.minimumX,
+                                  clicker.drag.maximumX);
         }
-
         MouseArea {
             id: clicker;
             drag {
@@ -121,7 +78,11 @@ Item {
             }
             onPositionChanged: {
                 if (pressed) {
-                    var tmp = (minValue + (maxValue - minValue) * (handle.x / (base.width - handle.width)));
+                    var tmp = Style.convert (handle.x,
+                                             clicker.drag.minimumX,
+                                             clicker.drag.maximumX,
+                                             minValue,
+                                             maxValue);
                     value = parseFloat (tmp.toFixed (decimals));
                     edited ();
                 }
@@ -139,7 +100,7 @@ Item {
                     content: base.value.toFixed (decimals);
 
                     readonly property var handleTopCenterAbsPos : base.mapToItem (parent,
-                                                                                  (handle.x + handle.width  / 2),
+                                                                                  (handle.x + handle.width / 2),
                                                                                   (handle.y));
                 }
             }
