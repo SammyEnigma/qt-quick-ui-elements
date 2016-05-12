@@ -83,8 +83,7 @@ AutoRepeatableClicker {
     property int   padding       : Style.spacingNormal;
     property bool  flat          : false;
     property bool  checked       : false;
-    property color backColor     : Style.colorClickable;
-    property color textColor     : Style.colorForeground;
+    property bool  autoColorIcon : true;
     property alias text          : lbl.text;
     property alias textFont      : lbl.font;
     property alias rounding      : rect.radius;
@@ -92,6 +91,10 @@ AutoRepeatableClicker {
     property alias hovered       : clicker.containsMouse;
     property int   contentWidth  : 0;
     property int   contentHeight : 0;
+    property color backColor     : Style.colorClickable;
+    property color textColor     : (Style.useDarkTheme !== Style.isDark (backColor)
+                                    ? Style.colorInverted
+                                    : Style.colorForeground);
 
     function click () {
         if (enabled) {
@@ -99,6 +102,12 @@ AutoRepeatableClicker {
         }
     }
 
+    Binding {
+        target: ico.item;
+        when: (autoColorIcon && ico.item !== null && "color" in ico.item)
+        property: "color";
+        value: textColor;
+    }
     PixelPerfectContainer {
         contentItem: rect;
         anchors.fill: parent;
