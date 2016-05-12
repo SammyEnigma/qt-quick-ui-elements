@@ -30,33 +30,40 @@ QtObject {
     property int fontSizeBig    : Math.round (fontSizeNormal * 1.15);
     property int fontSizeTitle  : Math.round (fontSizeNormal * 1.25);
 
-    property color colorDumb       : "#FF00FF"; // magenta
-    property color colorNone       : "transparent";
-    property color colorHighlight  : (useDarkTheme ? "#00648B" : "#85D3FF"); // deep blue | light blue
-    property color colorSelection  : (useDarkTheme ? "#0076A8" : "#238FCD"); // water blue | dark blue
-    property color colorSecondary  : (useDarkTheme ? "#333333" : "#A9A9A9"); // darker gray | dark gray
-    property color colorWindow     : (useDarkTheme ? "#212121" : "#D3D3D3"); // very dark gray | light gray
-    property color colorClickable  : (useDarkTheme ? "#2E2E2E" : "#C7C7C7"); // very dark gray | light gray
-    property color colorEditable   : (useDarkTheme ? "#000000" : "#FFFFFF"); // black | white
-    property color colorForeground : (useDarkTheme ? "#FFFFFF" : "#000000"); // white | black
-    property color colorBorder     : (useDarkTheme ? "#4F4F4F" : "#808088"); // dark gray | mid gray
-    property color colorLink       : (useDarkTheme ? "#5BBDFF" : "#113487"); // light blue | dark blue
-    property color colorError      : (useDarkTheme ? "#FF5B6B" : "#B30000"); // light red | dark red
-    property color colorValid      : (useDarkTheme ? "#14C321" : "#1F7A1F"); // light green | dark green
-    property color colorBubble     : (useDarkTheme ? "#4F4130" : "#FFF5C1"); // coffee brown | sand yellow
+    readonly property color colorDumb : "#FF00FF"; // magenta
+    readonly property color colorNone : "transparent";
 
-    Behavior on colorHighlight  { ColorAnimation { duration: themeFadeTime; } }
-    Behavior on colorSelection  { ColorAnimation { duration: themeFadeTime; } }
-    Behavior on colorSecondary  { ColorAnimation { duration: themeFadeTime; } }
-    Behavior on colorWindow     { ColorAnimation { duration: themeFadeTime; } }
-    Behavior on colorClickable  { ColorAnimation { duration: themeFadeTime; } }
-    Behavior on colorEditable   { ColorAnimation { duration: themeFadeTime; } }
-    Behavior on colorForeground { ColorAnimation { duration: themeFadeTime; } }
-    Behavior on colorBorder     { ColorAnimation { duration: themeFadeTime; } }
-    Behavior on colorLink       { ColorAnimation { duration: themeFadeTime; } }
-    Behavior on colorError      { ColorAnimation { duration: themeFadeTime; } }
-    Behavior on colorValid      { ColorAnimation { duration: themeFadeTime; } }
-    Behavior on colorBubble     { ColorAnimation { duration: themeFadeTime; } }
+    property color colorHighlight   : (useDarkTheme ? "#00648B" : "#85D3FF"); // deep blue | light blue
+    property color colorSelection   : (useDarkTheme ? "#0076A8" : "#238FCD"); // water blue | dark blue
+    property color colorSecondary   : (useDarkTheme ? "#333333" : "#A9A9A9"); // darker gray | dark gray
+    property color colorWindow      : (useDarkTheme ? "#212121" : "#D3D3D3"); // very dark gray | light gray
+    property color colorClickable   : (useDarkTheme ? "#2E2E2E" : "#C7C7C7"); // very dark gray | light gray
+    property color colorEditable    : (useDarkTheme ? "#000000" : "#FFFFFF"); // black | white
+    property color colorForeground  : (useDarkTheme ? "#FFFFFF" : "#000000"); // white | black
+    property color colorInverted    : (useDarkTheme ? "#000000" : "#FFFFFF"); // black | white
+    property color colorBorder      : (useDarkTheme ? "#4F4F4F" : "#808088"); // dark gray | mid gray
+    property color colorLink        : (useDarkTheme ? "#5BBDFF" : "#113487"); // light blue | dark blue
+    property color colorError       : (useDarkTheme ? "#FF5B6B" : "#B30000"); // light red | dark red
+    property color colorValid       : (useDarkTheme ? "#14C321" : "#1F7A1F"); // light green | dark green
+    property color colorBubble      : (useDarkTheme ? "#4F4130" : "#FFF5C1"); // coffee brown | sand yellow
+    property color colorButtonRed   : (useDarkTheme ? "#8B0000" : "#FF0000"); // darkred | red
+    property color colorButtonGreen : (useDarkTheme ? "#006400" : "#008000"); // darkgreen | green
+
+    Behavior on colorHighlight   { ColorAnimation { duration: themeFadeTime; } }
+    Behavior on colorSelection   { ColorAnimation { duration: themeFadeTime; } }
+    Behavior on colorSecondary   { ColorAnimation { duration: themeFadeTime; } }
+    Behavior on colorWindow      { ColorAnimation { duration: themeFadeTime; } }
+    Behavior on colorClickable   { ColorAnimation { duration: themeFadeTime; } }
+    Behavior on colorEditable    { ColorAnimation { duration: themeFadeTime; } }
+    Behavior on colorForeground  { ColorAnimation { duration: themeFadeTime; } }
+    Behavior on colorInverted    { ColorAnimation { duration: themeFadeTime; } }
+    Behavior on colorBorder      { ColorAnimation { duration: themeFadeTime; } }
+    Behavior on colorLink        { ColorAnimation { duration: themeFadeTime; } }
+    Behavior on colorError       { ColorAnimation { duration: themeFadeTime; } }
+    Behavior on colorValid       { ColorAnimation { duration: themeFadeTime; } }
+    Behavior on colorBubble      { ColorAnimation { duration: themeFadeTime; } }
+    Behavior on colorButtonRed   { ColorAnimation { duration: themeFadeTime; } }
+    Behavior on colorButtonGreen { ColorAnimation { duration: themeFadeTime; } }
 
     property string fontName : selectFont ([
                                                "Sail Sans Pro",
@@ -354,6 +361,11 @@ QtObject {
     function opacify (tint, alpha) {
         var tmp = Qt.darker (tint, 1.0);
         return Qt.rgba (tmp.r, tmp.g, tmp.b, alpha);
+    }
+
+    function isDark (color) {
+        var tmp = Qt.darker (color, 1.0);
+        return (((tmp.r + tmp.g + tmp.b) / 3) < 0.5);
     }
 
     function selectFont (list, fallback) {
