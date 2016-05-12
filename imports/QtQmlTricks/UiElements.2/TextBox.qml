@@ -23,6 +23,8 @@ FocusScope {
     property alias acceptable : input.acceptableInput;
     property alias rounding   : rect.radius;
 
+    readonly property bool isEmpty : (text.trim () === "");
+
     signal accepted ();
 
     function selectAll () {
