@@ -15,6 +15,8 @@ FocusScope {
     property int  decimals    : 0;
     property bool showButtons : true;
 
+    signal edited ();
+
     TextLabel {
         id: metricsValue;
         color: Style.colorNone;
@@ -39,7 +41,8 @@ FocusScope {
         ExtraAnchors.leftDock: parent;
         onClicked: {
             if (value - step >= minValue) {
-                value -= step;;
+                value -= step;
+                edited ();
             }
         }
     }
@@ -58,6 +61,7 @@ FocusScope {
         onClicked: {
             if (value + step <= maxValue) {
                 value += step;
+                edited ();
             }
         }
     }
@@ -106,6 +110,7 @@ FocusScope {
         function apply () {
             if (!notNumber && !tooBig && !tooSmall) {
                 base.value = number;
+                edited ();
             }
             else {
                 text = (base.value.toFixed (decimals));
