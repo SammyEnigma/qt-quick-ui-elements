@@ -103,8 +103,8 @@ AutoRepeatableClicker {
     }
 
     Binding {
-        target: ico.item;
-        when: (autoColorIcon && ico.item !== null && "color" in ico.item)
+        target: (ico.item && "color" in ico.item ? ico.item : null);
+        when: (autoColorIcon && ico.item)
         property: "color";
         value: textColor;
     }
