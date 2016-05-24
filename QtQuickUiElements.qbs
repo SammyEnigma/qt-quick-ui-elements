@@ -78,6 +78,7 @@ Project {
                 "QQuickThemeIconProvider.h",
                 "QQuickWrapLeftRightContainer.h",
                 "QtQmlTricksPlugin.h",
+                "QtQmlTricksPlugin_UiElements.h",
             ]
         }
         Group {
