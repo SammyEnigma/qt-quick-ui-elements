@@ -5,21 +5,25 @@ import QtQmlTricks.UiElements 2.0;
 Item {
     id: base;
 
-    property string fileUrl : "";
+    property string fileUrl  : "";
+    property string filePath : "";
 
-    property alias folder      : modelFS.folder;
-    property alias rootFolder  : modelFS.rootFolder;
-    property alias nameFilters : modelFS.nameFilters;
+    property string folder      : FS.homePath;
+    property string rootFolder  : FS.rootPath;
+    property var    nameFilters : [];
+    property bool   showFiles   : true;
+    property bool   showHidden  : false;
 
     MimeIconsHelper { id: mimeHelper; }
-    FolderListModel {
+    ListModel {
         id: modelFS;
-        showDirs: true;
-        showFiles: true;
-        showHidden: false;
-        showDirsFirst: true;
-        showDotAndDotDot: false;
-        Component.onCompleted: { path.text = folder.toString (); }
+        onEntriesChanged: {
+            clear ();
+            append (entries);
+        }
+        Component.onCompleted: { append (entries); }
+
+        readonly property var entries : FS.list (folder, nameFilters, showHidden, showFiles);
     }
     StretchColumnContainer {
         spacing: Style.spacingNormal;
@@ -31,7 +35,7 @@ Item {
 
             TextButton {
                 text: "Parent";
-                enabled: (folder.toString () !== "file:///");
+                enabled: (folder !== rootFolder);
                 icon: SvgIconLoader {
                     icon: "qrc:/QtQmlTricks/icons/actions/chevron-up.svg";
                     size: Style.realPixels (24);
@@ -40,7 +44,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter;
                 onClicked: {
                     list.currentIndex = -1;
-                    folder = modelFS.parentFolder;
+                    folder = FS.parentDir (folder);
                 }
             }
             Item {
@@ -72,21 +76,23 @@ Item {
                     height: (Math.max (label.height, img.height) + label.anchors.margins * 2);
                     ExtraAnchors.horizontalFill: parent;
                     onClicked: {
-                        if (!model.fileIsDir) {
+                        if (!model.isDir) {
                             list.currentIndex = model.index;
-                            fileUrl = model.fileURL.toString ();
+                            fileUrl  = model.url;
+                            filePath = model.path;
                         }
                         else {
                             list.currentIndex = -1;
                         }
                     }
                     onDoubleClicked: {
-                        if (model.fileIsDir) {
+                        if (model.isDir) {
                             list.currentIndex = -1;
-                            folder = model.fileURL;
+                            folder = model.path;
                         }
                         else {
-                            fileUrl = model.fileURL.toString ();
+                            fileUrl  = model.url;
+                            filePath = model.path;
                         }
                     }
 
@@ -97,7 +103,7 @@ Item {
                     SvgIconLoader {
                         id: img;
                         size: Style.realPixels (24);
-                        icon: mimeHelper.getSvgIconPathForUrl (model.fileURL);
+                        icon: mimeHelper.getSvgIconPathForUrl (model.url);
                         anchors {
                             left: parent.left;
                             margins: Style.spacingNormal;
@@ -106,7 +112,7 @@ Item {
                     }
                     TextLabel {
                         id: label;
-                        text: model.fileName + (model.fileIsDir ? "/" : "");
+                        text: model.name + (model.isDir ? "/" : "");
                         elide: Text.ElideRight;
                         wrapMode: Text.WrapAtWordBoundaryOrAnywhere;
                         maximumLineCount: 3;

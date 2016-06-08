@@ -43,7 +43,9 @@ HEADERS += \
     $$PWD/QQuickFormContainer.h \
     $$PWD/QQmlIntrospector.h \
     $$PWD/QQuickPixelPerfectContainer.h \
-    $$PWD/QQuickEllipse.h
+    $$PWD/QQuickEllipse.h \
+    $$PWD/QQmlFsSingleton.h \
+    $$PWD/QtQmlTricksPlugin_UiElements.h
 
 SOURCES += \
     $$PWD/QQuickGridContainer.cpp \
@@ -59,4 +61,5 @@ SOURCES += \
     $$PWD/QQuickFormContainer.cpp \
     $$PWD/QQmlIntrospector.cpp \
     $$PWD/QQuickPixelPerfectContainer.cpp \
-    $$PWD/QQuickEllipse.cpp
+    $$PWD/QQuickEllipse.cpp \
+    $$PWD/QQmlFsSingleton.cpp

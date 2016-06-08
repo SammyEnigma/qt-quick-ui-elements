@@ -19,6 +19,7 @@
 #include "QQuickRoundedRectanglePaintedItem.h"
 #include "QQuickPixelPerfectContainer.h"
 #include "QQmlIntrospector.h"
+#include "QQmlFsSingleton.h"
 
 static void registerQtQmlTricksUiElements (QQmlEngine * engine = Q_NULLPTR) {
     Q_INIT_RESOURCE (qtqmltricks_uielements);
@@ -53,7 +54,8 @@ static void registerQtQmlTricksUiElements (QQmlEngine * engine = Q_NULLPTR) {
 
     qmlRegisterUncreatableType<QQuickExtraAnchors>       (uri, maj, min, "ExtraAnchors", "!!!");
 
-    qmlRegisterSingletonType <QQmlIntrospector>          (uri, maj, min, "Introspector", &QQmlIntrospector::qmlSingletonProvider);
+    qmlRegisterSingletonType<QQmlFsSingleton>            (uri, maj, min, "FS",           &QQmlFsSingleton::qmlSingletonProvider);
+    qmlRegisterSingletonType<QQmlIntrospector>           (uri, maj, min, "Introspector", &QQmlIntrospector::qmlSingletonProvider);
 
     QQuickSvgIconHelper::setBasePath (":/QtQmlTricks/icons");
 
