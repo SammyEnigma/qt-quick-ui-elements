@@ -179,6 +179,18 @@ QUrl QQmlFileSystemSingleton::urlFromPath (const QString & path) const {
 
 QVariantList QQmlFileSystemSingleton::list (const QString & dirPath, const QStringList & nameFilters, const bool showHidden, const bool showFiles) const {
     static QMimeDatabase mimeDb;
+    static const QString ROLE_URL           = QStringLiteral ("url");
+    static const QString ROLE_NAME          = QStringLiteral ("name");
+    static const QString ROLE_PATH          = QStringLiteral ("path");
+    static const QString ROLE_IS_DIR        = QStringLiteral ("isDir");
+    static const QString ROLE_IS_FILE       = QStringLiteral ("isFile");
+    static const QString ROLE_IS_LINK       = QStringLiteral ("isLink");
+    static const QString ROLE_EXTENSION     = QStringLiteral ("extension");
+    static const QString ROLE_SIZE          = QStringLiteral ("size");
+    static const QString ROLE_PERMISSIONS   = QStringLiteral ("permissions");
+    static const QString ROLE_LAST_MODIFIED = QStringLiteral ("lastModified");
+    static const QString ROLE_MIME_TYPE     = QStringLiteral ("mimeType");
+    static const QString DATETIME_FORMAT    = QStringLiteral ("yyyy-MM-dd hh:mm:ss.zzz");
     QVariantList ret;
     const QDir dir (dirPath);
     if (dir.exists ()) {
@@ -186,7 +198,7 @@ QVariantList QQmlFileSystemSingleton::list (const QString & dirPath, const QStri
                                      | QDir::AllDirs
                                      | QDir::NoDotAndDotDot
                                      | (showHidden ? QDir::Hidden : 0)
-                                     | (showFiles ? QDir::Files : 0));
+                                     | (showFiles  ? QDir::Files  : 0));
         const QDir::SortFlags sortFlags (QDir::Name
                                          | QDir::IgnoreCase
                                          | QDir::DirsFirst);
@@ -196,17 +208,17 @@ QVariantList QQmlFileSystemSingleton::list (const QString & dirPath, const QStri
         for (QList<QFileInfo>::const_iterator it = infoList.constBegin (); it != infoList.constEnd (); it++) {
             const QFileInfo & info = (* it);
             if (showHidden || !info.fileName ().startsWith ('.')) {
-                entry.insert ("url",          QUrl::fromLocalFile (info.absoluteFilePath ()).toString ());
-                entry.insert ("name",         info.fileName ());
-                entry.insert ("path",         info.absoluteFilePath ());
-                entry.insert ("isDir",        info.isDir ());
-                entry.insert ("isFile",       info.isFile ());
-                entry.insert ("isLink",       info.isSymLink ());
-                entry.insert ("extension",    info.completeSuffix ());
-                entry.insert ("size",         static_cast<int> (info.size ()));
-                entry.insert ("permissions",  static_cast<int> (info.permissions ()));
-                entry.insert ("lastModified", info.lastModified ().toString ("yyyy-MM-dd hh:mm:ss.zzz"));
-                entry.insert ("mimeType",     mimeDb.mimeTypeForFile (info.absoluteFilePath ()).name ());
+                entry.insert (ROLE_URL,           QUrl::fromLocalFile (info.absoluteFilePath ()).toString ());
+                entry.insert (ROLE_NAME,          info.fileName ());
+                entry.insert (ROLE_PATH,          info.absoluteFilePath ());
+                entry.insert (ROLE_IS_DIR,        info.isDir ());
+                entry.insert (ROLE_IS_FILE,       info.isFile ());
+                entry.insert (ROLE_IS_LINK,       info.isSymLink ());
+                entry.insert (ROLE_EXTENSION,     info.completeSuffix ());
+                entry.insert (ROLE_SIZE,          static_cast<int> (info.size ()));
+                entry.insert (ROLE_PERMISSIONS,   static_cast<int> (info.permissions ()));
+                entry.insert (ROLE_LAST_MODIFIED, info.lastModified ().toString (DATETIME_FORMAT));
+                entry.insert (ROLE_MIME_TYPE,     mimeDb.mimeTypeForFile (info.absoluteFilePath ()).name ());
                 ret.append (entry);
             }
         }
