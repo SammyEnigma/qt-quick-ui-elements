@@ -44,6 +44,7 @@ Project {
         Group {
             name: "C++ sources";
             files: [
+                "QQmlFsSingleton.cpp",
                 "QQmlIntrospector.cpp",
                 "QQmlMimeIconsHelper.cpp",
                 "QQuickEllipse.cpp",
@@ -63,6 +64,7 @@ Project {
         Group {
             name: "C++ headers";
             files: [
+                "QQmlFsSingleton.h",
                 "QQmlIntrospector.h",
                 "QQmlMimeIconsHelper.h",
                 "QQuickEllipse.h",
