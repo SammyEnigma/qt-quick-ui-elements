@@ -206,7 +206,7 @@ QVariantList QQmlFileSystemSingleton::list (const QString & dirPath, const QStri
                 entry.insert ("size",         static_cast<int> (info.size ()));
                 entry.insert ("permissions",  static_cast<int> (info.permissions ()));
                 entry.insert ("lastModified", info.lastModified ().toString ("yyyy-MM-dd hh:mm:ss.zzz"));
-                //entry.insert ("mimeType",     mimeDb.mimeTypeForFile (info.absoluteFilePath ()).name ());
+                entry.insert ("mimeType",     mimeDb.mimeTypeForFile (info.absoluteFilePath ()).name ());
                 ret.append (entry);
             }
         }
