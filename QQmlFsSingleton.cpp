@@ -11,7 +11,7 @@
 #include <QMimeDatabase>
 #include <QMimeType>
 
-QQmlFsSingleton::QQmlFsSingleton (QObject * parent)
+QQmlFileSystemSingleton::QQmlFileSystemSingleton (QObject * parent)
     : QObject (parent)
     , m_homePath             (QDir::homePath ())
     , m_rootPath             (QDir::rootPath ())
@@ -25,91 +25,105 @@ QQmlFsSingleton::QQmlFsSingleton (QObject * parent)
     , m_videosPath           (QStandardPaths::writableLocation (QStandardPaths::MoviesLocation))
     , m_downloadsPath        (QStandardPaths::writableLocation (QStandardPaths::DownloadLocation))
     , m_workingDirectoryPath (QDir::currentPath ())
-{ }
-
-QObject * QQmlFsSingleton::qmlSingletonProvider (QQmlEngine * qmlEngine, QJSEngine * jsEngine) {
-    Q_UNUSED (qmlEngine)
-    Q_UNUSED (jsEngine)
-    return new QQmlFsSingleton;
+{
+    QStringList tmp;
+    const QList<QFileInfo> infoList = QDir::drives ();
+    for (QList<QFileInfo>::const_iterator it = infoList.constBegin (); it != infoList.constEnd (); it++) {
+        tmp.append ((* it).absolutePath ());
+    }
+    if (m_drivesList != tmp) {
+        m_drivesList = tmp;
+        emit drivesListChanged (m_drivesList);
+    }
 }
 
-QString QQmlFsSingleton::getHomePath (void) const {
+QObject * QQmlFileSystemSingleton::qmlSingletonProvider (QQmlEngine * qmlEngine, QJSEngine * jsEngine) {
+    Q_UNUSED (qmlEngine)
+    Q_UNUSED (jsEngine)
+    return new QQmlFileSystemSingleton;
+}
+
+QString QQmlFileSystemSingleton::getHomePath (void) const {
     return m_homePath;
 }
 
-QString QQmlFsSingleton::getRootPath (void) const {
+QString QQmlFileSystemSingleton::getRootPath (void) const {
     return m_rootPath;
 }
 
-QString QQmlFsSingleton::getTempPath (void) const {
+QString QQmlFileSystemSingleton::getTempPath (void) const {
     return m_tempPath;
 }
 
-QString QQmlFsSingleton::getAppDirPath (void) const {
+QString QQmlFileSystemSingleton::getAppDirPath (void) const {
     return m_appDirPath;
 }
 
-QString QQmlFsSingleton::getAppCachePath (void) const {
+QString QQmlFileSystemSingleton::getAppCachePath (void) const {
     return m_appCachePath;
 }
 
-QString QQmlFsSingleton::getAppConfigPath (void) const {
+QString QQmlFileSystemSingleton::getAppConfigPath (void) const {
     return m_appConfigPath;
 }
 
-QString QQmlFsSingleton::getDocumentsPath (void) const {
+QString QQmlFileSystemSingleton::getDocumentsPath (void) const {
     return m_documentsPath;
 }
 
-QString QQmlFsSingleton::getImagesPath (void) const {
+QString QQmlFileSystemSingleton::getImagesPath (void) const {
     return m_imagesPath;
 }
 
-QString QQmlFsSingleton::getMusicPath (void) const {
+QString QQmlFileSystemSingleton::getMusicPath (void) const {
     return m_musicPath;
 }
 
-QString QQmlFsSingleton::getVideosPath (void) const {
+QString QQmlFileSystemSingleton::getVideosPath (void) const {
     return m_videosPath;
 }
 
-QString QQmlFsSingleton::getDownloadsPath (void) const {
+QString QQmlFileSystemSingleton::getDownloadsPath (void) const {
     return m_downloadsPath;
 }
 
-QString QQmlFsSingleton::getWorkingDirectoryPath (void) const {
+QString QQmlFileSystemSingleton::getWorkingDirectoryPath (void) const {
     return m_workingDirectoryPath;
 }
 
-bool QQmlFsSingleton::isDir (const QString & path) const {
+QStringList QQmlFileSystemSingleton::getDrivesList (void) const {
+    return m_drivesList;
+}
+
+bool QQmlFileSystemSingleton::isDir (const QString & path) const {
     return QFileInfo (path).isDir ();
 }
 
-bool QQmlFsSingleton::isFile (const QString & path) const {
+bool QQmlFileSystemSingleton::isFile (const QString & path) const {
     return QFileInfo (path).isFile ();
 }
 
-bool QQmlFsSingleton::isLink (const QString & path) const {
+bool QQmlFileSystemSingleton::isLink (const QString & path) const {
     return QFileInfo (path).isSymLink ();
 }
 
-bool QQmlFsSingleton::exists (const QString & path) const {
+bool QQmlFileSystemSingleton::exists (const QString & path) const {
     return QFile::exists (path);
 }
 
-bool QQmlFsSingleton::copy (const QString & sourcePath, const QString & destPath) const {
+bool QQmlFileSystemSingleton::copy (const QString & sourcePath, const QString & destPath) const {
     return QFile::copy (sourcePath, destPath);
 }
 
-bool QQmlFsSingleton::move (const QString & sourcePath, const QString & destPath) const {
+bool QQmlFileSystemSingleton::move (const QString & sourcePath, const QString & destPath) const {
     return QFile::rename (sourcePath, destPath);
 }
 
-bool QQmlFsSingleton::link (const QString & sourcePath, const QString & destPath) const {
+bool QQmlFileSystemSingleton::link (const QString & sourcePath, const QString & destPath) const {
     return QFile::link (sourcePath, destPath);
 }
 
-bool QQmlFsSingleton::remove (const QString & path) const {
+bool QQmlFileSystemSingleton::remove (const QString & path) const {
     if (QFileInfo (path).isDir ()) {
         return QDir (path).removeRecursively ();
     }
@@ -118,17 +132,17 @@ bool QQmlFsSingleton::remove (const QString & path) const {
     }
 }
 
-int QQmlFsSingleton::size (const QString & path) const {
+int QQmlFileSystemSingleton::size (const QString & path) const {
     return static_cast<int> (QFileInfo (path).size ());
 }
 
-QString QQmlFsSingleton::parentDir (const QString & path) const {
+QString QQmlFileSystemSingleton::parentDir (const QString & path) const {
     QDir dir (path);
     dir.cdUp ();
     return dir.path ();
 }
 
-QString QQmlFsSingleton::readTextFile (const QString & path) const {
+QString QQmlFileSystemSingleton::readTextFile (const QString & path) const {
     QString ret;
     QFile file (path);
     if (file.open (QFile::ReadOnly)) {
@@ -138,7 +152,7 @@ QString QQmlFsSingleton::readTextFile (const QString & path) const {
     return ret;
 }
 
-bool QQmlFsSingleton::writeTextFile (const QString & path, const QString & text) const {
+bool QQmlFileSystemSingleton::writeTextFile (const QString & path, const QString & text) const {
     bool ret = false;
     QFile file (path);
     if (file.open (QFile::WriteOnly)) {
@@ -150,15 +164,15 @@ bool QQmlFsSingleton::writeTextFile (const QString & path, const QString & text)
     return ret;
 }
 
-QString QQmlFsSingleton::pathFromUrl (const QUrl & url) const {
+QString QQmlFileSystemSingleton::pathFromUrl (const QUrl & url) const {
     return url.toLocalFile ();
 }
 
-QUrl QQmlFsSingleton::urlFromPath (const QString & path) const {
+QUrl QQmlFileSystemSingleton::urlFromPath (const QString & path) const {
     return QUrl::fromLocalFile (path);
 }
 
-QVariantList QQmlFsSingleton::list (const QString & dirPath, const QStringList & nameFilters, const bool showHidden, const bool showFiles) const {
+QVariantList QQmlFileSystemSingleton::list (const QString & dirPath, const QStringList & nameFilters, const bool showHidden, const bool showFiles) const {
     static QMimeDatabase mimeDb;
     QVariantList ret;
     const QDir dir (dirPath);
@@ -176,18 +190,20 @@ QVariantList QQmlFsSingleton::list (const QString & dirPath, const QStringList &
         QVariantMap entry;
         for (QList<QFileInfo>::const_iterator it = infoList.constBegin (); it != infoList.constEnd (); it++) {
             const QFileInfo & info = (* it);
-            entry.insert ("url",          QUrl::fromLocalFile (info.absoluteFilePath ()).toString ());
-            entry.insert ("name",         info.fileName ());
-            entry.insert ("path",         info.absoluteFilePath ());
-            entry.insert ("isDir",        info.isDir ());
-            entry.insert ("isFile",       info.isFile ());
-            entry.insert ("isLink",       info.isSymLink ());
-            entry.insert ("extension",    info.completeSuffix ());
-            entry.insert ("size",         static_cast<int> (info.size ()));
-            entry.insert ("permissions",  static_cast<int> (info.permissions ()));
-            entry.insert ("lastModified", info.lastModified ().toString ("yyyy-MM-dd hh:mm:ss.zzz"));
-            //entry.insert ("mimeType",     mimeDb.mimeTypeForFile (info.absoluteFilePath ()).name ());
-            ret.append (entry);
+            if (showHidden || !info.fileName ().startsWith ('.')) {
+                entry.insert ("url",          QUrl::fromLocalFile (info.absoluteFilePath ()).toString ());
+                entry.insert ("name",         info.fileName ());
+                entry.insert ("path",         info.absoluteFilePath ());
+                entry.insert ("isDir",        info.isDir ());
+                entry.insert ("isFile",       info.isFile ());
+                entry.insert ("isLink",       info.isSymLink ());
+                entry.insert ("extension",    info.completeSuffix ());
+                entry.insert ("size",         static_cast<int> (info.size ()));
+                entry.insert ("permissions",  static_cast<int> (info.permissions ()));
+                entry.insert ("lastModified", info.lastModified ().toString ("yyyy-MM-dd hh:mm:ss.zzz"));
+                //entry.insert ("mimeType",     mimeDb.mimeTypeForFile (info.absoluteFilePath ()).name ());
+                ret.append (entry);
+            }
         }
     }
     return ret;

@@ -1,5 +1,4 @@
 import QtQuick 2.1;
-import Qt.labs.folderlistmodel 2.1;
 import QtQmlTricks.UiElements 2.0;
 
 Item {
@@ -8,11 +7,11 @@ Item {
     property string fileUrl  : "";
     property string filePath : "";
 
-    property string folder      : FS.homePath;
-    property string rootFolder  : FS.rootPath;
-    property var    nameFilters : [];
+    property string folder      : FileSystem.homePath;
+    property string rootFolder  : FileSystem.rootPath;
     property bool   showFiles   : true;
     property bool   showHidden  : false;
+    property var    nameFilters : [];
 
     MimeIconsHelper { id: mimeHelper; }
     ListModel {
@@ -21,46 +20,65 @@ Item {
             clear ();
             append (entries);
         }
-        Component.onCompleted: { append (entries); }
+        Component.onCompleted: {
+            clear ();
+            append (entries);
+        }
 
-        readonly property var entries : FS.list (folder, nameFilters, showHidden, showFiles);
+        readonly property var entries : FileSystem.list (folder, nameFilters, showHidden, showFiles);
     }
     StretchColumnContainer {
         spacing: Style.spacingNormal;
         anchors.fill: parent;
 
         StretchRowContainer {
-            spacing: Style.spacingBig;
+            spacing: Style.spacingNormal;
             ExtraAnchors.horizontalFill: parent;
 
-            TextButton {
-                text: "Parent";
-                enabled: (folder !== rootFolder);
-                icon: SvgIconLoader {
-                    icon: "qrc:/QtQmlTricks/icons/actions/chevron-up.svg";
-                    size: Style.realPixels (24);
-                    color: Style.colorForeground;
-                }
+            ComboList {
+                model: FileSystem.drivesList;
+                visible: (FileSystem.rootPath !== "/");
+                delegate: ComboListDelegateForSimpleVar { }
                 anchors.verticalCenter: parent.verticalCenter;
-                onClicked: {
-                    list.currentIndex = -1;
-                    folder = FS.parentDir (folder);
+                onCurrentKeyChanged: {
+                    if (currentKey !== undefined && currentKey !== "" && ready) {
+                        rootFolder = currentKey;
+                        folder = currentKey;
+                    }
                 }
+                Component.onCompleted: {
+                    selectByKey (FileSystem.rootPath);
+                    ready = true;
+                }
+
+                property bool ready : false;
             }
-            Item {
+            Stretcher {
                 height: implicitHeight;
-                implicitWidth: -1;
                 implicitHeight: path.height;
                 anchors.verticalCenter: parent.verticalCenter;
 
                 TextLabel {
                     id: path;
+                    text: folder;
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere;
                     font.pixelSize: Style.fontSizeSmall;
                     anchors.verticalCenter: parent.verticalCenter;
                     ExtraAnchors.horizontalFill: parent;
-
-                    Binding on text { value: folder; }
+                }
+            }
+            TextButton {
+                text: qsTr ("Parent");
+                enabled: (folder !== rootFolder);
+                icon: SvgIconLoader {
+                    icon: "actions/chevron-up";
+                    size: Style.iconSize (1);
+                    color: Style.colorForeground;
+                }
+                anchors.verticalCenter: parent.verticalCenter;
+                onClicked: {
+                    list.currentIndex = -1;
+                    folder = FileSystem.parentDir (folder);
                 }
             }
         }
@@ -129,7 +147,7 @@ Item {
         }
         TextLabel {
             text: (list.currentIndex > -1 && list.currentIndex < modelFS.count
-                   ? modelFS.get (list.currentIndex, "fileName")
+                   ? (modelFS.get (list.currentIndex) ["name"] || "")
                    : "");
             elide: Text.ElideMiddle;
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere;

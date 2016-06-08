@@ -6,9 +6,11 @@
 #include <QQmlEngine>
 #include <QJSEngine>
 
-class QQmlFsSingleton : public QObject {
+class QQmlFileSystemSingleton : public QObject {
     Q_OBJECT
+
     Q_ENUMS (Permission)
+
     Q_PROPERTY (QString homePath             READ getHomePath             CONSTANT)
     Q_PROPERTY (QString rootPath             READ getRootPath             CONSTANT)
     Q_PROPERTY (QString tempPath             READ getTempPath             CONSTANT)
@@ -21,6 +23,8 @@ class QQmlFsSingleton : public QObject {
     Q_PROPERTY (QString videosPath           READ getVideosPath           CONSTANT)
     Q_PROPERTY (QString downloadsPath        READ getDownloadsPath        CONSTANT)
     Q_PROPERTY (QString workingDirectoryPath READ getWorkingDirectoryPath CONSTANT)
+
+    Q_PROPERTY (QStringList drivesList READ getDrivesList NOTIFY drivesListChanged)
 
 public:
     static QObject * qmlSingletonProvider (QQmlEngine * qmlEngine, QJSEngine * jsEngine);
@@ -44,6 +48,8 @@ public:
     QString getVideosPath           (void) const;
     QString getDownloadsPath        (void) const;
     QString getWorkingDirectoryPath (void) const;
+
+    QStringList getDrivesList       (void) const;
 
 public slots:
     bool isDir  (const QString & path) const;
@@ -72,8 +78,11 @@ public slots:
                        const bool showHidden = false,
                        const bool showFiles = true) const;
 
+signals:
+    void drivesListChanged (const QStringList & drivesList);
+
 protected:
-    explicit QQmlFsSingleton (QObject * parent = Q_NULLPTR);
+    explicit QQmlFileSystemSingleton (QObject * parent = Q_NULLPTR);
 
 private:
     const QString m_homePath;
@@ -88,6 +97,7 @@ private:
     const QString m_videosPath;
     const QString m_downloadsPath;
     const QString m_workingDirectoryPath;
+    QStringList m_drivesList;
 };
 
 #endif // QQMLFSSINGLETON_H

@@ -54,7 +54,7 @@ static void registerQtQmlTricksUiElements (QQmlEngine * engine = Q_NULLPTR) {
 
     qmlRegisterUncreatableType<QQuickExtraAnchors>       (uri, maj, min, "ExtraAnchors", "!!!");
 
-    qmlRegisterSingletonType<QQmlFsSingleton>            (uri, maj, min, "FS",           &QQmlFsSingleton::qmlSingletonProvider);
+    qmlRegisterSingletonType<QQmlFileSystemSingleton>    (uri, maj, min, "FileSystem",   &QQmlFileSystemSingleton::qmlSingletonProvider);
     qmlRegisterSingletonType<QQmlIntrospector>           (uri, maj, min, "Introspector", &QQmlIntrospector::qmlSingletonProvider);
 
     QQuickSvgIconHelper::setBasePath (":/QtQmlTricks/icons");
