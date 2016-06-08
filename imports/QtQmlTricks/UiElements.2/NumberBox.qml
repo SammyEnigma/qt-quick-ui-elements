@@ -17,6 +17,12 @@ FocusScope {
 
     signal edited ();
 
+    function validate () {
+        if (enabled) {
+            input.apply ();
+        }
+    }
+
     TextLabel {
         id: metricsValue;
         color: Style.colorNone;
