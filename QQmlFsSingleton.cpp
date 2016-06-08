@@ -10,6 +10,7 @@
 #include <QDateTime>
 #include <QMimeDatabase>
 #include <QMimeType>
+#include <QStringBuilder>
 
 QQmlFileSystemSingleton::QQmlFileSystemSingleton (QObject * parent)
     : QObject (parent)
@@ -18,7 +19,11 @@ QQmlFileSystemSingleton::QQmlFileSystemSingleton (QObject * parent)
     , m_tempPath             (QDir::tempPath ())
     , m_appDirPath           (QCoreApplication::applicationDirPath ())
     , m_appCachePath         (QStandardPaths::writableLocation (QStandardPaths::CacheLocation))
+#if QT_VERSION >= 0x050500
     , m_appConfigPath        (QStandardPaths::writableLocation (QStandardPaths::AppConfigLocation))
+#else
+    , m_appConfigPath        (QStandardPaths::writableLocation (QStandardPaths::ConfigLocation) % '/' % QCoreApplication::applicationName ())
+#endif
     , m_documentsPath        (QStandardPaths::writableLocation (QStandardPaths::DocumentsLocation))
     , m_imagesPath           (QStandardPaths::writableLocation (QStandardPaths::PicturesLocation))
     , m_musicPath            (QStandardPaths::writableLocation (QStandardPaths::MusicLocation))
