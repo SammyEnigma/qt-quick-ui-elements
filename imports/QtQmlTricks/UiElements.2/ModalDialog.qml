@@ -4,7 +4,13 @@ import QtQmlTricks.UiElements 2.0;
 FocusScope {
     id: base;
     anchors.fill: parent;
-    Component.onCompleted: { forceActiveFocus (); }
+    Component.onCompleted: {
+        var win = Introspector.window (this);
+        if (win !== null) {
+            priv.previouslyFocusedItem = win.activeFocusItem;
+        }
+        forceActiveFocus ();
+    }
 
     property string title : "";
 
@@ -25,6 +31,9 @@ FocusScope {
     default property alias content : container.children;
 
     function hide () {
+        if (priv.previouslyFocusedItem !== null) {
+            priv.previouslyFocusedItem.forceActiveFocus ();
+        }
         base.destroy ();
     }
 
@@ -34,6 +43,11 @@ FocusScope {
 
     signal buttonClicked (int buttonType);
 
+    QtObject {
+        id: priv;
+
+        property Item previouslyFocusedItem : null;
+    }
     MouseArea {
         id: blocker;
         hoverEnabled: Style.useHovering;

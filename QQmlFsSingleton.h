@@ -5,6 +5,59 @@
 #include <QString>
 #include <QQmlEngine>
 #include <QJSEngine>
+#include <QFileInfo>
+#include <QMimeDatabase>
+
+class QQmlFileSystemModelEntry : public QObject {
+    Q_OBJECT
+
+    Q_PROPERTY (QString url          READ getUrl          CONSTANT)
+    Q_PROPERTY (QString name         READ getName         CONSTANT)
+    Q_PROPERTY (QString path         READ getPath         CONSTANT)
+    Q_PROPERTY (QString mimeType     READ getMimeType     CONSTANT)
+    Q_PROPERTY (QString extension    READ getExtension    CONSTANT)
+    Q_PROPERTY (QString lastModified READ getLastModified CONSTANT)
+
+    Q_PROPERTY (bool    isDir        READ getIsDir        CONSTANT)
+    Q_PROPERTY (bool    isFile       READ getIsFile       CONSTANT)
+    Q_PROPERTY (bool    isLink       READ getIsLink       CONSTANT)
+
+    Q_PROPERTY (int     size         READ getSize         CONSTANT)
+    Q_PROPERTY (int     permissions  READ getPermission   CONSTANT)
+
+public:
+    explicit QQmlFileSystemModelEntry (const QFileInfo & info = QFileInfo (), QObject * parent = Q_NULLPTR);
+
+    static QMimeDatabase MIME_DATABASE;
+    static const QString DATETIME_FORMAT;
+
+    const QString & getUrl          (void) const;
+    const QString & getName         (void) const;
+    const QString & getPath         (void) const;
+    const QString & getMimeType     (void) const;
+    const QString & getExtension    (void) const;
+    const QString & getLastModified (void) const;
+
+    bool getIsDir  (void) const;
+    bool getIsFile (void) const;
+    bool getIsLink (void) const;
+
+    int getSize       (void) const;
+    int getPermission (void) const;
+
+private:
+    const QString m_url;
+    const QString m_name;
+    const QString m_path;
+    const QString m_mimeType;
+    const QString m_extension;
+    const QString m_lastModified;
+    const bool m_isDir;
+    const bool m_isFile;
+    const bool m_isLink;
+    const int m_size;
+    const int m_permissions;
+};
 
 class QQmlFileSystemSingleton : public QObject {
     Q_OBJECT
@@ -36,20 +89,20 @@ public:
         ReadOther = 0x0004, WriteOther = 0x0002, ExeOther = 0x0001,
     };
 
-    QString getHomePath             (void) const;
-    QString getRootPath             (void) const;
-    QString getTempPath             (void) const;
-    QString getAppDirPath           (void) const;
-    QString getAppCachePath         (void) const;
-    QString getAppConfigPath        (void) const;
-    QString getDocumentsPath        (void) const;
-    QString getImagesPath           (void) const;
-    QString getMusicPath            (void) const;
-    QString getVideosPath           (void) const;
-    QString getDownloadsPath        (void) const;
-    QString getWorkingDirectoryPath (void) const;
+    const QString & getHomePath             (void) const;
+    const QString & getRootPath             (void) const;
+    const QString & getTempPath             (void) const;
+    const QString & getAppDirPath           (void) const;
+    const QString & getAppCachePath         (void) const;
+    const QString & getAppConfigPath        (void) const;
+    const QString & getDocumentsPath        (void) const;
+    const QString & getImagesPath           (void) const;
+    const QString & getMusicPath            (void) const;
+    const QString & getVideosPath           (void) const;
+    const QString & getDownloadsPath        (void) const;
+    const QString & getWorkingDirectoryPath (void) const;
 
-    QStringList getDrivesList       (void) const;
+    const QStringList & getDrivesList (void) const;
 
 public slots:
     bool isDir  (const QString & path) const;
@@ -81,8 +134,8 @@ public slots:
 signals:
     void drivesListChanged (const QStringList & drivesList);
 
-protected:
-    explicit QQmlFileSystemSingleton (QObject * parent = Q_NULLPTR);
+protected slots:
+    void doRefreshDrives (void);
 
 private:
     const QString m_homePath;
@@ -98,6 +151,8 @@ private:
     const QString m_downloadsPath;
     const QString m_workingDirectoryPath;
     QStringList m_drivesList;
+
+    explicit QQmlFileSystemSingleton (QObject * parent = Q_NULLPTR);
 };
 
 #endif // QQMLFSSINGLETON_H

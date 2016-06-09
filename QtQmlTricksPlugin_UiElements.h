@@ -52,6 +52,8 @@ static void registerQtQmlTricksUiElements (QQmlEngine * engine = Q_NULLPTR) {
 
     qmlRegisterType<QQuickPixelPerfectContainer>         (uri, maj, min, "PixelPerfectContainer");
 
+    qmlRegisterType<QQmlFileSystemModelEntry>            (uri, maj, min, "FileSystemModelEntry");
+
     qmlRegisterUncreatableType<QQuickExtraAnchors>       (uri, maj, min, "ExtraAnchors", "!!!");
 
     qmlRegisterSingletonType<QQmlFileSystemSingleton>    (uri, maj, min, "FileSystem",   &QQmlFileSystemSingleton::qmlSingletonProvider);
