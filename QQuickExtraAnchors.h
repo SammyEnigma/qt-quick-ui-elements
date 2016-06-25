@@ -24,13 +24,14 @@ class QQuickExtraAnchors : public QObject {
 public:
     explicit QQuickExtraAnchors (QObject * parent = Q_NULLPTR);
 
-    static QQuickExtraAnchors * qmlAttachedProperties (QObject * object);
+    enum Sides {
+        TOP,
+        LEFT,
+        RIGHT,
+        BOTTOM,
+    };
 
-    static const QString TOP;
-    static const QString LEFT;
-    static const QString RIGHT;
-    static const QString BOTTOM;
-    static const QString ANCHORS;
+    static QQuickExtraAnchors * qmlAttachedProperties (QObject * object);
 
     QQuickItem * getTopDock           (void) const;
     QQuickItem * getLeftDock          (void) const;
@@ -68,7 +69,7 @@ signals:
     void bottomRightCornerChanged (QQuickItem * bottomRightCorner);
 
 protected:
-    void defineAnchorLine (QQuickItem * other, const QString & lineName);
+    void defineAnchorLine (QQuickItem * other, const Sides side);
 
 private:
     QObject    * m_anchors;

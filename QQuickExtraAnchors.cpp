@@ -3,15 +3,9 @@
 
 #include <QQmlProperty>
 
-const QString QQuickExtraAnchors::TOP     = QStringLiteral ("top");
-const QString QQuickExtraAnchors::LEFT    = QStringLiteral ("left");
-const QString QQuickExtraAnchors::RIGHT   = QStringLiteral ("right");
-const QString QQuickExtraAnchors::BOTTOM  = QStringLiteral ("bottom");
-const QString QQuickExtraAnchors::ANCHORS = QStringLiteral ("anchors");
-
 QQuickExtraAnchors::QQuickExtraAnchors (QObject * parent)
     : QObject (parent)
-    , m_anchors (parent != Q_NULLPTR ? QQmlProperty (parent, ANCHORS).read ().value<QObject *> () : Q_NULLPTR)
+    , m_anchors (parent != Q_NULLPTR ? QQmlProperty (parent, "anchors").read ().value<QObject *> () : Q_NULLPTR)
     , m_dockTop (Q_NULLPTR)
     , m_dockLeft (Q_NULLPTR)
     , m_dockRight (Q_NULLPTR)
@@ -28,10 +22,38 @@ QQuickExtraAnchors * QQuickExtraAnchors::qmlAttachedProperties (QObject * object
     return new QQuickExtraAnchors (object);
 }
 
-void QQuickExtraAnchors::defineAnchorLine (QQuickItem * otherItem, const QString & lineName) {
+void QQuickExtraAnchors::defineAnchorLine (QQuickItem * otherItem, const Sides side) {
     static const QVariant UNDEFINED = QVariant ();
     if (m_anchors != Q_NULLPTR) {
-        QQmlProperty (m_anchors, lineName).write (otherItem != Q_NULLPTR ? QQmlProperty (otherItem, lineName).read () : UNDEFINED);
+        QString lineName;
+        switch (side) {
+            case TOP: {
+                lineName = QStringLiteral ("top");
+                break;
+            }
+            case LEFT: {
+                lineName = QStringLiteral ("left");
+                break;
+            }
+            case RIGHT: {
+                lineName = QStringLiteral ("right");
+                break;
+            }
+            case BOTTOM: {
+                lineName = QStringLiteral ("bottom");
+                break;
+            }
+        }
+        if (!lineName.isEmpty ()) {
+            QQmlProperty prop (m_anchors, lineName);
+            if (otherItem != Q_NULLPTR) {
+                QQmlProperty tmp (otherItem, lineName);
+                prop.write (tmp.read ());
+            }
+            else {
+                prop.write (UNDEFINED);
+            }
+        }
     }
 }
 
