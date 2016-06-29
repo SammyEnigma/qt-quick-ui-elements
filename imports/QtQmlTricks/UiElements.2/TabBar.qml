@@ -58,7 +58,7 @@ Item {
                 states: [
                     State {
                         name: "text_and_icon";
-                        when: (clicker.group.icon !== null);
+                        when: (clicker.group.icon !== null && clicker.group.title !== "");
 
                         AnchorChanges {
                             target: lbl;
@@ -77,12 +77,17 @@ Item {
                         }
                         PropertyChanges {
                             target: lbl;
+                            visible: true;
                             horizontalAlignment: Text.AlignLeft;
+                        }
+                        PropertyChanges {
+                            target: ico;
+                            visible: true;
                         }
                     },
                     State {
                         name: "text_only";
-                        when: (clicker.group.icon === null);
+                        when: (clicker.group.icon === null && clicker.group.title !== "");
 
                         AnchorChanges {
                             target: lbl;
@@ -94,7 +99,32 @@ Item {
                         }
                         PropertyChanges {
                             target: lbl;
+                            visible: true;
                             horizontalAlignment: Text.AlignHCenter;
+                        }
+                        PropertyChanges {
+                            target: ico;
+                            visible: false;
+                        }
+                    },
+                    State {
+                        name: "icon_only";
+                        when: (clicker.group.icon !== null && clicker.group.title === "");
+
+                        AnchorChanges {
+                            target: ico;
+                            anchors {
+                                verticalCenter: parent.verticalCenter;
+                                horizontalCenter: parent.horizontalCenter;
+                            }
+                        }
+                        PropertyChanges {
+                            target: lbl;
+                            visible: false;
+                        }
+                        PropertyChanges {
+                            target: ico;
+                            visible: true;
                         }
                     }
                 ]
