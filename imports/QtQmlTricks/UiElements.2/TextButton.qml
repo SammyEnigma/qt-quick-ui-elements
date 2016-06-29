@@ -125,7 +125,7 @@ AutoRepeatableClicker {
                           : (pressed
                              ? Style.gradientPressed (backColor)
                              : Style.gradientIdle (flat ? Style.colorNone : Qt.lighter (backColor, hovered ? 1.15 : 1.0))))
-                       : Style.gradientDisabled ());
+                       : Style.gradientDisabled (flat ? Style.colorNone : Style.colorClickable));
             border {
                 width: (!flat || pressed || checked || hovered ? Style.lineSize : 0);
                 color: (checked ? Style.colorSelection : Style.colorBorder);
