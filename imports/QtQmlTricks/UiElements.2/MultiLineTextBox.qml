@@ -8,14 +8,15 @@ FocusScope {
     implicitWidth: (input.contentWidth + padding * 2);
     implicitHeight: (input.contentHeight + padding * 2);
 
-    property int   padding    : Style.spacingNormal;
-    property alias text       : input.text;
-    property alias readOnly   : input.readOnly;
-    property alias textFont   : input.font;
-    property alias textColor  : input.color;
-    property alias textAlign  : input.horizontalAlignment;
-    property alias textHolder : holder.text;
-    property alias rounding   : rect.radius;
+    property int   padding      : Style.spacingNormal;
+    property bool  allowNewLine : true;
+    property alias text         : input.text;
+    property alias readOnly     : input.readOnly;
+    property alias textFont     : input.font;
+    property alias textColor    : input.color;
+    property alias textAlign    : input.horizontalAlignment;
+    property alias textHolder   : holder.text;
+    property alias rounding     : rect.radius;
 
     function selectAll () {
         input.selectAll ();
@@ -24,6 +25,8 @@ FocusScope {
     function clear () {
         input.text = "";
     }
+
+    signal returnPressed ();
 
     Rectangle {
         id: rect;
@@ -64,6 +67,14 @@ FocusScope {
             anchors {
                 fill: parent;
                 margins: padding;
+            }
+            Keys.onReturnPressed: {
+                if (!allowNewLine) {
+                    returnPressed ();
+                }
+                else {
+                    event.accepted = false;
+                }
             }
         }
     }
