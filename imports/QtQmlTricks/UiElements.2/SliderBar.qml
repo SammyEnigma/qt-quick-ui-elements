@@ -13,6 +13,8 @@ ProgressJauge {
 
     property int handleSize : (Style.spacingBig * 2);
 
+    property bool showTooltipWhenMoved : true;
+
     signal edited ();
 
     MouseArea {
@@ -66,12 +68,12 @@ ProgressJauge {
             hoverEnabled: Style.useHovering;
             anchors.fill: parent;
             onPressed: {
-                if (tooltip === null) {
+                if (tooltip === null && showTooltipWhenMoved) {
                     tooltip = compoTooltip.createObject (Introspector.window (base));
                 }
             }
             onReleased: {
-                if (tooltip !== null) {
+                if (tooltip !== null && showTooltipWhenMoved) {
                     tooltip.destroy ();
                     tooltip = null;
                 }
