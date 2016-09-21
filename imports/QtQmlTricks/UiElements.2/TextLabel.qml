@@ -3,6 +3,7 @@ import QtQmlTricks.UiElements 2.0;
 
 Text {
     color: (enabled ? Style.colorForeground : Style.colorBorder);
+    linkColor: (enabled ? Style.colorLink : Style.colorBorder);
     textFormat: Text.PlainText;
     renderType: (Style.useNativeText ? Text.NativeRendering : Text.QtRendering);
     verticalAlignment: Text.AlignVCenter;
