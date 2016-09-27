@@ -11,6 +11,7 @@ FocusScope {
     property int   padding    : Style.spacingNormal;
     property bool  hasClear   : false;
     property bool  isPassword : false;
+    property bool  emphasis   : false;
     property color backColor  : Style.colorEditable;
     property color textColor  : Style.colorForeground;
     property alias text       : input.text;
@@ -74,7 +75,7 @@ FocusScope {
             echoMode: (isPassword ? TextInput.Password : TextInput.Normal);
             font {
                 family: Style.fontName;
-                weight: (Style.useSlimFonts ? Font.Light : Font.Normal);
+                weight: (emphasis ? Font.Bold : (Style.useSlimFonts ? Font.Light : Font.Normal));
                 pixelSize: Style.fontSizeNormal;
             }
             anchors {
