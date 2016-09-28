@@ -162,8 +162,7 @@ FocusScope {
 
             Rectangle {
                 id: backBottom;
-                color: Style.colorBorder;
-                opacity: (flickableItem && flickableItem.contentWidth > container.width ? 0.5 : 0.15);
+                color: Style.colorGroove;
                 anchors.fill: parent;
             }
             SymbolLoader {
@@ -250,8 +249,7 @@ FocusScope {
 
             Rectangle {
                 id: backRight;
-                color: Style.colorSecondary;
-                opacity: (flickableItem && flickableItem.contentHeight > container.height ? 0.5 : 0.15);
+                color: Style.colorGroove;
                 anchors.fill: parent;
             }
             SymbolLoader {
@@ -330,11 +328,10 @@ FocusScope {
             }
         }
         Rectangle {
-            color: Style.colorBorder;
+            color: Style.colorGroove;
             width: scrollbarY.width;
             height: scrollbarX.height;
             visible: (scrollbarX.visible && scrollbarY.visible);
-            opacity: Math.max (backRight.opacity, backBottom.opacity);
             ExtraAnchors.bottomRightCorner: parent;
         }
     }

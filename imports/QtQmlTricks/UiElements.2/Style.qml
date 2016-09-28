@@ -38,6 +38,7 @@ QtObject {
     property color colorSecondary   : (useDarkTheme ? "#333333" : "#A9A9A9"); // darker gray | dark gray
     property color colorWindow      : (useDarkTheme ? "#212121" : "#D3D3D3"); // very dark gray | light gray
     property color colorClickable   : (useDarkTheme ? "#2E2E2E" : "#C7C7C7"); // very dark gray | light gray
+    property color colorGroove      : (useDarkTheme ? "#282828" : "#CECECE"); // very dark gray | light gray
     property color colorEditable    : (useDarkTheme ? "#111111" : "#FFFFFF"); // almost black | white
     property color colorForeground  : (useDarkTheme ? "#EEEEEE" : "#000000"); // almost white | black
     property color colorInverted    : (useDarkTheme ? "#111111" : "#FFFFFF"); // almost black | white
