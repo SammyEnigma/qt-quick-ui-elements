@@ -53,5 +53,7 @@
         <file>icons/actions/zoom-out.svg</file>
         <file>icons/actions/link.svg</file>
         <file>icons/actions/stop.svg</file>
+        <file>icons/actions/logout.svg</file>
+        <file>icons/actions/login.svg</file>
     </qresource>
 </RCC>
