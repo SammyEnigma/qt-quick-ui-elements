@@ -18,14 +18,18 @@ FocusScope {
 
     default property alias content : base.flickableItem;
 
+    readonly property bool canScrollX : (flickableItem && flickableItem.contentWidth  > flickableItem.width);
+    readonly property bool canScrollY : (flickableItem && flickableItem.contentHeight > flickableItem.height);
+
     readonly property real minContentX : 0;
     readonly property real minContentY : 0;
-    readonly property real maxContentX : (flickableItem && flickableItem.contentWidth  > flickableItem.width
-                                          ? flickableItem.contentWidth  - flickableItem.width
-                                          : 0);
-    readonly property real maxContentY : (flickableItem && flickableItem.contentHeight > flickableItem.height
-                                          ? flickableItem.contentHeight - flickableItem.height
-                                          : 0);
+    readonly property real maxContentX : (canScrollX ? flickableItem.contentWidth  - flickableItem.width  : 0);
+    readonly property real maxContentY : (canScrollY ? flickableItem.contentHeight - flickableItem.height : 0);
+
+    readonly property real ratioContentX : (canScrollX ? flickableItem.contentX / maxContentX : 0.0);
+    readonly property real ratioContentY : (canScrollY ? flickableItem.contentY / maxContentY : 0.0);
+    readonly property real ratioContentW : (canScrollX ? flickableItem.width  / flickableItem.contentWidth  : 0.0);
+    readonly property real ratioContentH : (canScrollY ? flickableItem.height / flickableItem.contentHeight : 0.0);
 
     function ensureVisible (item) {
         if (item && flickableItem) {
@@ -188,7 +192,7 @@ FocusScope {
             MouseArea {
                 id: grooveHoriz;
                 clip: true;
-                enabled: !indicatorOnly;
+                enabled: (canScrollX && !indicatorOnly);
                 drag {
                     axis: Drag.XAxis;
                     target: handleHoriz;
@@ -206,16 +210,16 @@ FocusScope {
 
                 Item {
                     id: handleHoriz;
-                    visible: (flickableItem && flickableItem.visibleArea.widthRatio < 1.0);
+                    visible: canScrollX;
                     ExtraAnchors.verticalFill: parent;
 
                     Binding on x {
                         when: (flickableItem && !grooveHoriz.pressed);
-                        value: (grooveHoriz.drag.maximumx * flickableItem.visibleArea.xPosition);
+                        value: (grooveHoriz.drag.maximumx * ratioContentX);
                     }
                     Binding on width {
                         when: (flickableItem && !grooveHoriz.pressed);
-                        value: Math.max (grooveHoriz.width * flickableItem.visibleArea.widthRatio, 40);
+                        value: Math.max (grooveHoriz.width * ratioContentW, 40);
                     }
                     PixelPerfectContainer {
                         contentItem: rectHoriz;
@@ -275,7 +279,7 @@ FocusScope {
             MouseArea {
                 id: grooveVertic;
                 clip: true;
-                enabled: !indicatorOnly;
+                enabled: (canScrollY && !indicatorOnly);
                 drag {
                     axis: Drag.YAxis;
                     target: handleVertic;
@@ -293,16 +297,16 @@ FocusScope {
 
                 Item {
                     id: handleVertic;
-                    visible: (flickableItem && flickableItem.visibleArea.heightRatio < 1.0);
+                    visible: canScrollY;
                     ExtraAnchors.horizontalFill: parent;
 
                     Binding on y {
                         when: (flickableItem && !grooveVertic.pressed);
-                        value: (grooveVertic.drag.maximumY * flickableItem.visibleArea.yPosition);
+                        value: (grooveVertic.drag.maximumY * ratioContentY);
                     }
                     Binding on height {
                         when: (flickableItem && !grooveVertic.pressed);
-                        value: Math.max (grooveVertic.height * flickableItem.visibleArea.heightRatio, 40);
+                        value: Math.max (grooveVertic.height * ratioContentH, 40);
                     }
                     PixelPerfectContainer {
                         contentItem: rectVertic;
