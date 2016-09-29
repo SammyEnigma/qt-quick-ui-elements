@@ -33,17 +33,22 @@ FocusScope {
 
     function ensureVisible (item) {
         if (item && flickableItem) {
-            var relPos = item.mapToItem (flickableItem, (item.x + item.width / 2), (item.y + item.height / 2));
-            var deltaX = (relPos.x - (flickableItem.width  / 2));
-            var deltaY = (relPos.y - (flickableItem.height / 2));
-            var idealContentX = (flickableItem.contentX + deltaX);
-            var idealContentY = (flickableItem.contentY + deltaY);
-            function clamp (val, min, max) {
-                return (val > max ? max : (val < min ? min : val));
-            }
+            // position of the object's center against the flickable viewport top-left origin
+            var relPos = item.mapToItem (flickableItem, (item.width / 2), (item.height / 2));
+            // position of the object's center against the flickable content scene top-left origin
+            var scenePosX = (flickableItem.contentX + relPos.x);
+            var scenePosY = (flickableItem.contentY + relPos.y);
+            // compute ideal flickable content scene position to have object's center in viewport center
+            var idealContentX = (scenePosX - (flickableItem.width  / 2));
+            var idealContentY = (scenePosY - (flickableItem.height / 2));
+            // move flickable content scene, in respect of boundaries
             flickableItem.contentX = clamp (idealContentX, minContentX, maxContentX);
             flickableItem.contentY = clamp (idealContentY, minContentY, maxContentY);
         }
+    }
+
+    function clamp (val, min, max) {
+        return (val > max ? max : (val < min ? min : val));
     }
 
     Rectangle {
