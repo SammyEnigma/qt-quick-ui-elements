@@ -6,7 +6,7 @@ Item {
     width: implicitWidth;
     height: implicitHeight;
     implicitWidth: 200;
-    implicitHeight: divisions;
+    implicitHeight: barSize;
 
     property real value      : 0;
     property real minValue   : 0;
