@@ -15,8 +15,8 @@ AutoRepeatableClicker {
 
             PropertyChanges {
                 target: clicker;
-                contentWidth: (ico.width + lbl.contentWidth + padding * 3);
-                contentHeight: (ico.height > lbl.contentHeight ? ico.height + padding * 2: lbl.contentHeight + padding * 2);
+                contentWidth: Math.ceil (ico.width + lbl.contentWidth + padding * 3);
+                contentHeight: Math.ceil (ico.height > lbl.contentHeight ? ico.height + padding * 2: lbl.contentHeight + padding * 2);
             }
             AnchorChanges {
                 target: ico;
@@ -40,8 +40,8 @@ AutoRepeatableClicker {
 
             PropertyChanges {
                 target: clicker;
-                contentWidth: Math.max (lbl.contentWidth + padding * 2, contentHeight);
-                contentHeight: (lbl.contentHeight + padding * 2);
+                contentWidth: Math.ceil (Math.max (lbl.contentWidth + padding * 2, contentHeight));
+                contentHeight: Math.ceil (lbl.contentHeight + padding * 2);
             }
             AnchorChanges {
                 target: lbl;
@@ -57,8 +57,8 @@ AutoRepeatableClicker {
 
             PropertyChanges {
                 target: clicker;
-                contentWidth: (ico.width + padding * 2);
-                contentHeight: (ico.height + padding * 2);
+                contentWidth: Math.ceil (ico.width + padding * 2);
+                contentHeight: Math.ceil (ico.height + padding * 2);
             }
             AnchorChanges {
                 target: ico;

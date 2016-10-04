@@ -5,8 +5,8 @@ FocusScope {
     id: base;
     width: implicitWidth;
     height: implicitHeight;
-    implicitWidth: (showButtons ? input.implicitWidth + input.height * 2 : input.implicitWidth);
-    implicitHeight: input.implicitHeight;
+    implicitWidth: Math.ceil (showButtons ? input.implicitWidth + input.height * 2 : input.implicitWidth);
+    implicitHeight: Math.ceil (input.implicitHeight);
 
     property real step        : 1;
     property real value       : 0;
