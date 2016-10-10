@@ -21,11 +21,17 @@ Item {
 
     function ensureVisible (item) {
         if (item && contentItem) {
-            var localPos = item.mapToItem (contentItem, item.width / 2, item.height / 2);
-            var idealContentOffsetX = (((contentItem.width  / 2) - localPos.x) * contentZoom);
-            var idealContentOffsetY = (((contentItem.height / 2) - localPos.y) * contentZoom);
-            priv.contentOffsetX = priv.clamp (idealContentOffsetX, -priv.contentOffsetXLimit, +priv.contentOffsetXLimit);
-            priv.contentOffsetY = priv.clamp (idealContentOffsetY, -priv.contentOffsetYLimit, +priv.contentOffsetYLimit);
+            if (item === contentItem) {
+                priv.contentOffsetX = 0;
+                priv.contentOffsetY = 0;
+            }
+            else {
+                var localPos = item.mapToItem (contentItem, item.width / 2, item.height / 2);
+                var idealContentOffsetX = (((contentItem.width  / 2) - localPos.x) * contentZoom);
+                var idealContentOffsetY = (((contentItem.height / 2) - localPos.y) * contentZoom);
+                priv.contentOffsetX = priv.clamp (idealContentOffsetX, -priv.contentOffsetXLimit, +priv.contentOffsetXLimit);
+                priv.contentOffsetY = priv.clamp (idealContentOffsetY, -priv.contentOffsetYLimit, +priv.contentOffsetYLimit);
+            }
         }
     }
 
