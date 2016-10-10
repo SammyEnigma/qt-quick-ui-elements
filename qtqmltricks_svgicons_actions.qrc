@@ -56,5 +56,6 @@
         <file>icons/actions/stop.svg</file>
         <file>icons/actions/logout.svg</file>
         <file>icons/actions/login.svg</file>
+        <file>icons/actions/pause.svg</file>
     </qresource>
 </RCC>
