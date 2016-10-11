@@ -9,11 +9,13 @@ ProgressJauge {
     implicitWidth: 200;
     implicitHeight: handle.height;
 
-    property int  decimals : 0;
+    property int decimals : 0;
 
     property int handleSize : (Style.spacingBig * 2);
 
     property bool showTooltipWhenMoved : true;
+
+    readonly property real ratio : Math.pow (10, decimals);
 
     signal edited ();
 
@@ -25,7 +27,7 @@ ProgressJauge {
                                      width,
                                      minValue,
                                      maxValue);
-            value = parseFloat (tmp.toFixed (decimals));
+            value = (Math.round (tmp * ratio) / ratio);
             edited ();
         }
     }
@@ -85,7 +87,7 @@ ProgressJauge {
                                              clicker.drag.maximumX,
                                              minValue,
                                              maxValue);
-                    value = parseFloat (tmp.toFixed (decimals));
+                    value = (Math.round (tmp * ratio) / ratio);
                     edited ();
                 }
             }
