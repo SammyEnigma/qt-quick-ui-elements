@@ -90,20 +90,37 @@ ProgressJauge {
                 }
             }
 
-            property Balloon tooltip : null;
+            property Item tooltip : null;
 
             Component {
                 id: compoTooltip;
 
-                Balloon {
+                Rectangle {
+                    id: rect;
                     x: (handleTopCenterAbsPos.x - width / 2);
                     y: (handleTopCenterAbsPos.y - height - Style.spacingNormal);
                     z: 9999999;
-                    content: base.value.toFixed (decimals);
+                    width: Math.ceil (lblTooltip.implicitWidth + lblTooltip.anchors.margins * 2);
+                    height: Math.ceil (lblTooltip.implicitHeight + lblTooltip.anchors.margins * 2);
+                    color: Style.colorBubble;
+                    radius: Style.roundness;
+                    antialiasing: radius;
+                    border {
+                        width: Style.lineSize;
+                        color: Qt.darker (color);
+                    }
 
                     readonly property var handleTopCenterAbsPos : base.mapToItem (parent,
                                                                                   (handle.x + handle.width / 2),
                                                                                   (handle.y));
+
+                    TextLabel {
+                        id: lblTooltip;
+                        text: base.value.toFixed (decimals);
+                        font.pixelSize: Style.fontSizeSmall;
+                        anchors.margins: Style.spacingSmall;
+                        anchors.centerIn: parent;
+                    }
                 }
             }
         }
