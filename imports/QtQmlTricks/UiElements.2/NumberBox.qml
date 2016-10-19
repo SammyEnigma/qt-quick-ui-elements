@@ -81,7 +81,13 @@ FocusScope {
         backColor: (flashEffect ? Style.colorError : Style.colorEditable);
         textColor: (flashEffect ? Style.colorEditable : (hasError ? Style.colorError : Style.colorForeground));
         implicitWidth: (metricsValue.contentWidth + padding * 2);
-        validator: RegExpValidator { regExp: (decimals > 0 ? /\d+\.\d+/ : /\d+/); }
+        validator: DoubleValidator {
+            top: base.maxValue;
+            bottom: base.minValue;
+            locale: "C";
+            decimals: base.decimals;
+            notation: DoubleValidator.StandardNotation;
+        }
         anchors {
             left: (showButtons ? btnDecrease.right : parent.left);
             right: (showButtons ? btnIncrease.left : parent.right);
