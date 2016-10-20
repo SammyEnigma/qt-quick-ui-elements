@@ -25,6 +25,8 @@ FocusScope {
 
     readonly property string currentPath : (inputName.value !== "" ? (folder + "/" + inputName.value) : "");
 
+    signal fileDoubleClicked ();
+
     function select (name) {
         var tmp = (name || "").trim ();
         inputName.text = tmp;
@@ -114,7 +116,10 @@ FocusScope {
                             select ("");
                             goToFolder (entry.path);
                         }
-                        else { }
+                        else {
+                            select ((selectionType & selectFile) ? entry.name : "");
+                            fileDoubleClicked ();
+                        }
                     }
 
                     readonly property FileSystemModelEntry entry : modelData;
