@@ -13,6 +13,7 @@ FocusScope {
     property real minValue    : 0;
     property real maxValue    : 100;
     property int  decimals    : 0;
+    property int  padding     : Style.spacingNormal;
     property bool showButtons : true;
 
     signal edited ();
@@ -41,6 +42,7 @@ FocusScope {
             color: (enabled ? Style.colorForeground : Style.colorBorder);
             symbol: Style.symbolMinus;
         }
+        padding: base.padding;
         visible: showButtons;
         enabled: (base.enabled && value - step >= minValue);
         autoRepeat: true;
@@ -59,6 +61,7 @@ FocusScope {
             color: (enabled ? Style.colorForeground : Style.colorBorder);
             symbol: Style.symbolPlus;
         }
+        padding: base.padding;
         width: (height + Style.roundness);
         visible: showButtons;
         enabled: (base.enabled && value + step <= maxValue);
@@ -74,6 +77,7 @@ FocusScope {
     TextBox {
         id: input;
         focus: true;
+        padding: base.padding;
         enabled: base.enabled;
         rounding: (showButtons ? 0 : Style.roundness);
         hasClear: false;
