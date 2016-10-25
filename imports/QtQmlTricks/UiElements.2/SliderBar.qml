@@ -13,6 +13,8 @@ ProgressJauge {
 
     property int handleSize : (Style.spacingBig * 2);
 
+    property bool editable : true;
+
     property bool showTooltipWhenMoved : true;
 
     readonly property real ratio : Math.pow (10, decimals);
@@ -20,6 +22,7 @@ ProgressJauge {
     signal edited ();
 
     MouseArea {
+        visible: editable;
         anchors.fill: parent;
         onClicked: {
             var tmp = Style.convert (mouse.x,
@@ -36,6 +39,7 @@ ProgressJauge {
         width: handleSize;
         height: handleSize;
         radius: (handleSize / 2);
+        visible: editable;
         enabled: base.enabled;
         antialiasing: radius;
         gradient: (enabled
