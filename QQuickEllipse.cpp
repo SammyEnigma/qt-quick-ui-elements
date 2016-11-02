@@ -103,11 +103,12 @@ void QQuickEllipse::setColor (const QColor & color) {
 }
 
 QPointF QQuickEllipse::trigoPoint (const int angleDeg) {
+    static const int DEGREES = 360;
     static bool computed (false);
-    static QPointF cache [359];
+    static QPointF cache [DEGREES];
     if (!computed) {
-        for (int tmpDeg (0); tmpDeg < 360; tmpDeg++) {
-            const qreal tmpRad (qreal (tmpDeg) * M_PI / 180.0f);
+        for (int tmpDeg = 0; tmpDeg < DEGREES; ++tmpDeg) {
+            const qreal tmpRad (qDegreesToRadians (qreal (tmpDeg)));
             cache [tmpDeg].setX (qCos (tmpRad));
             cache [tmpDeg].setY (qSin (tmpRad));
         }
