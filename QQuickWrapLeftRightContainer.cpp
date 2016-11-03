@@ -48,15 +48,11 @@ void QQuickWrapLeftRightContainer::componentComplete (void) {
 }
 
 static inline bool isWrapper (QQuickItem * item) {
-    QQuickWrapLeftRightContainerBreaker * wrapper = qobject_cast<QQuickWrapLeftRightContainerBreaker *> (item);
-    return (wrapper != Q_NULLPTR);
+    return (qobject_cast<QQuickWrapLeftRightContainerBreaker *> (item) != Q_NULLPTR);
 }
 
 static inline QQuickItem * keepBiggestImplicitHeight (QQuickItem * item, QQuickItem * ref = Q_NULLPTR) {
-    return (ref == Q_NULLPTR ||
-            (ref != Q_NULLPTR && ref->implicitHeight () < item->implicitHeight ())
-            ? item
-            : ref);
+    return ((ref == Q_NULLPTR) || (ref->implicitHeight () < item->implicitHeight ()) ? item : ref);
 }
 
 static inline void centerItemInHeight (QQuickItem * item, // item to center
