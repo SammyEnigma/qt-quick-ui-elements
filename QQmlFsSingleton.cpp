@@ -48,7 +48,7 @@ QObject * QQmlFileSystemSingleton::qmlSingletonProvider (QQmlEngine * qmlEngine,
 void QQmlFileSystemSingleton::doRefreshDrives (void) {
     QStringList tmp;
     const QList<QFileInfo> infoList = QDir::drives ();
-    for (QList<QFileInfo>::const_iterator it = infoList.constBegin (); it != infoList.constEnd (); it++) {
+    for (QList<QFileInfo>::const_iterator it = infoList.constBegin (); it != infoList.constEnd (); ++it) {
         tmp.append ((* it).absolutePath ());
     }
     if (m_drivesList != tmp) {
@@ -207,7 +207,7 @@ QVariantList QQmlFileSystemSingleton::list (const QString & dirPath, const QStri
                                          | QDir::DirsFirst);
         const QList<QFileInfo> infoList = dir.entryInfoList (nameFilters, filters, sortFlags);
         ret.reserve (infoList.size ());
-        for (QList<QFileInfo>::const_iterator it = infoList.constBegin (); it != infoList.constEnd (); it++) {
+        for (QList<QFileInfo>::const_iterator it = infoList.constBegin (); it != infoList.constEnd (); ++it) {
             const QFileInfo & info = (* it);
             if (showHidden || !info.fileName ().startsWith ('.')) {
                 ret.append (QVariant::fromValue (new QQmlFileSystemModelEntry (info)));

@@ -152,7 +152,7 @@ QSGNode * QQuickEllipse::updatePaintNode (QSGNode * oldNode, UpdatePaintNodeData
         area->setDrawingMode (GL_TRIANGLE_STRIP);
         QSGGeometry::Point2D * vertex (area->vertexDataAsPoint2D ());
         int pointIdx (0);
-        for (QVector<QPointF>::const_iterator it = anglesList.constBegin (); it != anglesList.constEnd (); it++) {
+        for (QVector<QPointF>::const_iterator it = anglesList.constBegin (); it != anglesList.constEnd (); ++it) {
             const QPointF & currTrigo (* it);
             const QPointF innerPoint (center + innerRadius * currTrigo);
             vertex [pointIdx].x = float (innerPoint.x ());
@@ -174,7 +174,7 @@ QSGNode * QQuickEllipse::updatePaintNode (QSGNode * oldNode, UpdatePaintNodeData
         vertex [pointIdx].x = float (center.x ());
         vertex [pointIdx].y = float (center.y ());
         pointIdx++;
-        for (QVector<QPointF>::const_iterator it = anglesList.constBegin (); it != anglesList.constEnd (); it++) {
+        for (QVector<QPointF>::const_iterator it = anglesList.constBegin (); it != anglesList.constEnd (); ++it) {
             const QPointF & currTrigo (* it);
             const QPointF currPoint (center + outerRadius * currTrigo);
             vertex [pointIdx].x = float (currPoint.x ());

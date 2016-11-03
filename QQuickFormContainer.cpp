@@ -51,7 +51,7 @@ void QQuickFormContainer::updatePolish (void) {
     qreal rightMaxChildWidth = 0;
     QList<qreal> leftChildHeight;
     QList<qreal> rightChildHeight;
-    for (QList<QQuickItem *>::const_iterator it = childrenList.constBegin (); it != childrenList.constEnd (); it++) {
+    for (QList<QQuickItem *>::const_iterator it = childrenList.constBegin (); it != childrenList.constEnd (); ++it) {
         QQuickItem * child = (* it);
         if (child != Q_NULLPTR && !child->inherits ("QQuickRepeater") && child->isVisible ()) {
             if (count % 2 == 0) {
@@ -92,7 +92,7 @@ void QQuickFormContainer::updatePolish (void) {
         int nb = 0;
         int line = 0;
         qreal currentY = 0;
-        for (QList<QQuickItem *>::const_iterator it = childrenList.constBegin (); it != childrenList.constEnd (); it++) {
+        for (QList<QQuickItem *>::const_iterator it = childrenList.constBegin (); it != childrenList.constEnd (); ++it) {
             QQuickItem * child = (* it);
             if (child != Q_NULLPTR && !child->inherits ("QQuickRepeater") && child->isVisible ()) {
                 const qreal lineHeight = childHeight.at (line);

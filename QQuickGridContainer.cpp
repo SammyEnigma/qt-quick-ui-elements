@@ -129,7 +129,7 @@ void QQuickGridContainer::updatePolish (void) {
     int count = 0;
     qreal maxChildWidth = 0;
     qreal maxChildHeight = 0;
-    for (QList<QQuickItem *>::const_iterator it = childrenList.constBegin (); it != childrenList.constEnd (); it++) {
+    for (QList<QQuickItem *>::const_iterator it = childrenList.constBegin (); it != childrenList.constEnd (); ++it) {
         QQuickItem * child = (* it);
         if (child != Q_NULLPTR && !child->inherits ("QQuickRepeater") && (child->isVisible () || !m_fillEmpty)) {
             if (child->implicitWidth () > maxChildWidth) {
@@ -166,7 +166,7 @@ void QQuickGridContainer::updatePolish (void) {
     qreal curY = (m_invertDirection ? layoutHeight - itemHeight : 0);
     if (m_rows > 0 && m_cols > 0) {
         int nb = 0;
-        for (QList<QQuickItem *>::const_iterator it = childrenList.constBegin (); it != childrenList.constEnd (); it++) {
+        for (QList<QQuickItem *>::const_iterator it = childrenList.constBegin (); it != childrenList.constEnd (); ++it) {
             QQuickItem * child = (* it);
             if (child != Q_NULLPTR && !child->inherits ("QQuickRepeater") && (child->isVisible () || !m_fillEmpty)) {
                 child->setX (curX);

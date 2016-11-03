@@ -38,7 +38,7 @@ void QQuickPixelPerfectContainer::componentComplete (void) {
 void QQuickPixelPerfectContainer::updatePolish (void) {
     if (m_contentItem != Q_NULLPTR) {
         QPointF absPos;
-        for (QVector<QQuickItem *>::const_iterator it = m_ancestors.constBegin (); it != m_ancestors.constEnd (); it++) {
+        for (QVector<QQuickItem *>::const_iterator it = m_ancestors.constBegin (); it != m_ancestors.constEnd (); ++it) {
             absPos += (*it)->position ();
         }
         m_contentItem->setPosition (absPos.toPoint () - absPos);

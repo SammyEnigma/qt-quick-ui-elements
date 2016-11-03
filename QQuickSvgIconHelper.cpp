@@ -49,7 +49,7 @@ public:
 
     virtual ~SvgMetaDataCache (void) {
 #ifdef Q_OS_LINUX
-        for (QHash<QString, int>::const_iterator it = descriptorsIndex.constBegin (); it != descriptorsIndex.constEnd (); it++) {
+        for (QHash<QString, int>::const_iterator it = descriptorsIndex.constBegin (); it != descriptorsIndex.constEnd (); ++it) {
             inotify_rm_watch (inotifyFd, it.value ());
         }
         ::close (inotifyFd);
@@ -197,7 +197,7 @@ protected:
             const QString path = descriptorsIndex.key (evt->wd);
             if (!path.isEmpty ()) {
                 const QList<QQuickSvgIconHelper *> watchersList = svgHelpersIndex.values (path);
-                for (QList<QQuickSvgIconHelper *>::const_iterator it = watchersList.constBegin (); it != watchersList.constEnd (); it++) {
+                for (QList<QQuickSvgIconHelper *>::const_iterator it = watchersList.constBegin (); it != watchersList.constEnd (); ++it) {
                     QQuickSvgIconHelper * svgHelper = (* it);
                     if (svgHelper != Q_NULLPTR) {
                         if (evt->mask & IN_MODIFY) {

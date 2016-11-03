@@ -86,7 +86,7 @@ void QQuickWrapLeftRightContainer::updatePolish (void) {
     QVector<QQuickItem *> rightItems;
     leftItems.reserve  (childrenList.count ());
     rightItems.reserve (childrenList.count ());
-    for (QList<QQuickItem *>::const_iterator it = childrenList.constBegin (); it != childrenList.constEnd (); it++) {
+    for (QList<QQuickItem *>::const_iterator it = childrenList.constBegin (); it != childrenList.constEnd (); ++it) {
         QQuickItem * child = (* it);
         if (child != Q_NULLPTR && !child->inherits ("QQuickRepeater") && child->isVisible ()) {
             if (isWrapper (child)) {
@@ -124,7 +124,7 @@ void QQuickWrapLeftRightContainer::updatePolish (void) {
     const qreal layoutHeight = height ();
     /// position left items
     qreal curX = 0;
-    for (QVector<QQuickItem *>::const_iterator it = leftItems.constBegin (); it != leftItems.constEnd (); it++) {
+    for (QVector<QQuickItem *>::const_iterator it = leftItems.constBegin (); it != leftItems.constEnd (); ++it) {
         QQuickItem * child = (* it);
         child->setWidth  (child->implicitWidth ());
         child->setHeight (child->implicitHeight ());
@@ -144,7 +144,7 @@ void QQuickWrapLeftRightContainer::updatePolish (void) {
     /// position right items
     curX = layoutWidth;
     const qreal offset = (mustWrap ? leftHeight + m_spacing : 0);
-    for (QVector<QQuickItem *>::const_iterator it = rightItems.constBegin (); it != rightItems.constEnd (); it++) {
+    for (QVector<QQuickItem *>::const_iterator it = rightItems.constBegin (); it != rightItems.constEnd (); ++it) {
         QQuickItem * child = (* it);
         child->setWidth  (child->implicitWidth ());
         child->setHeight (child->implicitHeight ());
