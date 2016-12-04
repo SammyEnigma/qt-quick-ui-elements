@@ -361,6 +361,7 @@ Group {
                 size: Style.fontSizeBig;
                 color: Style.colorForeground;
             }
+            visible: collapsable;
             padding: (Style.lineSize * 2);
             anchors {
                 top: (borderSide === Item.Left || borderSide === Item.Right ? parent.top : undefined);
