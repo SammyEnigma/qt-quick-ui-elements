@@ -158,9 +158,7 @@ int QQmlFileSystemSingleton::size (const QString & path) const {
 }
 
 QString QQmlFileSystemSingleton::parentDir (const QString & path) const {
-    QDir dir (path);
-    dir.cdUp ();
-    return dir.path ();
+    return QFileInfo (path).dir ().absolutePath ();
 }
 
 QString QQmlFileSystemSingleton::readTextFile (const QString & path) const {
