@@ -24,12 +24,10 @@ Item {
         onReleased: {
             if (autoRepeat) {
                 if (timerAutoRepeatDelay.running) {
-                    timerAutoRepeatDelay.stop ();
                     base.clicked (false);
                 }
-                else {
-                    timerAutoRepeatInterval.stop ();
-                }
+                timerAutoRepeatDelay.stop ();
+                timerAutoRepeatInterval.stop ();
             }
             else {
                 base.clicked (false);
