@@ -26,6 +26,7 @@ FocusScope {
     readonly property string currentPath : (inputName.value !== "" ? (folder + "/" + inputName.value) : "");
 
     signal fileDoubleClicked ();
+    signal fileNameReturned ();
 
     function select (name) {
         var tmp = (name || "").trim ();
@@ -175,6 +176,7 @@ FocusScope {
                 enabled: (selectionType & selectAllowNew);
                 implicitWidth: -1;
                 anchors.verticalCenter: parent.verticalCenter;
+                onAccepted: { base.fileNameReturned (); }
 
                 readonly property string value : (text.trim ());
             }
