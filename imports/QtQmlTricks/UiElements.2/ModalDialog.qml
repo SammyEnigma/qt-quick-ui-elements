@@ -21,6 +21,7 @@ FocusScope {
     property int minWidth : 400;
     property int maxWidth : 600;
 
+    readonly property int buttonNone   : 0;
     readonly property int buttonOk     : (1 << 0);
     readonly property int buttonYes    : (1 << 1);
     readonly property int buttonNo     : (1 << 2);
@@ -143,9 +144,10 @@ FocusScope {
                 ExtraAnchors.topDock: parent;
             }
         }
-        Line { }
+        Line { visible: buttons; }
         StretchRowContainer {
             id: row;
+            visible: buttons;
             spacing: Style.spacingNormal;
 
             Stretcher { }
