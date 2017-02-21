@@ -89,9 +89,7 @@ Item {
         property Item dropdownItem : null;
 
         function createDropdown () {
-            dropdownItem = compoDropdown.createObject (Introspector.window (base), {
-                                                           "refItem" : base
-                                                       });
+            dropdownItem = compoDropdown.createObject (Introspector.window (base), { });
         }
 
         function destroyDropdown () {
@@ -176,30 +174,23 @@ Item {
             id: dimmer;
             z: 999999999;
             anchors.fill: parent;
-            states: State {
-                when: (dimmer.refItem !== null);
-
-                PropertyChanges {
-                    target: frame;
-                    x: (frame.mapFromItem (dimmer.refItem.parent, dimmer.refItem.x, 0) ["x"] || 0);
-                    y: (frame.mapFromItem (dimmer.refItem.parent, 0, dimmer.refItem.y + dimmer.refItem.height -1) ["y"] || 0);
-                    width: dimmer.refItem.width;
-                }
-            }
             onWheel: { }
             onPressed: { clicker.destroyDropdown (); }
             onReleased: { }
 
-            property Item refItem : null;
-
             Rectangle {
                 id: frame;
+                x: mapFromItem (base.parent, base.x, 0) ["x"];
+                y: mapFromItem (base.parent, 0, (base.y + base.height -1)) ["y"];
                 color: Style.colorWindow;
+                scale: (mapFromItem (base.parent, 0, 0, base.width, 0) ["width"] / base.width);
+                width: base.width;
                 height: Math.max (layout.height, (Style.fontSizeNormal + Style.spacingNormal * 2));
                 border {
                     width: Style.lineSize;
                     color: Style.colorBorder;
                 }
+                transformOrigin: Item.TopLeft;
 
                 StretchColumnContainer {
                     id: layout;
