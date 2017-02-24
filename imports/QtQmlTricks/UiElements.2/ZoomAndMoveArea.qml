@@ -29,8 +29,8 @@ Item {
                 var localPos = item.mapToItem (contentItem, item.width / 2, item.height / 2);
                 var idealContentOffsetX = (((contentItem.width  / 2) - localPos.x) * contentZoom);
                 var idealContentOffsetY = (((contentItem.height / 2) - localPos.y) * contentZoom);
-                priv.contentOffsetX = priv.clamp (idealContentOffsetX, -priv.contentOffsetXLimit, +priv.contentOffsetXLimit);
-                priv.contentOffsetY = priv.clamp (idealContentOffsetY, -priv.contentOffsetYLimit, +priv.contentOffsetYLimit);
+                priv.contentOffsetX = Math.round (priv.clamp (idealContentOffsetX, -priv.contentOffsetXLimit, +priv.contentOffsetXLimit));
+                priv.contentOffsetY = Math.round (priv.clamp (idealContentOffsetY, -priv.contentOffsetYLimit, +priv.contentOffsetYLimit));
             }
         }
     }
@@ -79,13 +79,13 @@ Item {
 
         function applyOffsetX (offset) {
             contentOffsetX = ((contentZoomedWidth + contentPadding * 2) > width
-                              ? clamp (offset, -contentOffsetXLimit, contentOffsetXLimit)
+                              ? Math.round (clamp (offset, -contentOffsetXLimit, contentOffsetXLimit))
                               : 0);
         }
 
         function applyOffsetY (offset) {
             contentOffsetY = ((contentZoomedHeight + contentPadding * 2) > height
-                              ? clamp (offset, -contentOffsetYLimit, contentOffsetYLimit)
+                              ? Math.round (clamp (offset, -contentOffsetYLimit, contentOffsetYLimit))
                               : 0);
         }
 
