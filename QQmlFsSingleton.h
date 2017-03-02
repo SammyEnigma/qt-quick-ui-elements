@@ -8,6 +8,10 @@
 #include <QFileInfo>
 #include <QMimeDatabase>
 
+template<> inline bool qLess<QFileInfo>::operator() (const QFileInfo & left, const QFileInfo & right) const {
+    return (left.baseName ().toLower () < right.baseName ().toLower ());
+}
+
 class QQmlFileSystemModelEntry : public QObject {
     Q_OBJECT
 
@@ -129,7 +133,9 @@ public slots:
     QVariantList list (const QString & dirPath,
                        const QStringList & nameFilters = QStringList (),
                        const bool showHidden = false,
-                       const bool showFiles = true) const;
+                       const bool showFiles = true,
+                       const bool showDirs = true,
+                       const bool recursive = false) const;
 
 signals:
     void drivesListChanged (const QStringList & drivesList);

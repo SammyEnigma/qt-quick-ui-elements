@@ -12,6 +12,7 @@
 #include <QMimeDatabase>
 #include <QMimeType>
 #include <QStringBuilder>
+#include <QDirIterator>
 
 QMimeDatabase QQmlFileSystemModelEntry::MIME_DATABASE;
 
@@ -191,25 +192,41 @@ QUrl QQmlFileSystemSingleton::urlFromPath (const QString & path) const {
     return QUrl::fromLocalFile (path);
 }
 
-QVariantList QQmlFileSystemSingleton::list (const QString & dirPath, const QStringList & nameFilters, const bool showHidden, const bool showFiles) const {
+QVariantList QQmlFileSystemSingleton::list (const QString & dirPath, const QStringList & nameFilters, const bool showHidden, const bool showFiles, const bool showDirs, const bool recursive) const {
     QVariantList ret;
     const QDir dir (dirPath);
     if (dir.exists ()) {
+        const QDirIterator::IteratorFlags itFlags = (recursive
+                                                     ? QDirIterator::Subdirectories
+                                                     : QDirIterator::NoIteratorFlags);
         const QDir::Filters filters (QDir::Dirs
                                      | QDir::AllDirs
                                      | QDir::NoDotAndDotDot
-                                     | (showHidden ? QDir::Hidden : 0)
+                                     | QDir::Hidden
                                      | (showFiles  ? QDir::Files  : 0));
-        const QDir::SortFlags sortFlags (QDir::Name
-                                         | QDir::IgnoreCase
-                                         | QDir::DirsFirst);
-        const QList<QFileInfo> infoList = dir.entryInfoList (nameFilters, filters, sortFlags);
-        ret.reserve (infoList.size ());
-        for (QList<QFileInfo>::const_iterator it = infoList.constBegin (); it != infoList.constEnd (); ++it) {
-            const QFileInfo & info = (* it);
+        QDirIterator finder (dirPath, nameFilters, filters, itFlags);
+        QFileInfoList dirsList;
+        QFileInfoList filesList;
+        while (finder.hasNext ()) {
+            const QFileInfo & info = finder.next ();
             if (showHidden || !info.fileName ().startsWith ('.')) {
-                ret.append (QVariant::fromValue (new QQmlFileSystemModelEntry (info)));
+                if (info.isDir () && showDirs) {
+                    dirsList.append (info);
+                }
+                else if (info.isFile () && showFiles) {
+                    filesList.append (info);
+                }
+                else { }
             }
+        }
+        qSort (dirsList);
+        qSort (filesList);
+        ret.reserve (dirsList.size () + filesList.size ());
+        for (QFileInfoList::const_iterator it = dirsList.constBegin (); it != dirsList.constEnd (); ++it) {
+            ret.append (QVariant::fromValue (new QQmlFileSystemModelEntry (* it)));
+        }
+        for (QFileInfoList::const_iterator it = filesList.constBegin (); it != filesList.constEnd (); ++it) {
+            ret.append (QVariant::fromValue (new QQmlFileSystemModelEntry (* it)));
         }
     }
     return ret;
