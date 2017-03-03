@@ -58,6 +58,7 @@ Project {
                 "QQuickStretchRowContainer.cpp",
                 "QQuickSvgIconHelper.cpp",
                 "QQuickThemeIconProvider.cpp",
+                "QQuickWindowIconHelper.cpp",
                 "QQuickWrapLeftRightContainer.cpp",
             ]
         }
@@ -78,6 +79,7 @@ Project {
                 "QQuickStretchRowContainer.h",
                 "QQuickSvgIconHelper.h",
                 "QQuickThemeIconProvider.h",
+                "QQuickWindowIconHelper.h",
                 "QQuickWrapLeftRightContainer.h",
                 "QtQmlTricksPlugin.h",
                 "QtQmlTricksPlugin_UiElements.h",

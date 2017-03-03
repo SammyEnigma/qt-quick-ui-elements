@@ -18,6 +18,7 @@
 #include "QQuickWrapLeftRightContainer.h"
 #include "QQuickRoundedRectanglePaintedItem.h"
 #include "QQuickPixelPerfectContainer.h"
+#include "QQuickWindowIconHelper.h"
 #include "QQmlIntrospector.h"
 #include "QQmlFsSingleton.h"
 
@@ -51,6 +52,8 @@ static void registerQtQmlTricksUiElements (QQmlEngine * engine = Q_NULLPTR) {
     qmlRegisterType<QQuickWrapLeftRightContainerBreaker> (uri, maj, min, "WrapBreaker");
 
     qmlRegisterType<QQuickPixelPerfectContainer>         (uri, maj, min, "PixelPerfectContainer");
+
+    qmlRegisterType<QQuickWindowIconHelper>              (uri, maj, min, "WindowIconHelper");
 
     qmlRegisterType<QQmlFileSystemModelEntry>            (uri, maj, min, "FileSystemModelEntry");
 
