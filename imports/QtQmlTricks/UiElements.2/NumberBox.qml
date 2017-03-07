@@ -92,6 +92,9 @@ FocusScope {
             decimals: base.decimals;
             notation: DoubleValidator.StandardNotation;
         }
+        textFont {
+            underline: (input.text !== (isNaN (base.value) ? "" : base.value.toFixed (base.decimals)));
+        }
         anchors {
             left: (showButtons ? btnDecrease.right : parent.left);
             right: (showButtons ? btnIncrease.left : parent.right);
