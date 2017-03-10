@@ -16,6 +16,8 @@ FocusScope {
     property int  padding     : Style.spacingNormal;
     property bool showButtons : true;
 
+    readonly property string display : (!isNaN (value) ? value.toFixed (decimals) : "");
+
     signal edited ();
 
     function validate () {
@@ -24,16 +26,6 @@ FocusScope {
         }
     }
 
-    TextLabel {
-        id: metricsValue;
-        color: Style.colorNone;
-        text: {
-            var txtMin = minValue.toFixed (decimals);
-            var txtMax = maxValue.toFixed (decimals);
-            var count = Math.max (txtMin.length, txtMax.length);
-            return new Array (count +1).join ("0");
-        }
-    }
     TextButton {
         id: btnDecrease;
         width: (height + Style.roundness);
@@ -84,7 +76,7 @@ FocusScope {
         textAlign: TextInput.AlignHCenter;
         backColor: (flashEffect ? Style.colorError : Style.colorEditable);
         textColor: (flashEffect ? Style.colorEditable : (hasError ? Style.colorError : Style.colorForeground));
-        implicitWidth: (metricsValue.contentWidth + padding * 2);
+        implicitWidth: (Math.max (metricsMinValue.width, metricsMaxValue.width) + padding * 2);
         validator: DoubleValidator {
             top: base.maxValue;
             bottom: base.minValue;
@@ -92,14 +84,12 @@ FocusScope {
             decimals: base.decimals;
             notation: DoubleValidator.StandardNotation;
         }
-        textFont {
-            underline: (input.text !== (isNaN (base.value) ? "" : base.value.toFixed (base.decimals)));
-        }
+        textFont.underline: (text !== display);
         anchors {
             left: (showButtons ? btnDecrease.right : parent.left);
             right: (showButtons ? btnIncrease.left : parent.right);
-            leftMargin: (showButtons ? -Style.roundness : 0);
-            rightMargin: (showButtons ? -Style.roundness : 0);
+            leftMargin: (showButtons ? -btnDecrease.rounding : 0);
+            rightMargin: (showButtons ? -btnIncrease.rounding : 0);
         }
         ExtraAnchors.verticalFill: parent;
         onActiveFocusChanged: {
@@ -108,15 +98,15 @@ FocusScope {
             }
         }
         Keys.onEnterPressed:  {
-            event.accepted = false;
             apply ();
+            event.accepted = false;
         }
         Keys.onReturnPressed: {
-            event.accepted = false;
             apply ();
+            event.accepted = false;
         }
-        Keys.onUpPressed:   { btnIncrease.click (); }
-        Keys.onDownPressed: { btnDecrease.click (); }
+        Keys.onUpPressed:   { btnIncrease.click (event.isAutoRepeat); }
+        Keys.onDownPressed: { btnDecrease.click (event.isAutoRepeat); }
 
         property bool flashEffect : false;
 
@@ -137,7 +127,7 @@ FocusScope {
             }
         }
 
-        Binding on text { value: (isNaN (base.value) ? "" : base.value.toFixed (decimals)); }
+        Binding on text { value: display; }
         SequentialAnimation on flashEffect {
             id: animFlash;
             loops: 2;
@@ -148,6 +138,16 @@ FocusScope {
             PauseAnimation { duration: 100; }
             PropertyAction { value: false; }
             PauseAnimation { duration: 100; }
+        }
+        TextLabel {
+            id: metricsMinValue;
+            text: minValue.toFixed (decimals);
+            color: Style.colorNone;
+        }
+        TextLabel {
+            id: metricsMaxValue;
+            text: maxValue.toFixed (decimals);
+            color: Style.colorNone;
         }
     }
 }

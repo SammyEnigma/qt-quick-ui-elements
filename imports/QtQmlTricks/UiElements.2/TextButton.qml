@@ -96,9 +96,9 @@ AutoRepeatableClicker {
                                     ? Style.colorInverted
                                     : Style.colorForeground);
 
-    function click () {
+    function click (isAutoRepeat) {
         if (enabled) {
-            clicked (null);
+            clicked (isAutoRepeat);
         }
     }
 
