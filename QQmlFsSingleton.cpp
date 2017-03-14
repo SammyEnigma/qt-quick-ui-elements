@@ -239,8 +239,8 @@ QVariantList QQmlFileSystemSingleton::list (const QString & dirPath, const QStri
             getDirsList (dirPath, showHidden, recursive, dirsList);
             if (showFiles) {
                 getFilesList (dirPath, nameFilters, showHidden, filesList);
-                for (const QFileInfo & dirInfo : dirsList) {
-                    getFilesList (dirInfo.absoluteFilePath (), nameFilters, showHidden, filesList);
+                for (QFileInfoList::const_iterator it = dirsList.constBegin (); it != dirsList.constEnd (); ++it) {
+                    getFilesList ((* it).absoluteFilePath (), nameFilters, showHidden, filesList);
                 }
             }
             if (!showDirs) {
