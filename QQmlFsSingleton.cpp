@@ -232,7 +232,7 @@ static void getFilesList (const QString & dirPath,
 QVariantList QQmlFileSystemSingleton::list (const QString & dirPath, const QStringList & nameFilters, const bool showHidden, const bool showFiles, const bool showDirs, const bool recursive) const {
     QVariantList ret;
     const QDir dir (dirPath);
-    if (dir.exists ()) {
+    if (!dirPath.isEmpty () && dir.exists ()) {
         QFileInfoList dirsList;
         QFileInfoList filesList;
         if (recursive) {
