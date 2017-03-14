@@ -13,6 +13,7 @@
 #include <QMimeType>
 #include <QStringBuilder>
 #include <QDirIterator>
+#include <QDebug>
 
 QMimeDatabase QQmlFileSystemModelEntry::MIME_DATABASE;
 
@@ -192,31 +193,66 @@ QUrl QQmlFileSystemSingleton::urlFromPath (const QString & path) const {
     return QUrl::fromLocalFile (path);
 }
 
+static void getDirsList (const QString & dirPath,
+                         const bool includeHidden,
+                         const bool recursive,
+                         QFileInfoList & dirsList) {
+    static const QStringList EMPTY_STR_LIST;
+    QDirIterator lister (dirPath,
+                         EMPTY_STR_LIST,
+                         QDir::Filters (QDir::Dirs | QDir::AllDirs | QDir::NoDotAndDotDot | QDir::Hidden),
+                         QDirIterator::NoIteratorFlags);
+    while (lister.hasNext ()) {
+        const QFileInfo & info = lister.next ();
+        if (includeHidden || (!info.isHidden () && !info.fileName ().startsWith ('.'))) {
+            dirsList.append (info);
+            if (recursive) {
+                getDirsList (info.absoluteFilePath (), includeHidden, true, dirsList);
+            }
+        }
+    }
+}
+
+static void getFilesList (const QString & dirPath,
+                          const QStringList & nameFilters,
+                          const bool includeHidden,
+                          QFileInfoList & filesList) {
+    QDirIterator lister (dirPath,
+                         nameFilters,
+                         QDir::Filters (QDir::Files | QDir::Hidden),
+                         QDirIterator::NoIteratorFlags);
+    while (lister.hasNext ()) {
+        const QFileInfo & info = lister.next ();
+        if (includeHidden || (!info.isHidden () && !info.fileName ().startsWith ('.'))) {
+            filesList.append (info);
+        }
+    }
+}
+
 QVariantList QQmlFileSystemSingleton::list (const QString & dirPath, const QStringList & nameFilters, const bool showHidden, const bool showFiles, const bool showDirs, const bool recursive) const {
     QVariantList ret;
     const QDir dir (dirPath);
     if (dir.exists ()) {
-        const QDirIterator::IteratorFlags itFlags = (recursive
-                                                     ? QDirIterator::Subdirectories
-                                                     : QDirIterator::NoIteratorFlags);
-        const QDir::Filters filters (QDir::Dirs
-                                     | QDir::AllDirs
-                                     | QDir::NoDotAndDotDot
-                                     | QDir::Hidden
-                                     | (showFiles  ? QDir::Files  : 0));
-        QDirIterator finder (dirPath, nameFilters, filters, itFlags);
         QFileInfoList dirsList;
         QFileInfoList filesList;
-        while (finder.hasNext ()) {
-            const QFileInfo & info = finder.next ();
-            if (showHidden || !info.fileName ().startsWith ('.')) {
-                if (info.isDir () && showDirs) {
-                    dirsList.append (info);
+        if (recursive) {
+            getDirsList (dirPath, showHidden, recursive, dirsList);
+            if (showFiles) {
+                getFilesList (dirPath, nameFilters, showHidden, filesList);
+                for (const QFileInfo & dirInfo : dirsList) {
+                    getFilesList (dirInfo.absoluteFilePath (), nameFilters, showHidden, filesList);
                 }
-                else if (info.isFile () && showFiles) {
-                    filesList.append (info);
-                }
-                else { }
+            }
+            if (!showDirs) {
+                dirsList.clear ();
+            }
+        }
+        else {
+            if (showDirs) {
+                getDirsList (dirPath, showHidden, false, dirsList);
+            }
+            if (showFiles) {
+                getFilesList (dirPath, nameFilters, showHidden, filesList);
             }
         }
         qSort (dirsList);
