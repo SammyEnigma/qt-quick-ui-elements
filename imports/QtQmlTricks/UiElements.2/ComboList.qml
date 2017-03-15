@@ -188,6 +188,7 @@ Item {
                 height: ((contentSize < minimumSize) ? minimumSize : ((contentSize > maximumSize) ? maximumSize : contentSize));
                 showBorder: true;
                 background: Style.colorWindow;
+                placeholder: (!repeaterDropdown.count ? qsTr ("Nothing here") : "");
                 transformOrigin: Item.TopLeft;
 
                 readonly property int itemSize : (Style.fontSizeNormal + padding * 2);
@@ -205,6 +206,7 @@ Item {
                         ExtraAnchors.topDock: parent;
 
                         Repeater {
+                            id: repeaterDropdown;
                             model: base.model;
                             delegate: MouseArea {
                                 width: implicitWidth;
