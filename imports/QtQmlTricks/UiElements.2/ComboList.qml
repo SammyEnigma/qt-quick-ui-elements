@@ -9,18 +9,19 @@ Item {
     implicitHeight: (loaderCurrent.height + padding * 2);
 
     property int   padding   : Style.spacingNormal;
-    property alias backColor : rect.color;
     property alias rounding  : rect.radius;
+    property alias backColor : rect.color;
 
     property var       model      : undefined;
     property Component delegate   : ComboListDelegateForModelWithRoles { }
-    property int       currentIdx : -1;
 
-    readonly property var currentValue : (currentIdx >= 0 && currentIdx < repeater.count
+    property int currentIdx : -1;
+
+    readonly property var currentValue : ((currentIdx >= 0 && currentIdx < repeater.count)
                                           ? repeater.itemAt (currentIdx) ["value"]
                                           : undefined);
 
-    readonly property var currentKey   : (currentIdx >= 0 && currentIdx < repeater.count
+    readonly property var currentKey   : ((currentIdx >= 0 && currentIdx < repeater.count)
                                           ? repeater.itemAt (currentIdx) ["key"]
                                           : undefined);
 
@@ -178,74 +179,82 @@ Item {
             onPressed: { clicker.destroyDropdown (); }
             onReleased: { }
 
-            Rectangle {
+            ScrollContainer {
                 id: frame;
                 x: mapFromItem (base.parent, base.x, 0) ["x"];
                 y: mapFromItem (base.parent, 0, (base.y + base.height -1)) ["y"];
-                color: Style.colorWindow;
                 scale: (mapFromItem (base.parent, 0, 0, base.width, 0) ["width"] / base.width);
-                width: base.width;
-                height: Math.max (layout.height, (Style.fontSizeNormal + Style.spacingNormal * 2));
-                border {
-                    width: Style.lineSize;
-                    color: Style.colorBorder;
-                }
+                width: Math.ceil (base.width);
+                height: ((contentSize < minimumSize) ? minimumSize : ((contentSize > maximumSize) ? maximumSize : contentSize));
+                showBorder: true;
+                background: Style.colorWindow;
                 transformOrigin: Item.TopLeft;
 
-                StretchColumnContainer {
-                    id: layout;
-                    ExtraAnchors.topDock: parent;
+                readonly property int itemSize : (Style.fontSizeNormal + padding * 2);
 
-                    Repeater {
-                        model: base.model;
-                        delegate: MouseArea {
-                            width: implicitWidth;
-                            height: implicitHeight;
-                            hoverEnabled: Style.useHovering;
-                            implicitWidth: (loader.width + padding * 2);
-                            implicitHeight: (loader.height + padding * 2);
-                            onClicked: {
-                                currentIdx = model.index;
-                                clicker.destroyDropdown ();
-                            }
-                            ExtraAnchors.horizontalFill: parent;
+                readonly property int contentSize : (layout.height + Style.lineSize * 2);
+                readonly property int minimumSize : (itemSize * 3);
+                readonly property int maximumSize : ((dimmer.parent.height - (y + (base.height * scale)) - Style.spacingNormal) / scale);
 
-                            Rectangle {
-                                color: Style.colorHighlight;
-                                opacity: 0.65;
-                                visible: parent.containsMouse;
-                                anchors.fill: parent;
-                                anchors.margins: frame.border.width;
-                            }
-                            Loader {
-                                id: loader;
-                                clip: true;
-                                sourceComponent: base.delegate;
-                                anchors {
-                                    margins: padding;
-                                    verticalCenter: parent.verticalCenter;
+                Flickable {
+                    contentHeight: layout.height;
+                    flickableDirection: Flickable.VerticalFlick;
+
+                    StretchColumnContainer {
+                        id: layout;
+                        ExtraAnchors.topDock: parent;
+
+                        Repeater {
+                            model: base.model;
+                            delegate: MouseArea {
+                                width: implicitWidth;
+                                height: implicitHeight;
+                                hoverEnabled: Style.useHovering;
+                                implicitWidth: (loader.width + padding * 2);
+                                implicitHeight: (loader.height + padding * 2);
+                                onClicked: {
+                                    currentIdx = model.index;
+                                    clicker.destroyDropdown ();
                                 }
                                 ExtraAnchors.horizontalFill: parent;
-                            }
-                            Binding {
-                                target: loader.item;
-                                property: "index";
-                                value: model.index;
-                            }
-                            Binding {
-                                target: loader.item;
-                                property: "model";
-                                value: (typeof (model) !== "undefined" ? model : undefined);
-                            }
-                            Binding {
-                                target: loader.item;
-                                property: "modelData";
-                                value: (typeof (modelData) !== "undefined" ? modelData : undefined);
-                            }
-                            Binding {
-                                target: loader.item;
-                                property: "active";
-                                value: (model.index === base.currentIdx);
+
+                                Rectangle {
+                                    color: Style.colorHighlight;
+                                    opacity: 0.65;
+                                    visible: parent.containsMouse;
+                                    anchors.fill: parent;
+                                    anchors.margins: Style.lineSize;
+                                }
+                                Loader {
+                                    id: loader;
+                                    clip: true;
+                                    sourceComponent: base.delegate;
+                                    anchors {
+                                        margins: padding;
+                                        verticalCenter: parent.verticalCenter;
+                                    }
+                                    ExtraAnchors.horizontalFill: parent;
+                                }
+                                Binding {
+                                    target: loader.item;
+                                    property: "index";
+                                    value: model.index;
+                                }
+                                Binding {
+                                    target: loader.item;
+                                    property: "model";
+                                    value: (typeof (model) !== "undefined" ? model : undefined);
+                                }
+                                Binding {
+                                    target: loader.item;
+                                    property: "modelData";
+                                    value: (typeof (modelData) !== "undefined" ? modelData : undefined);
+                                }
+                                Binding {
+                                    target: loader.item;
+                                    property: "active";
+                                    value: (model.index === base.currentIdx);
+                                }
                             }
                         }
                     }
