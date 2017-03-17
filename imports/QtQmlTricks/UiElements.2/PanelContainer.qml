@@ -221,9 +221,11 @@ Group {
         if (priv.subWindow === null) {
             var rootItem = Introspector.window (base);
             var abspos = rootItem.contentItem.mapFromItem (base, 0 , 0);
-            priv.subWindow = compoWindow.createObject (Introspector.window (base), {
-                                                           "x" : (abspos.x + rootItem.x),
-                                                           "y" : (abspos.y + rootItem.y),
+            priv.subWindow = compoWindow.createObject (null, {
+                                                           "x"      : (abspos.x + rootItem.x),
+                                                           "y"      : (abspos.y + rootItem.y),
+                                                           "width"  : container.width,
+                                                           "height" : container.height,
                                                        });
             panel.parent = priv.subWindow.contentItem;
         }
@@ -257,9 +259,9 @@ Group {
         Window {
             color: rect.color;
             title: base.title;
-            width: container.width;
-            height: container.height;
+            flags: Qt.Window;
             visible: true;
+            modality: Qt.NonModal;
             onClosing: { attach (); }
         }
     }
