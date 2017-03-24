@@ -3,6 +3,12 @@ import QtQmlTricks.UiElements 2.0;
 
 Item {
     id: base;
+    onEnabledChanged: {
+        if (!enabled) {
+            timerAutoRepeatDelay.stop ();
+            timerAutoRepeatInterval.stop ();
+        }
+    }
 
     property int   repeatDelay    : 650;
     property int   repeatInterval : 30;
