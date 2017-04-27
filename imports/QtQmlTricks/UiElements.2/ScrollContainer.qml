@@ -15,6 +15,7 @@ FocusScope {
     property alias     headerItem    : loaderHeader.sourceComponent;
     property alias     footerItem    : loaderFooter.sourceComponent;
     property Flickable flickableItem : null;
+    property int       rounding      : Style.roundness;
 
     default property alias content : base.flickableItem;
 
@@ -73,7 +74,7 @@ FocusScope {
         Rectangle {
             z: -1;
             width: Math.round (parent.width);
-            radius: Style.roundness;
+            radius: rounding;
             antialiasing: radius;
             gradient: Gradient {
                 GradientStop { position: 0.0; color: Style.colorWindow; }
@@ -96,7 +97,7 @@ FocusScope {
         Rectangle {
             z: -1;
             width: Math.round (parent.width);
-            radius: Style.roundness;
+            radius: rounding;
             antialiasing: radius;
             gradient: Gradient {
                 GradientStop { position: 0.0; color: background; }
