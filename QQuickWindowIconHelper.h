@@ -1,18 +1,16 @@
 #ifndef QQUICKWINDOWICONHELPER_H
 #define QQUICKWINDOWICONHELPER_H
 
-#include <QObject>
+#include <QQuickItem>
 #include <QQmlParserStatus>
 
-class QQuickWindowIconHelper : public QObject, public QQmlParserStatus {
+class QQuickWindowIconHelper : public QQuickItem {
     Q_OBJECT
-    Q_INTERFACES (QQmlParserStatus)
     Q_PROPERTY (QString iconPath READ getIconPath WRITE setIconPath NOTIFY iconPathChanged)
 
 public:
-    explicit QQuickWindowIconHelper (QObject * parent = Q_NULLPTR);
+    explicit QQuickWindowIconHelper (QQuickItem * parent = Q_NULLPTR);
 
-    void classBegin        (void) Q_DECL_FINAL;
     void componentComplete (void) Q_DECL_FINAL;
 
     const QString & getIconPath (void) const;

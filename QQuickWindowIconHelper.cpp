@@ -1,18 +1,19 @@
 
 #include "QQuickWindowIconHelper.h"
 
+#include <QUrl>
 #include <QIcon>
 #include <QWindow>
+#include <QQuickWindow>
 
-QQuickWindowIconHelper::QQuickWindowIconHelper (QObject * parent)
-    : QObject (parent)
+QQuickWindowIconHelper::QQuickWindowIconHelper (QQuickItem * parent)
+    : QQuickItem (parent)
 {
     connect (this, &QQuickWindowIconHelper::iconPathChanged, this, &QQuickWindowIconHelper::refreshWindowIcon);
 }
 
-void QQuickWindowIconHelper::classBegin (void) { }
-
 void QQuickWindowIconHelper::componentComplete (void) {
+    QQuickItem::componentComplete ();
     refreshWindowIcon ();
 }
 
@@ -28,7 +29,9 @@ void QQuickWindowIconHelper::setIconPath (const QString & iconPath) {
 }
 
 void QQuickWindowIconHelper::refreshWindowIcon (void) {
-    if (QWindow * window = qobject_cast<QWindow *> (parent ())) {
-        window->setIcon (QIcon (m_iconPath));
+    if (window ()) {
+        window ()->setIcon (QIcon ((m_iconPath.indexOf ("://") < 5)
+                                   ? QUrl (m_iconPath).toLocalFile ()
+                                   : m_iconPath));
     }
 }
