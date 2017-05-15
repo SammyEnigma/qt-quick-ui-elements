@@ -9,6 +9,7 @@
 QQuickWindowIconHelper::QQuickWindowIconHelper (QQuickItem * parent)
     : QQuickItem (parent)
 {
+    connect (this, &QQuickWindowIconHelper::windowChanged,   this, &QQuickWindowIconHelper::refreshWindowIcon);
     connect (this, &QQuickWindowIconHelper::iconPathChanged, this, &QQuickWindowIconHelper::refreshWindowIcon);
 }
 
