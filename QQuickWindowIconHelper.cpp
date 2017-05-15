@@ -31,8 +31,17 @@ void QQuickWindowIconHelper::setIconPath (const QString & iconPath) {
 
 void QQuickWindowIconHelper::refreshWindowIcon (void) {
     if (window ()) {
-        window ()->setIcon (QIcon ((m_iconPath.indexOf ("://") < 5)
-                                   ? QUrl (m_iconPath).toLocalFile ()
-                                   : m_iconPath));
+        if (m_iconPath.startsWith ("file://")) {
+            window ()->setIcon (QIcon (QUrl (m_iconPath).toLocalFile ()));
+        }
+        else if (m_iconPath.startsWith ("qrc:///")) {
+            window ()->setIcon (QIcon (m_iconPath.replace ("qrc:///", ":/")));
+        }
+        else if (m_iconPath.startsWith ("qrc://")) {
+            window ()->setIcon (QIcon (m_iconPath.replace ("qrc://", ":/")));
+        }
+        else {
+            window ()->setIcon (QIcon (m_iconPath));
+        }
     }
 }
