@@ -4,11 +4,15 @@ import QtQmlTricks.UiElements 2.0;
 Item {
     id: accordion;
 
-    property alias background : rect.color;
-
     property Group currentTab : null;
 
-    default property alias content : container.children;
+    property alias background : rect.color;
+
+    property int padding : Style.spacingNormal;
+
+    property int tabSize : (Style.fontSizeNormal + padding * 2);
+
+    readonly property int paneSize : (height - tabs.length * (tabSize + Style.lineSize));
 
     readonly property var tabs : {
         var ret = [];
@@ -21,8 +25,7 @@ Item {
         return ret;
     }
 
-    readonly property int tabSize  : (Style.spacingBig * 2);
-    readonly property int paneSize : (height - tabs.length * (tabSize + Style.lineSize));
+    default property alias content : container.children;
 
     Group { id: testGroup; }
     Rectangle {
@@ -99,12 +102,12 @@ Item {
                         id: ico;
                         enabled: col.enabled;
                         sourceComponent: col.group.icon;
-                        anchors.margins: Style.spacingNormal;
+                        anchors.margins: padding;
                     }
                     TextLabel {
                         id: lbl;
                         text: col.group.title;
-                        anchors.margins: Style.spacingNormal;
+                        anchors.margins: padding;
                     }
                 }
                 Binding {
