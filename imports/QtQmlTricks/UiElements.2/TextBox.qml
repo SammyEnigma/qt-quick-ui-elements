@@ -50,7 +50,7 @@ FocusScope {
             antialiasing: radius;
             gradient: (enabled ? Style.gradientEditable (backColor) : Style.gradientDisabled ());
             border {
-                width: (input.activeFocus ? Style.lineSize * 2 : Style.lineSize);
+                width: (input.activeFocus && !readOnly ? Style.lineSize * 2 : Style.lineSize);
                 color: (input.activeFocus ? Style.colorSelection : Style.colorBorder);
             }
         }
