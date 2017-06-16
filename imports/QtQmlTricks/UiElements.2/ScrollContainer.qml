@@ -221,7 +221,7 @@ FocusScope {
 
                     Binding on x {
                         when: (flickableItem && !grooveHoriz.pressed);
-                        value: (grooveHoriz.drag.maximumx * ratioContentX);
+                        value: (grooveHoriz.drag.maximumX * ratioContentX);
                     }
                     Binding on width {
                         when: (flickableItem && !grooveHoriz.pressed);
