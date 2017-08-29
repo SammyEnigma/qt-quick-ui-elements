@@ -17,6 +17,8 @@ Item {
 
     property int currentIdx : -1;
 
+    readonly property int count : repeater.count;
+
     readonly property var currentValue : ((currentIdx >= 0 && currentIdx < repeater.count)
                                           ? repeater.itemAt (currentIdx) ["value"]
                                           : undefined);
@@ -26,7 +28,7 @@ Item {
                                           : undefined);
 
     function selectByKey (key) {
-        for (var idx = 0; idx < repeater.count; idx++) {
+        for (var idx = 0; idx < repeater.count; ++idx) {
             var item = repeater.itemAt (idx);
             if (item ["key"] === key) {
                 currentIdx = idx;
