@@ -28,13 +28,16 @@ Item {
                                           : undefined);
 
     function selectByKey (key) {
+        var ret = false;
         for (var idx = 0; idx < repeater.count; ++idx) {
             var item = repeater.itemAt (idx);
             if (item ["key"] === key) {
                 currentIdx = idx;
+                ret = true;
                 break;
             }
         }
+        return ret;
     }
 
     StretchColumnContainer {
@@ -181,83 +184,136 @@ Item {
             onPressed: { clicker.destroyDropdown (); }
             onReleased: { }
 
-            ScrollContainer {
-                id: frame;
-                x: mapFromItem (base.parent, base.x, 0) ["x"];
-                y: mapFromItem (base.parent, 0, (base.y + base.height -1)) ["y"];
-                scale: (mapFromItem (base.parent, 0, 0, base.width, 0) ["width"] / base.width);
-                width: Math.ceil (base.width);
-                height: ((contentSize < minimumSize) ? minimumSize : ((contentSize > maximumSize) ? maximumSize : contentSize));
-                showBorder: true;
-                background: Style.colorWindow;
-                placeholder: (!repeaterDropdown.count ? qsTr ("Nothing here") : "");
-                transformOrigin: Item.TopLeft;
+            Item {
+                id: mirror;
+                x:      ref ["x"];
+                y:      ref ["y"];
+                width:  ref ["width"];
+                height: ref ["height"];
 
-                readonly property int itemSize : (Style.fontSizeNormal + padding * 2);
+                readonly property rect ref : (dimmer.width && dimmer.height
+                                              ? base.mapToItem (parent, 0, 0, base.width, base.height)
+                                              : Qt.rect (0,0,0,0));
+            }
+            Item {
+                id: placeholderAbove;
+                anchors {
+                    top: dimmer.top;
+                    left: mirror.left;
+                    right: mirror.right;
+                    bottom: mirror.top;
+                    topMargin: Style.spacingNormal;
+                    bottomMargin: -Style.lineSize;
+                }
+            }
+            Item {
+                id: placeholderUnder;
+                anchors {
+                    top: mirror.bottom;
+                    left: mirror.left;
+                    right: mirror.right;
+                    bottom: dimmer.bottom;
+                    topMargin: -Style.lineSize;
+                    bottomMargin: Style.spacingNormal;
+                }
+            }
+            Item {
+                anchors.fill: frame.place;
 
-                readonly property int contentSize : (layout.height + Style.lineSize * 2);
-                readonly property int minimumSize : (itemSize * 3);
-                readonly property int maximumSize : ((dimmer.parent.height - (y + (base.height * scale)) - Style.spacingNormal) / scale);
+                ScrollContainer {
+                    id: frame;
+                    y: (place === placeholderAbove ? (parent.height - (height * scale)) : 0);
+                    width: Math.ceil (base.width);
+                    height: (parent.height >= actualSize ? actualSize : parent.height);
+                    scale: (mirror.width / base.width);
+                    showBorder: true;
+                    background: Style.colorWindow;
+                    placeholder: (!repeaterDropdown.count ? qsTr ("Nothing here") : "");
+                    transformOrigin: Item.TopLeft;
 
-                Flickable {
-                    contentHeight: layout.height;
-                    flickableDirection: Flickable.VerticalFlick;
+                    readonly property int itemSize    : (Style.fontSizeNormal + padding * 2);
+                    readonly property int contentSize : (layout.height  + Style.lineSize * 2);
+                    readonly property int minimumSize : ((itemSize * 3) + Style.lineSize * 2);
+                    readonly property int actualSize  : Math.max (contentSize, minimumSize);
 
-                    StretchColumnContainer {
-                        id: layout;
-                        ExtraAnchors.topDock: parent;
+                    readonly property Item place : {
+                        if (placeholderUnder.height >= actualSize) {
+                            return placeholderUnder;
+                        }
+                        else if (placeholderAbove.height >= actualSize) {
+                            return placeholderAbove;
+                        }
+                        else if (placeholderUnder.height >= minimumSize) {
+                            return placeholderUnder;
+                        }
+                        else if (placeholderAbove.height >= minimumSize) {
+                            return placeholderAbove;
+                        }
+                        else {
+                            return placeholderUnder;
+                        }
+                    }
 
-                        Repeater {
-                            id: repeaterDropdown;
-                            model: base.model;
-                            delegate: MouseArea {
-                                width: implicitWidth;
-                                height: implicitHeight;
-                                hoverEnabled: Style.useHovering;
-                                implicitWidth: (loader.width + padding * 2);
-                                implicitHeight: (loader.height + padding * 2);
-                                onClicked: {
-                                    currentIdx = model.index;
-                                    clicker.destroyDropdown ();
-                                }
-                                ExtraAnchors.horizontalFill: parent;
+                    Flickable {
+                        contentHeight: layout.height;
+                        flickableDirection: Flickable.VerticalFlick;
 
-                                Rectangle {
-                                    color: Style.colorHighlight;
-                                    opacity: 0.65;
-                                    visible: parent.containsMouse;
-                                    anchors.fill: parent;
-                                    anchors.margins: Style.lineSize;
-                                }
-                                Loader {
-                                    id: loader;
-                                    clip: true;
-                                    sourceComponent: base.delegate;
-                                    anchors {
-                                        margins: padding;
-                                        verticalCenter: parent.verticalCenter;
+                        StretchColumnContainer {
+                            id: layout;
+                            ExtraAnchors.topDock: parent;
+
+                            Repeater {
+                                id: repeaterDropdown;
+                                model: base.model;
+                                delegate: MouseArea {
+                                    width: implicitWidth;
+                                    height: implicitHeight;
+                                    hoverEnabled: Style.useHovering;
+                                    implicitWidth: (loader.width + padding * 2);
+                                    implicitHeight: (loader.height + padding * 2);
+                                    onClicked: {
+                                        currentIdx = model.index;
+                                        clicker.destroyDropdown ();
                                     }
                                     ExtraAnchors.horizontalFill: parent;
-                                }
-                                Binding {
-                                    target: loader.item;
-                                    property: "index";
-                                    value: model.index;
-                                }
-                                Binding {
-                                    target: loader.item;
-                                    property: "model";
-                                    value: (typeof (model) !== "undefined" ? model : undefined);
-                                }
-                                Binding {
-                                    target: loader.item;
-                                    property: "modelData";
-                                    value: (typeof (modelData) !== "undefined" ? modelData : undefined);
-                                }
-                                Binding {
-                                    target: loader.item;
-                                    property: "active";
-                                    value: (model.index === base.currentIdx);
+
+                                    Rectangle {
+                                        color: Style.colorHighlight;
+                                        opacity: 0.65;
+                                        visible: parent.containsMouse;
+                                        anchors.fill: parent;
+                                        anchors.margins: Style.lineSize;
+                                    }
+                                    Loader {
+                                        id: loader;
+                                        clip: true;
+                                        sourceComponent: base.delegate;
+                                        anchors {
+                                            margins: padding;
+                                            verticalCenter: parent.verticalCenter;
+                                        }
+                                        ExtraAnchors.horizontalFill: parent;
+                                    }
+                                    Binding {
+                                        target: loader.item;
+                                        property: "index";
+                                        value: model.index;
+                                    }
+                                    Binding {
+                                        target: loader.item;
+                                        property: "model";
+                                        value: (typeof (model) !== "undefined" ? model : undefined);
+                                    }
+                                    Binding {
+                                        target: loader.item;
+                                        property: "modelData";
+                                        value: (typeof (modelData) !== "undefined" ? modelData : undefined);
+                                    }
+                                    Binding {
+                                        target: loader.item;
+                                        property: "active";
+                                        value: (model.index === base.currentIdx);
+                                    }
                                 }
                             }
                         }
