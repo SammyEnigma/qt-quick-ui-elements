@@ -153,7 +153,7 @@ AutoRepeatableClicker {
                        ? (checked
                           ? Style.gradientChecked ()
                           : (pressed
-                             ? Style.gradientPressed (backColor)
+                             ? Style.gradientPressed (Style.opacify (backColor, flat ? 0.35 : 1.0))
                              : Style.gradientIdle (flat ? Style.colorNone : Qt.lighter (backColor, hovered ? 1.15 : 1.0))))
                        : Style.gradientDisabled (flat ? Style.colorNone : Style.colorClickable));
             border {
