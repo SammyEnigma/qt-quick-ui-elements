@@ -11,12 +11,14 @@ AutoRepeatableClicker {
     states: [
         State {
             name: "icon_and_text";
-            when: (ico.visible && lbl.visible);
+            when: (ico.visible && lbl.visible && !invertLayout);
 
             PropertyChanges {
                 target: clicker;
                 contentWidth: Math.ceil (ico.width + lbl.contentWidth + padding * 3);
-                contentHeight: Math.ceil (ico.height > lbl.contentHeight ? ico.height + padding * 2: lbl.contentHeight + padding * 2);
+                contentHeight: Math.ceil (ico.height > lbl.contentHeight
+                                          ? ico.height + padding * 2
+                                          : lbl.contentHeight + padding * 2);
             }
             AnchorChanges {
                 target: ico;
@@ -29,6 +31,33 @@ AutoRepeatableClicker {
                 target: lbl;
                 anchors {
                     left: ico.right;
+                    right: parent.right;
+                    verticalCenter: parent.verticalCenter;
+                }
+            }
+        },
+        State {
+            name: "text_and_icon";
+            when: (ico.visible && lbl.visible && invertLayout);
+
+            PropertyChanges {
+                target: clicker;
+                contentWidth: Math.ceil (ico.width + lbl.contentWidth + padding * 3);
+                contentHeight: Math.ceil (ico.height > lbl.contentHeight
+                                          ? ico.height + padding * 2
+                                          : lbl.contentHeight + padding * 2);
+            }
+            AnchorChanges {
+                target: lbl;
+                anchors {
+                    left: parent.left;
+                    right: ico.left;
+                    verticalCenter: parent.verticalCenter;
+                }
+            }
+            AnchorChanges {
+                target: ico;
+                anchors {
                     right: parent.right;
                     verticalCenter: parent.verticalCenter;
                 }
@@ -84,6 +113,7 @@ AutoRepeatableClicker {
     property bool  flat          : false;
     property bool  checked       : false;
     property bool  autoColorIcon : true;
+    property bool  invertLayout  : false;
     property alias text          : lbl.text;
     property alias textFont      : lbl.font;
     property alias rounding      : rect.radius;
