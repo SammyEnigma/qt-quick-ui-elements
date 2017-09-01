@@ -173,7 +173,9 @@ AutoRepeatableClicker {
         id: lbl;
         color: (enabled
                 ? (checked
-                   ? Style.colorLink
+                   ? (Style.useDarkTheme
+                      ? Qt.lighter (Style.colorSelection)
+                      : Qt.darker  (Style.colorSelection))
                    : textColor)
                 : Style.colorBorder);
         enabled: clicker.enabled;
