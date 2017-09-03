@@ -12,6 +12,7 @@ Item {
 
     property int   repeatDelay    : 650;
     property int   repeatInterval : 30;
+    property int   sensitiveHalo  : 0;
     property bool  autoRepeat     : false;
     property alias pressed        : clicker.pressed;
     property alias hoverEnabled   : clicker.hoverEnabled;
@@ -22,6 +23,7 @@ Item {
     MouseArea {
         id: clicker;
         anchors.fill: parent;
+        anchors.margins: -sensitiveHalo;
         onPressed: {
             if (autoRepeat) {
                 timerAutoRepeatDelay.start ();
