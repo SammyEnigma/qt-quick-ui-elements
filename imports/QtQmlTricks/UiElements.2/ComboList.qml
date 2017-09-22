@@ -231,6 +231,26 @@ Item {
                     background: Style.colorWindow;
                     placeholder: (!repeaterDropdown.count ? qsTr ("Nothing here") : "");
                     transformOrigin: Item.TopLeft;
+                    headerItem: TextBox {
+                        id: inputFilter;
+                        visible: filterable;
+                        hasClear: true;
+                        textHolder: qsTr ("Filter...");
+                        ExtraAnchors.horizontalFill: parent;
+                        Component.onCompleted: {
+                           if (filterable) {
+                               forceActiveFocus ();
+                           }
+                        }
+
+                        Binding {
+                            target: frame;
+                            property: "filter";
+                            value: inputFilter.text.toLowerCase ();
+                        }
+                    }
+
+                    property string filter : "";
 
                     readonly property int itemSize    : (Style.fontSizeNormal + padding * 2);
                     readonly property int contentSize : (layout.height  + Style.lineSize * 2);
@@ -255,6 +275,10 @@ Item {
                         }
                     }
 
+                    function matches (str) {
+                        return (filter === "" || (str.toLowerCase ().indexOf (filter) >= 0));
+                    }
+
                     Flickable {
                         contentHeight: layout.height;
                         flickableDirection: Flickable.VerticalFlick;
@@ -263,29 +287,13 @@ Item {
                             id: layout;
                             ExtraAnchors.topDock: parent;
 
-                            TextBox {
-                                id: inputFilter;
-                                visible: filterable;
-                                hasClear: true;
-                                textHolder: qsTr ("Filter...");
-                                ExtraAnchors.horizontalFill: parent;
-                                Component.onCompleted: {
-                                   if (filterable) {
-                                       forceActiveFocus ();
-                                   }
-                                }
-
-                                function matches (str) {
-                                    return (isEmpty || (str.toLowerCase ().indexOf (text.toLowerCase ()) >= 0));
-                                }
-                            }
                             Repeater {
                                 id: repeaterDropdown;
                                 model: base.model;
                                 delegate: MouseArea {
                                     width: implicitWidth;
                                     height: implicitHeight;
-                                    visible: inputFilter.matches (loader.instance.value);
+                                    visible: frame.matches (loader.instance.value);
                                     hoverEnabled: Style.useHovering;
                                     implicitWidth: (loader.width + padding * 2);
                                     implicitHeight: (loader.height + padding * 2);
