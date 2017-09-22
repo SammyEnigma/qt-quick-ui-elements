@@ -8,9 +8,10 @@ Item {
     implicitWidth: (dumbLayout.width + arrow.width + padding * 3);
     implicitHeight: (loaderCurrent.height + padding * 2);
 
-    property int   padding   : Style.spacingNormal;
-    property alias rounding  : rect.radius;
-    property alias backColor : rect.color;
+    property int   padding    : Style.spacingNormal;
+    property bool  filterable : false;
+    property alias rounding   : rect.radius;
+    property alias backColor  : rect.color;
 
     property var       model      : undefined;
     property Component delegate   : ComboListDelegateForModelWithRoles { }
@@ -262,12 +263,29 @@ Item {
                             id: layout;
                             ExtraAnchors.topDock: parent;
 
+                            TextBox {
+                                id: inputFilter;
+                                visible: filterable;
+                                hasClear: true;
+                                textHolder: qsTr ("Filter...");
+                                ExtraAnchors.horizontalFill: parent;
+                                Component.onCompleted: {
+                                   if (filterable) {
+                                       forceActiveFocus ();
+                                   }
+                                }
+
+                                function matches (str) {
+                                    return (isEmpty || (str.toLowerCase ().indexOf (text.toLowerCase ()) >= 0));
+                                }
+                            }
                             Repeater {
                                 id: repeaterDropdown;
                                 model: base.model;
                                 delegate: MouseArea {
                                     width: implicitWidth;
                                     height: implicitHeight;
+                                    visible: inputFilter.matches (loader.instance.value);
                                     hoverEnabled: Style.useHovering;
                                     implicitWidth: (loader.width + padding * 2);
                                     implicitHeight: (loader.height + padding * 2);
@@ -293,6 +311,8 @@ Item {
                                             verticalCenter: parent.verticalCenter;
                                         }
                                         ExtraAnchors.horizontalFill: parent;
+
+                                        readonly property ComboListDelegate instance : item;
                                     }
                                     Binding {
                                         target: loader.item;
