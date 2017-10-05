@@ -229,26 +229,9 @@ Item {
                     scale: (mirror.width / base.width);
                     showBorder: true;
                     background: Style.colorWindow;
+                    headerItem: (filterable ? compoFilter : null);
                     placeholder: (!repeaterDropdown.count ? qsTr ("Nothing here") : "");
                     transformOrigin: Item.TopLeft;
-                    headerItem: TextBox {
-                        id: inputFilter;
-                        visible: filterable;
-                        hasClear: true;
-                        textHolder: qsTr ("Filter...");
-                        ExtraAnchors.horizontalFill: parent;
-                        Component.onCompleted: {
-                           if (filterable) {
-                               forceActiveFocus ();
-                           }
-                        }
-
-                        Binding {
-                            target: frame;
-                            property: "filter";
-                            value: inputFilter.text.toLowerCase ();
-                        }
-                    }
 
                     property string filter : "";
 
@@ -279,6 +262,23 @@ Item {
                         return (filter === "" || (str.toLowerCase ().indexOf (filter) >= 0));
                     }
 
+                    Component {
+                        id: compoFilter;
+
+                        TextBox {
+                            id: inputFilter;
+                            hasClear: true;
+                            textHolder: qsTr ("Filter...");
+                            ExtraAnchors.horizontalFill: parent;
+                            Component.onCompleted: { forceActiveFocus (); }
+
+                            Binding {
+                                target: frame;
+                                property: "filter";
+                                value: inputFilter.text.toLowerCase ();
+                            }
+                        }
+                    }
                     Flickable {
                         contentHeight: layout.height;
                         flickableDirection: Flickable.VerticalFlick;
