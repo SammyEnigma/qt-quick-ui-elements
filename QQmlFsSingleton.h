@@ -120,9 +120,12 @@ public slots:
 
     bool remove (const QString & path) const;
 
+    bool mkpath (const QString & path) const;
+
     int  size (const QString & path) const;
 
     QString parentDir (const QString & path) const;
+    QString baseName  (const QString & path) const;
 
     QString readTextFile  (const QString & path) const;
     bool    writeTextFile (const QString & path, const QString & text) const;

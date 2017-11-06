@@ -155,12 +155,20 @@ bool QQmlFileSystemSingleton::remove (const QString & path) const {
     }
 }
 
+bool QQmlFileSystemSingleton::mkpath (const QString & path) const {
+    return QDir ().mkpath (path);
+}
+
 int QQmlFileSystemSingleton::size (const QString & path) const {
     return static_cast<int> (QFileInfo (path).size ());
 }
 
 QString QQmlFileSystemSingleton::parentDir (const QString & path) const {
     return QFileInfo (path).dir ().absolutePath ();
+}
+
+QString QQmlFileSystemSingleton::baseName (const QString & path) const {
+    return QFileInfo (path).fileName ();
 }
 
 QString QQmlFileSystemSingleton::readTextFile (const QString & path) const {
