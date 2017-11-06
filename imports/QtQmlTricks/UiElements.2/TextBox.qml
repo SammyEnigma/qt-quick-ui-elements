@@ -5,7 +5,7 @@ FocusScope {
     id: base;
     width: implicitWidth;
     height: implicitHeight;
-    implicitWidth: Math.ceil (input.contentWidth + padding * 2);
+    implicitWidth: Math.ceil (Math.max (input.contentWidth, holder.contentWidth) + padding * 2);
     implicitHeight: Math.ceil (input.contentHeight + padding * 2);
 
     property int   padding    : Style.spacingNormal;
