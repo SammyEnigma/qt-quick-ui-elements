@@ -27,5 +27,6 @@
         <file>icons/filetypes/video.svg</file>
         <file>icons/filetypes/webpage.svg</file>
         <file>icons/filetypes/xml.svg</file>
+        <file>icons/filetypes/key.svg</file>
     </qresource>
 </RCC>
